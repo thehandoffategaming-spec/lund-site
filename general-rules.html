@@ -217,7 +217,7 @@
   <div class="eyebrow">Chapter I</div>
   <h1>General Rules</h1>
   <p class="lede">
-	To survive in the glorious city fo Lund, you need to know the rules of Lund. 
+	To survive in the glorious city of Lund, you need to know the rules of Lund. 
   </p>
 </div>
 
@@ -257,7 +257,7 @@
         </table>
         <div class="callout">
           <span class="label">Guard</span>
-          <p>Guard is a pool of protection rolled separately (1d6) at character creation. Incoming damage is subtracted from Guard before it touches a Virtue score — once Guard is depleted, hits land in full.</p>
+          <p>Guard is a pool of protection rolled separately (1d6) at character creation. Incoming damage is subtracted from Guard before it touches a Virtue score — once Guard is depleted, hits land in full. Fatekin cannot disengage from enemies if they lack guard.</p>
         </div>
         <p class="flavor">Armor — worn plate, a raised shield, a warded charm — reduces Damage directly, before it ever reaches Guard. See Attacking, below.</p>
       </section>
@@ -289,7 +289,8 @@
         <span class="num-tag">1.4</span>
         <h2>Turns</h2>
         <p>A turn is enough time to <strong>Move</strong> and perform an <strong>Action</strong>, in either order. Players always take their turn first, then enemies act.</p>
-        <p class="flavor">Common Actions include making an Attack, casting a Rite (Chapter III), or Aiding an ally. There's no individual initiative roll — the party moves as one side, then the opposition responds as the other.</p>
+		<p>A move typically covers about 10m of ground. Fatekin who are in touch range of an enemy cannot move away unless they have guard remaining, or an ally is next to them to assist with their retreat.</p>
+        <p class="flavor">Common Actions include making an Attack, casting a Spell (Chapter III), or Aiding an ally. There's no individual initiative roll — the party moves as one side, then the opposition responds as the other.</p>
       </section>
 
       <section class="rule" id="attacking">
@@ -357,7 +358,7 @@
           <div class="feat-card">
             <h3>Smite</h3>
             <span class="suit-tag">Suit of Pentacles</span>
-            <p>Use before making any melee Attack. Your melee attacks this turn gain +1d12.</p>
+            <p>Use before making any melee Attack that lacks the Blast property. Your melee attacks this turn gain +1d12.</p>
             <p class="feat-save">Pass a Vigor Save or become Fatigued</p>
           </div>
           <div class="feat-card">
@@ -369,7 +370,7 @@
           <div class="feat-card">
             <h3>Masterstrike</h3>
             <span class="suit-tag">Suit of Swords</span>
-            <p>Use before making any melee Attack. Your attacks this turn ignore Armor.</p>
+            <p>Use before making any Attack that lacks the blast property. Your attacks this turn ignore Armor.</p>
             <p class="feat-save">Pass a Vigor Save or become Fatigued</p>
           </div>
           <div class="feat-card">
@@ -411,18 +412,19 @@
         <p>Every spell has a Virtue cost. Some are free, but a typical cost is either 2, 4, or 8 points of the relevant Virtue.</p>
         <div class="callout">
           <span class="label">Overflow</span>
-          <p>If a casting cost exceeds the caster's remaining casting Virtue (typically Spirit), the excess is always taken from Vigor instead. If Vigor is itself the spellcasting Virtue being used when that excess applies, the caster falls dead.</p>
+          <p>If a casting cost exceeds the caster's remaining casting Virtue (typically Spirit), the excess is always taken from Vigor instead. If Vigor is itself the spellcasting Virtue being used when that excess applies, the caster immediately suffers a mortal wound.</p>
         </div>
         <p class="flavor">Spells typically take effect immediately and rarely allow a Save — only when the effect would leave the target disabled, helpless, or wholly ineffective.</p>
 
         <h3 class="sub-head">Qualities of Spells</h3>
 
-        <p><strong>Range</strong> — spells typically use one of four ranges:</p>
+        <p><strong>Range</strong> — spells typically use one of five ranges:</p>
         <ul>
           <li>Self</li>
           <li>Touch (within a meter)</li>
           <li>Short-Range (within 10 meters)</li>
-          <li>Long-Range (within 50 meters)</li>
+          <li>Long-Range (within 100 meters)</li>
+		  <li>Extreme-Range (within 500 meters)</li>
         </ul>
 
         <p><strong>Attack, Save, or Direct Damage</strong> — spells that deal damage usually do so through an Attack, following the same rules as Attacking, but using the dice the spell provides.</p>
@@ -501,8 +503,8 @@
           <tr><td>Vulnerable</td><td>You are in a disadvantaged position somehow; attacks against you are Enhanced</td></tr>
           <tr><td>Deprived</td><td>You are lacking necessities and cannot benefit from resting</td></tr>
           <tr><td>Dazed</td><td>Cannot perform Gambits</td></tr>
-          <tr><td>Bound</td><td>Cannot move; disadvantage on Grace saves</td></tr>
-          <tr><td>Shaken</td><td>Disadvantage on Spirit checks until the source is removed</td></tr>
+          <tr><td>Bound</td><td>Cannot move</td></tr>
+          <tr><td>Shaken</td><td>Disadvantage on Spirit checks and saves until the source is removed</td></tr>
         </table>
       </section>
 
