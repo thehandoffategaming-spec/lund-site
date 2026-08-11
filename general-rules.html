@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>General Rules — The Lund Codex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Almendra+SC&family=Jost:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lund-theme.css">
+<style>
+  .layout{
+    display:grid;
+    grid-template-columns: 200px 1fr;
+    gap:48px;
+    align-items:start;
+  }
+  .chapter-nav{
+    position:sticky; top:76px;
+    border-left: 1px solid var(--line);
+    padding-left:18px;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .chapter-nav a{
+    font-family:'Jost', sans-serif;
+    font-size:0.7rem;
+    letter-spacing:0.115em;
+    text-transform:uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+  }
+  .chapter-nav a:hover, .chapter-nav a:focus-visible{ color: var(--gold-bright); }
+
+  section.rule{ margin-bottom:56px; scroll-margin-top: 90px; }
+  section.rule h2{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size: 1.65rem;
+    color: var(--gold-bright);
+    margin: 0 0 6px;
+  }
+  section.rule .num-tag{
+    font-family:'Jost', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.235em;
+    text-transform:uppercase;
+    color: var(--gold);
+    display:block;
+    margin-bottom:8px;
+  }
+  section.rule p{
+    line-height:1.7;
+    font-size:1.02rem;
+    color: var(--parchment);
+    margin: 0 0 14px;
+  }
+  section.rule p.flavor{
+    font-style:italic;
+    color: var(--parchment-dim);
+  }
+  section.rule h3.sub-head{
+    font-family:'Jost', sans-serif;
+    font-size:0.85rem;
+    letter-spacing:0.155em;
+    text-transform:uppercase;
+    color: var(--gold-bright);
+    margin: 20px 0 6px;
+  }
+  section.rule h3.sub-head:first-of-type{ margin-top:6px; }
+
+  .rule-table{
+    width:100%;
+    border-collapse:collapse;
+    margin: 18px 0 8px;
+    font-size:0.95rem;
+  }
+  .rule-table th{
+    font-family:'Jost', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.135em;
+    text-transform:uppercase;
+    text-align:left;
+    color: var(--gold-bright);
+    border-bottom: 1px solid var(--line);
+    padding: 8px 12px;
+  }
+  .rule-table td{
+    padding: 9px 12px;
+    border-bottom: 1px solid rgba(184,147,63,0.15);
+    color: var(--parchment-dim);
+  }
+  .rule-table tr:hover td{ background: rgba(184,147,63,0.05); color: var(--parchment); }
+
+  .callout{
+    border: 1px solid var(--line);
+    background: rgba(31,26,52,0.4);
+    border-radius:6px;
+    padding: 16px 20px;
+    margin: 20px 0;
+  }
+  .callout .label{
+    font-family:'Jost', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.185em;
+    text-transform:uppercase;
+    color: var(--teal-bright);
+    margin-bottom:6px;
+    display:block;
+  }
+  .callout p{ margin:0; font-size:0.95rem; }
+
+  section.rule ul{
+    margin: 0 0 16px;
+    padding-left: 22px;
+    color: var(--parchment);
+    line-height:1.65;
+    font-size:1.02rem;
+  }
+  section.rule ul li{ margin-bottom:6px; }
+  section.rule ul li::marker{ color: var(--gold); }
+
+  .feat-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:18px;
+    margin: 20px 0 8px;
+  }
+  .feat-card{
+    border: 1px solid var(--line);
+    background: rgba(31,26,52,0.4);
+    border-radius:8px;
+    padding: 16px 18px;
+  }
+  .feat-card h3{
+    font-family:'Jost', sans-serif;
+    font-size:0.92rem;
+    letter-spacing:0.095em;
+    text-transform:uppercase;
+    color: var(--gold-bright);
+    margin:0 0 2px;
+  }
+  .feat-card .suit-tag{
+    font-family:'Jost', sans-serif;
+    font-size:0.6rem;
+    letter-spacing:0.155em;
+    text-transform:uppercase;
+    color: var(--teal-bright);
+    display:block;
+    margin-bottom:8px;
+  }
+  .feat-card p{
+    margin:0 0 8px;
+    font-size:0.9rem;
+    color: var(--parchment-dim);
+    line-height:1.55;
+  }
+  .feat-card p:last-child{ margin-bottom:0; }
+  .feat-card .feat-save{
+    font-family:'Jost', sans-serif;
+    font-size:0.66rem;
+    letter-spacing:0.115em;
+    text-transform:uppercase;
+    color: var(--rose);
+  }
+  .feat-card ul{
+    margin: 0 0 10px;
+    padding-left: 18px;
+    font-size:0.86rem;
+    color: var(--parchment-dim);
+    line-height:1.5;
+  }
+  .feat-card ul li{ margin-bottom:3px; }
+  .feat-card ul li::marker{ color: var(--gold); }
+
+  @media (max-width: 780px){
+    .feat-grid{ grid-template-columns: 1fr; }
+  }
+
+  .remedy-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:18px;
+    margin: 20px 0 8px;
+  }
+  @media (max-width: 780px){
+    .remedy-grid{ grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 720px){
+    .layout{ grid-template-columns: 1fr; }
+    .chapter-nav{
+      position:static;
+      flex-direction:row;
+      flex-wrap:wrap;
+      border-left:none;
+      border-top:1px solid var(--line);
+      padding-left:0; padding-top:14px;
+      gap: 8px 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <a class="mark" href="index.html">The Lund Codex</a>
+  <nav>
+    <a href="general-rules.html" class="current">I · Rules</a>
+    <a href="item-tables.html">II · Items</a>
+    <a href="arcana-tables.html">III · Arcana</a>
+    <a href="world-information.html">IV · World</a>
+    <a href="character-generation.html">V · Characters</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="eyebrow">Chapter I</div>
+  <h1>General Rules</h1>
+  <p class="lede">
+    The mechanics underneath everything else — how checks resolve, how combat moves,
+    and what happens when a character is pushed past their limit.
+  </p>
+</div>
+
+<main class="content">
+  <div class="layout">
+    <nav class="chapter-nav" aria-label="Section navigation">
+      <a href="#abilities">Virtues &amp; Guard</a>
+      <a href="#virtue-loss">Virtue Loss</a>
+      <a href="#checks">Saves &amp; Checks</a>
+      <a href="#turns">Turns</a>
+      <a href="#attacking">Attacking</a>
+      <a href="#gambits">Gambits</a>
+      <a href="#feats">Feats</a>
+      <a href="#spellcasting">Spellcasting</a>
+      <a href="#fatigue">Fatigue</a>
+      <a href="#damage">Damage</a>
+      <a href="#scars">Scars</a>
+      <a href="#conditions">Conditions</a>
+      <a href="#inventory">Inventory &amp; Encumbrance</a>
+      <a href="#recovery">Rest &amp; Recovery</a>
+      <a href="#advancement">Advancement</a>
+    </nav>
+
+    <div>
+      <section class="rule" id="abilities">
+        <span class="num-tag">1.1</span>
+        <h2>Virtues &amp; Guard</h2>
+        <ul>
+          <li>Virtues can be reduced and raised in a number of ways, but can never go higher than 19 or lower than 0.</li>
+        </ul>
+        <p>Every character is defined by three Virtues, each rolled 1d6 + 1d12, plus a separate Guard score rolled 1d6.</p>
+        <table class="rule-table">
+          <tr><th>Virtue</th><th>Nature</th></tr>
+          <tr><td>Vigor</td><td>Strong Body, Sturdy Bones, Mighty Heart</td></tr>
+          <tr><td>Grace</td><td>Keen Thought, Swift Reflex, Flawless Motion</td></tr>
+          <tr><td>Spirit</td><td>Composed Mind, Striking Presence, Guarded Soul</td></tr>
+        </table>
+        <div class="callout">
+          <span class="label">Guard</span>
+          <p>Guard is a pool of protection rolled separately (1d6) at character creation. Incoming damage is subtracted from Guard before it touches a Virtue score — once Guard is depleted, hits land in full.</p>
+        </div>
+        <p class="flavor">Armor — worn plate, a raised shield, a warded charm — reduces Damage directly, before it ever reaches Guard. See Attacking, below.</p>
+      </section>
+
+      <section class="rule" id="virtue-loss">
+        <span class="num-tag">1.2</span>
+        <h2>Virtue Loss</h2>
+        <p>Virtues may be reduced by means other than Damage — this is Virtue Loss. Beyond the situations listed elsewhere in these rules, characters may suffer Virtue Loss as the cost or consequence of an action, detailed case by case where it applies.</p>
+        <p class="flavor">Victims are only Slain or Mortally Wounded if the Virtue was reduced by Damage — never as a result of Virtue Loss.</p>
+        <table class="rule-table">
+          <tr><th>At Zero</th><th>Effect</th></tr>
+          <tr><td>Vigor 0</td><td>Exhausted — cannot Attack if you have moved this turn</td></tr>
+          <tr><td>Grace 0</td><td>Your attacks are Impaired, rolling a single d4 only</td></tr>
+          <tr><td>Spirit 0</td><td>Exposed — your Guard is set to 0</td></tr>
+        </table>
+      </section>
+
+      <section class="rule" id="checks">
+        <span class="num-tag">1.3</span>
+        <h2>Saves &amp; Checks</h2>
+        <h3 class="sub-head">Saves</h3>
+        <p>To pass a Save, roll a d20 equal to or below the relevant Virtue. Failure means negative consequences — not always a failed action.</p>
+        <h3 class="sub-head">Checks</h3>
+        <p>To pass a Check, roll a d20 equal to or below the relevant Virtue. When performing Opposed Checks, the lower check wins — but only if it's equal to or below the relevant Virtue. Those with the most to lose from the check's outcome win ties.</p>
+        <p class="flavor">Advantage means rolling 2d20 and keeping the <em>lower</em> result; Disadvantage means rolling 2d20 and keeping the <em>higher</em> result — the inverse of how these usually work, since rolling low is what you want here.</p>
+      </section>
+
+      <section class="rule" id="turns">
+        <span class="num-tag">1.4</span>
+        <h2>Turns</h2>
+        <p>A turn is enough time to <strong>Move</strong> and perform an <strong>Action</strong>, in either order. Players always take their turn first, then enemies act.</p>
+        <p class="flavor">Common Actions include making an Attack, casting a Rite (Chapter III), or Aiding an ally. There's no individual initiative roll — the party moves as one side, then the opposition responds as the other.</p>
+      </section>
+
+      <section class="rule" id="attacking">
+        <span class="num-tag">1.5</span>
+        <h2>Attacking</h2>
+        <p>Take the Attack dice noted on your weapon(s), shield, and any bonuses granted. Go through the following steps in order:</p>
+        <ol style="padding-left:22px; color:var(--parchment); line-height:1.7; font-size:1.02rem; margin:0 0 16px;">
+          <li>All combatants attacking the same target roll their dice at the same time.</li>
+          <li>If the target or their nearby allies can Deny, they may use it.</li>
+          <li>Attackers may perform Gambits.</li>
+          <li>Take the highest die remaining.</li>
+          <li>Add any extra Damage from attackers who are Bolstering the Attack.</li>
+          <li>Subtract the target's total Armor score.</li>
+          <li>The Attack causes that much Damage.</li>
+        </ol>
+        <div class="callout">
+          <span class="label">Worked Example</span>
+          <p>A Fatekin with a mace (d8) and shield (d4) is aided by an ally with two daggers (d6 each). They roll d8, d4, and 2d6. The dice show 7, 3, 1, and 5. The highest die is 7. The 5 is spent on a Gambit to Bolster the Damage to 8. The target has Armor 2 (helm and shield), reducing the Damage to 6.</p>
+        </div>
+        <p><strong>Impaired</strong> attacks roll a single d4 only, and cannot gain bonus dice or benefit from Feats.</p>
+        <p><strong>Blast</strong> attacks target everybody in their area, rolling each separately.</p>
+        <p><strong>Enhanced</strong> attacks gain a bonus die. Whatever grants the Enhancement will typically specify which die — if it doesn't, the bonus die is a d8.</p>
+      </section>
+
+      <section class="rule" id="gambits">
+        <span class="num-tag">1.6</span>
+        <h2>Gambits</h2>
+        <p>Attackers may discard any number of Attack dice showing 4 or higher to perform Gambits, each causing one of the effects below. The affected foe must be a target of the original attack.</p>
+        <p class="flavor">For Gambits other than Bolster and Move, the target receives a Vigor Save to ignore the effect.</p>
+        <ul>
+          <li>Bolster the Attack for +1 total Damage</li>
+          <li>Move after the Attack, even if you already moved or are unable to move</li>
+          <li>Repel a foe away from you</li>
+          <li>Stop a foe from moving next turn</li>
+          <li>Impair a foe's weapon or spellcasting next turn</li>
+          <li>Trap a shield or silence a spellcaster until your next turn</li>
+          <li>Dismount a foe or disable a vehicle until your next turn</li>
+          <li>Other effect of a similar level of impact</li>
+        </ul>
+        <p>If a die of 8 or higher is used in melee, a <strong>Strong Gambit</strong> is performed instead, and the attacker chooses one of the following:</p>
+        <ul>
+          <li>No Save is granted to the target</li>
+          <li>A greater effect, such as disarming an item, breaking a wooden shield or weapon, or removing a helm — this does not increase the Damage from Bolster</li>
+        </ul>
+      </section>
+
+      <section class="rule" id="feats">
+        <span class="num-tag">1.7</span>
+        <h2>Feats</h2>
+        <p>These special actions known by Fatekin can be performed as described. Using a Feat risks the Fatekin becoming Fatigued, which prevents them from using further Feats until they rest. Each Feat can only be used once per Attack by each combatant involved.</p>
+        <p class="flavor">Most Feats carry an affinity toward one suit of the Arcana — Deny and Focus are universal, learned by any Fatekin regardless of leaning.</p>
+        <div class="feat-grid">
+          <div class="feat-card">
+            <h3>Deny</h3>
+            <span class="suit-tag">Universal</span>
+            <p>Rebuff an attack before it lands. Use after an Attack roll against you or an ally within arm's reach — discard one Attack die from the roll.</p>
+            <p class="feat-save">Pass a Grace Save or become Fatigued</p>
+          </div>
+          <div class="feat-card">
+            <h3>Focus</h3>
+            <span class="suit-tag">Universal</span>
+            <p>Create an opening to exploit. Use after rolling an Attack — perform a Gambit without spending a die.</p>
+            <p class="feat-save">Pass a Spirit Save or become Fatigued</p>
+          </div>
+          <div class="feat-card">
+            <h3>Smite</h3>
+            <span class="suit-tag">Suit of Pentacles</span>
+            <p>Use before making any melee Attack. Your melee attacks this turn gain +1d12.</p>
+            <p class="feat-save">Pass a Vigor Save or become Fatigued</p>
+          </div>
+          <div class="feat-card">
+            <h3>Cleave</h3>
+            <span class="suit-tag">Suit of Swords</span>
+            <p>Use before making any melee Attack. Your melee attacks this turn gain Blast.</p>
+            <p class="feat-save">Pass a Vigor Save or become Fatigued</p>
+          </div>
+          <div class="feat-card">
+            <h3>Masterstrike</h3>
+            <span class="suit-tag">Suit of Swords</span>
+            <p>Use before making any melee Attack. Your attacks this turn ignore Armor.</p>
+            <p class="feat-save">Pass a Vigor Save or become Fatigued</p>
+          </div>
+          <div class="feat-card">
+            <h3>Morph</h3>
+            <span class="suit-tag">Suit of Wands</span>
+            <p>Use when any spell you can see is cast. You may modify that spell in one of the following ways:</p>
+            <ul>
+              <li>Blast ignores allies of the caster</li>
+              <li>Remove or add Blast to the spell</li>
+              <li>Change the Virtue cost of the spell for the caster</li>
+              <li>Change the spell's damage type</li>
+              <li>Add or remove a target from a targeted spell</li>
+              <li>Cast the spell without sound or gesture</li>
+            </ul>
+            <p class="feat-save">Pass a Spirit Save or become Fatigued</p>
+          </div>
+          <div class="feat-card">
+            <h3>Humiliate</h3>
+            <span class="suit-tag">Suit of Cups</span>
+            <p>Use when dealing Damage. Choose which Virtue is damaged on the target.</p>
+            <p class="feat-save">Pass a Spirit Save or become Fatigued</p>
+          </div>
+          <div class="feat-card">
+            <h3>Ruse</h3>
+            <span class="suit-tag">Suit of Cups</span>
+            <p>Use before making any Attack. Make two attacks and pick one to use.</p>
+            <p class="feat-save">Pass a Grace Save or become Fatigued</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="rule" id="spellcasting">
+        <span class="num-tag">1.8</span>
+        <h2>Spellcasting</h2>
+
+        <h3 class="sub-head">Casting a Spell</h3>
+        <p>As an action, a Fatekin can cast a spell. Before casting completes, they may use the Morph Feat if they have it. After the spellcaster applies their own Morph effect, other valid Morph effects may be applied by others. A Morph effect cannot be applied twice, and if two effects would cancel each other out, they simply do.</p>
+        <p>Once a spell is successfully cast and any Morph effects are resolved, the spell's casting cost is deducted from the caster's corresponding Virtue. By default this is always Spirit, unless the spell states otherwise or a Morph effect has adjusted it.</p>
+        <p>Every spell has a Virtue cost. Some are free, but a typical cost is either 2, 4, or 8 points of the relevant Virtue.</p>
+        <div class="callout">
+          <span class="label">Overflow</span>
+          <p>If a casting cost exceeds the caster's remaining casting Virtue (typically Spirit), the excess is always taken from Vigor instead. If Vigor is itself the spellcasting Virtue being used when that excess applies, the caster falls dead.</p>
+        </div>
+        <p class="flavor">Spells typically take effect immediately and rarely allow a Save — only when the effect would leave the target disabled, helpless, or wholly ineffective.</p>
+
+        <h3 class="sub-head">Qualities of Spells</h3>
+
+        <p><strong>Range</strong> — spells typically use one of four ranges:</p>
+        <ul>
+          <li>Self</li>
+          <li>Touch (within a meter)</li>
+          <li>Short-Range (within 10 meters)</li>
+          <li>Long-Range (within 50 meters)</li>
+        </ul>
+
+        <p><strong>Attack, Save, or Direct Damage</strong> — spells that deal damage usually do so through an Attack, following the same rules as Attacking, but using the dice the spell provides.</p>
+        <p>Some spells deal Direct damage to a Virtue instead. This isn't an Attack — it simply reduces the target's Virtue as stated, ignoring both Guard and Armor.</p>
+        <p>Some spells call for a Save when cast; the defender saves against their own Virtue score.</p>
+
+        <p><strong>Targets</strong> — a targeted spell affects one creature, and can be Morphed to add or remove targets. Spells cast on Self are not considered to target a creature. When Morph is used to add a target, the new target must be within the spell's original range.</p>
+
+        <p><strong>Blast</strong> — a spell with Blast can affect more than one creature at once. How many creatures a Blast can affect is up to the GM, but a good baseline: the size of the die used by the spell sets the maximum number of normal-sized creatures the Blast can contain.</p>
+        <div class="callout">
+          <span class="label">Example</span>
+          <p>A Blast spell dealing 2d8 Fire damage at Short-Range could affect up to 8 normal-sized creatures.</p>
+        </div>
+        <p class="flavor">When Blast is added to a spell with no die size, its extent is left to the GM's judgment.</p>
+        <p>When casting a Blast spell, the caster picks a creature at its center for the purposes of the Morph Feat — this doesn't prevent the spell from being cast if no creatures are present. If Morph is used to remove the Blast quality, the spell still affects whichever creature was at its center.</p>
+
+        <p><strong>Curse</strong> — a spell with the Curse quality tends to be long lasting unless stated otherwise. Ways to remove a curse exist, but by default, one of the following must happen if the Curse has no set duration:</p>
+        <ul>
+          <li>Killing the spellcaster who cast the Curse ends it</li>
+          <li>Using a specialist, or a specialized spell or item, to remove it</li>
+        </ul>
+        <p class="flavor">A spellcaster can only have one instance of a given Curse active at a time — but if that casting affected multiple targets through Blast or a Morph effect, all of them are included in that single instance.</p>
+      </section>
+
+      <section class="rule" id="fatigue">
+        <span class="num-tag">1.9</span>
+        <h2>Fatigue</h2>
+        <p>A Fatigued character cannot use Feats until they rest. Fatigue clears on a Short Rest — see Rest &amp; Recovery, below.</p>
+      </section>
+
+      <section class="rule" id="damage">
+        <span class="num-tag">1.10</span>
+        <h2>Damage</h2>
+        <p>An Attack's Damage is deducted from the target's Guard.</p>
+        <ul>
+          <li>If they have at least 1 Guard remaining, they <strong>Evade</strong> the Attack.</li>
+          <li>If it leaves them with exactly 0 Guard, they gain a <strong>Scar</strong>.</li>
+          <li>If it exceeds the target's Guard, the excess is deducted from Vigor and they are <strong>Wounded</strong>.</li>
+          <li>If they lose half or more of their remaining Vigor, it is a <strong>Mortal Wound</strong>. Mortally Wounded targets are down and dying — they die if left untended for an hour, but can be patched up in a few moments.</li>
+          <li>If Damage reduces the target's Vigor to 0, they are <strong>Slain</strong>.</li>
+        </ul>
+      </section>
+
+      <section class="rule" id="scars">
+        <span class="num-tag">1.11</span>
+        <h2>Scars</h2>
+        <p>When a Scar is gained, take the die that caused it and roll it again, consulting the table below for the specific Scar caused.</p>
+        <p class="flavor">Virtue Loss through a Scar is not Damage, so it can never Mortally Wound or Slay the victim. Scars are only gained through real, deadly combat — never through training or a bloodless duel.</p>
+        <table class="rule-table">
+          <tr><th>Roll</th><th>Scar</th><th>Effect</th></tr>
+          <tr><td>1</td><td>Distress</td><td>A lucky escape. Lose d6 Spirit.</td></tr>
+          <tr><td>2</td><td>Disfigurement</td><td>A permanent mark — roll 1d6: 1 Eye, 2 Cheek, 3 Neck, 4 Torso, 5 Nose, 6 Jaw. If your max Guard is 2 or less, increase it by d6.</td></tr>
+          <tr><td>3</td><td>Smash</td><td>A sudden spray of blood. Lose d6 Vigor.</td></tr>
+          <tr><td>4</td><td>Stun</td><td>Pain drowns the senses. Lose d6 Grace. If your max Guard is 4 or less, increase it by d6.</td></tr>
+          <tr><td>5</td><td>Rupture</td><td>Innards pierced and compressed. Lose 2d6 Vigor.</td></tr>
+          <tr><td>6</td><td>Gouge</td><td>Flesh torn from bone. When you get stitched up, if your max Guard is 6 or less, increase it by d6.</td></tr>
+          <tr><td>7</td><td>Concussion</td><td>A heavy blow numbs the mind. Lose 2d6 Grace.</td></tr>
+          <tr><td>8</td><td>Tear</td><td>Something taken in a violent struggle — roll 1d6: 1 Nose, 2 Ear, 3 Finger, 4 Thumb, 5 Eye, 6 Chunk of Scalp. When you get patched up, if your max Guard is 8 or less, increase it by d6.</td></tr>
+          <tr><td>9</td><td>Agony</td><td>With a crack, a torturous break. Lose 2d6 Spirit.</td></tr>
+          <tr><td>10</td><td>Mutilation</td><td>A limb rendered lost or useless — roll 1d6: 1–2 Leg, 3–4 Shield Arm, 5–6 Sword Arm. By next Season you have a prosthetic or have learned to get by. If your max Guard is 10 or less, increase it by d6.</td></tr>
+          <tr><td>11</td><td>Doom</td><td>A cheated death haunts you. If you take a Mortal Wound this Season, you are Slain instead.</td></tr>
+          <tr><td>12</td><td>Humiliation</td><td>A most dolorous stroke. When you achieve revenge, if your max Guard is 12 or less, increase it by d6.</td></tr>
+        </table>
+      </section>
+
+      <section class="rule" id="conditions">
+        <span class="num-tag">1.12</span>
+        <h2>Conditions</h2>
+        <p>Conditions describe temporary states that alter what a character can do. They stack unless noted otherwise, and clear according to their own rules — not automatically at the end of combat.</p>
+        <table class="rule-table">
+          <tr><th>Condition</th><th>Effect</th></tr>
+          <tr><td>Fatigued</td><td>Cannot use Feats until you rest</td></tr>
+          <tr><td>Exhausted</td><td>Cannot Attack if you have moved this turn</td></tr>
+          <tr><td>Exposed</td><td>Your Guard is set to 0</td></tr>
+          <tr><td>Impaired</td><td>Your attacks roll a single d4 only, and cannot gain bonus dice or benefit from Feats</td></tr>
+          <tr><td>Vulnerable</td><td>You are in a disadvantaged position somehow; attacks against you are Enhanced</td></tr>
+          <tr><td>Deprived</td><td>You are lacking necessities and cannot benefit from resting</td></tr>
+          <tr><td>Dazed</td><td>Cannot perform Gambits</td></tr>
+          <tr><td>Bound</td><td>Cannot move; disadvantage on Grace saves</td></tr>
+          <tr><td>Shaken</td><td>Disadvantage on Spirit checks until the source is removed</td></tr>
+        </table>
+      </section>
+
+      <section class="rule" id="inventory">
+        <span class="num-tag">1.13</span>
+        <h2>Inventory &amp; Encumbrance</h2>
+        <p>Every character sheet has ten slots for Items and ten slots for Spells. If a character fills their tenth Item slot, they become <strong>Encumbered</strong> — and while Encumbered, their Guard is set to 0.</p>
+
+        <h3 class="sub-head">Worn Equipment</h3>
+        <p>Items being worn don't take up an inventory slot — unless they have the Bulky quality, in which case they take up one slot even while worn.</p>
+        <p>Four items can be worn as armor at once: a Shield, a Helm, an Underlayer (such as a Gambeson), and an Outer Layer (such as Plate).</p>
+
+        <h3 class="sub-head">Petty Items &amp; Consumables</h3>
+        <p>Petty items don't take up an inventory slot at all, unless a character is carrying an unreasonable amount of them.</p>
+        <p>Bombs, Flasks, Vials, Syringes, and most other consumable items store three to an inventory slot. Remedies are the exception — each one takes up a full slot on its own.</p>
+
+        <h3 class="sub-head">Spells in Memory</h3>
+        <p>A character can hold up to ten spells in memory at any given time, and cannot memorize more than ten.</p>
+      </section>
+
+      <section class="rule" id="recovery">
+        <span class="num-tag">1.14</span>
+        <h2>Rest &amp; Recovery</h2>
+        <p>There are three types of Rest:</p>
+        <ul>
+          <li><strong>Short Rest</strong> — takes just a few minutes to catch your breath. Restores Guard and removes Fatigue.</li>
+          <li><strong>Night's Rest</strong> — can only be taken in a safe place with proper food and lodging. Restores Vigor to full.</li>
+          <li><strong>Full Rest</strong> — takes a week in a safe place with food and lodging. Restores all Virtues to full.</li>
+        </ul>
+
+        <h3 class="sub-head">Remedies</h3>
+        <p>Remedies also exist that restore Virtues. Each Remedy is enough for up to four Fatekin, takes an hour to use, and restores 6 points to the relevant Virtue it remedies. Typical remedies are available at specialist shops in Lund.</p>
+        <div class="remedy-grid">
+          <div class="feat-card">
+            <h3>Stitcher-Drones</h3>
+            <span class="suit-tag">Restores Vigor</span>
+            <p>Automatons that repair bodily harm, restoring 6 Vigor to injured Fatekin.</p>
+          </div>
+          <div class="feat-card">
+            <h3>Stimulant-Rigs</h3>
+            <span class="suit-tag">Restores Grace</span>
+            <p>Sets of brewing equipment, stimulating powders, and elixirs that restore 6 Grace to weary Fatekin.</p>
+          </div>
+          <div class="feat-card">
+            <h3>Sedative-Assortment</h3>
+            <span class="suit-tag">Restores Spirit</span>
+            <p>A set of specialized sedative medicines that, when imbibed, restore 6 Spirit to dejected Fatekin.</p>
+          </div>
+        </div>
+
+        <h3 class="sub-head">Impassioned</h3>
+        <p>Impassioned is a special resource awarded to a Fatekin who indulges their Passion (defined at character creation), roleplays exceptionally well, or does something clever the GM appreciates.</p>
+        <p>A Fatekin may expend a use of Impassioned to automatically pass any Virtue Save that would otherwise cause Fatigue from using a Feat, or to immediately restore 1d6 Spirit.</p>
+
+        <div class="callout">
+          <span class="label">GM Note</span>
+          <p>A Night's Rest or Full Rest taken outside a warded space is never fully safe in Lund — see Chapter IV for what tends to notice.</p>
+        </div>
+      </section>
+
+      <section class="rule" id="advancement">
+        <span class="num-tag">1.15</span>
+        <h2>Advancement</h2>
+        <p>There are three levels of play in this system. A Fatekin grows more capable both through choices made at character creation and through advancement during play.</p>
+
+        <h3 class="sub-head">Starting at Higher Levels</h3>
+        <p>Not every campaign begins at Level 1. If a story calls for more seasoned Fatekin from the outset, use the table below in place of the standard Level 1 method.</p>
+        <table class="rule-table">
+          <tr><th>Level</th><th>Virtue Rolls</th><th>Guard Roll</th><th>Bonus</th></tr>
+          <tr><td>1</td><td>1d6 + 1d12 (×3, assign freely)</td><td>1d6</td><td>—</td></tr>
+          <tr><td>2</td><td>3d6 (×3, assign freely)</td><td>2d6</td><td>+1 to any 2 Virtues</td></tr>
+          <tr><td>3</td><td>2d6 + 5 (×3, assign freely)</td><td>2d6 + 6</td><td>+2 to any 2 Virtues</td></tr>
+        </table>
+        <p class="flavor">At every level, three separate rolls are made for the Virtue pool — a Fatekin assigns each result to Vigor, Grace, or Spirit as they choose, rather than rolling each Virtue in a fixed order.</p>
+
+        <h3 class="sub-head">Leveling Up</h3>
+        <p>When a Fatekin advances to <strong>Level 2</strong>:</p>
+        <ul>
+          <li>Draw three cards from the Minor Arcana and keep one.</li>
+          <li>Roll 2d6 for Guard — if the result is higher than their current Guard, it replaces it.</li>
+          <li>Add 1 point to any two Virtues.</li>
+        </ul>
+        <p>When a Fatekin advances to <strong>Level 3</strong>:</p>
+        <ul>
+          <li>Draw three cards from the Major Arcana and keep one.</li>
+          <li>Roll 3d6 for Guard — if the result is higher than their current Guard, it replaces it.</li>
+          <li>Add 2 points to any two Virtues.</li>
+        </ul>
+        <p class="flavor">Kept Fate cards represent boons, omens, or bonds carried forward — see Chapter V's Fate Draw for how a card's Spell, Gift, and Starting Gear are read.</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <span>General Rules — Chapter I</span>
+  <span><a href="index.html">↑ Back to Index</a></span>
+</footer>
+
+</body>
+</html>

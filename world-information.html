@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Information — The Lund Codex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Almendra+SC&family=Jost:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lund-theme.css">
+<style>
+  .layout{
+    display:grid;
+    grid-template-columns: 200px 1fr;
+    gap:48px;
+    align-items:start;
+  }
+  .chapter-nav{
+    position:sticky; top:76px;
+    border-left: 1px solid var(--line);
+    padding-left:18px;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .chapter-nav a{
+    font-family:'Jost', sans-serif;
+    font-size:0.7rem;
+    letter-spacing:0.115em;
+    text-transform:uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+  }
+  .chapter-nav a:hover, .chapter-nav a:focus-visible{ color: var(--gold-bright); }
+
+  section.lore{ margin-bottom:56px; scroll-margin-top: 90px; }
+  section.lore h2{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size: 1.65rem;
+    color: var(--gold-bright);
+    margin: 0 0 6px;
+  }
+  section.lore .num-tag{
+    font-family:'Jost', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.235em;
+    text-transform:uppercase;
+    color: var(--gold);
+    display:block;
+    margin-bottom:8px;
+  }
+  section.lore p{
+    line-height:1.7;
+    font-size:1.02rem;
+    color: var(--parchment);
+    margin: 0 0 14px;
+  }
+  section.lore p.flavor{
+    font-style:italic;
+    color: var(--parchment-dim);
+  }
+
+  .street-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:20px;
+    margin-top:8px;
+  }
+  .street-card{
+    border: 1px solid var(--line);
+    background: rgba(31,26,52,0.4);
+    border-radius:8px;
+    padding: 18px 20px;
+  }
+  .street-card h3{
+    font-family:'Jost', sans-serif;
+    letter-spacing:0.03em;
+    font-size:1.05rem;
+    color: var(--gold-bright);
+    margin:0 0 4px;
+  }
+  .street-card .role-tag{
+    font-family:'Jost', sans-serif;
+    font-size:0.62rem;
+    letter-spacing:0.175em;
+    text-transform:uppercase;
+    color: var(--teal-bright);
+    display:block;
+    margin-bottom:10px;
+  }
+  .street-card p{ margin:0; font-size:0.92rem; color: var(--parchment-dim); line-height:1.6; }
+
+  .callout{
+    border: 1px solid var(--line);
+    background: rgba(31,26,52,0.4);
+    border-radius:6px;
+    padding: 16px 20px;
+    margin: 20px 0;
+  }
+  .callout .label{
+    font-family:'Jost', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.185em;
+    text-transform:uppercase;
+    color: var(--teal-bright);
+    margin-bottom:6px;
+    display:block;
+  }
+  .callout p{ margin:0; font-size:0.95rem; }
+  .callout p + p{ margin-top:10px; }
+
+  .cat-tabs{
+    display:flex; flex-wrap:wrap; gap:8px;
+    margin-bottom:28px;
+  }
+  .cat-tab{
+    font-family:'Jost', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.095em;
+    text-transform:uppercase;
+    color: var(--parchment-dim);
+    background: rgba(31,26,52,0.5);
+    border: 1px solid var(--line);
+    border-radius:999px;
+    padding: 8px 15px;
+    cursor:pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .cat-tab:hover{ color: var(--parchment); }
+  .cat-tab.active{
+    background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+    color: #2a2118;
+    border-color: var(--gold-bright);
+  }
+
+  .venture-list{ border-top: 1px solid var(--line); }
+  .venture-item{
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(184,147,63,0.15);
+  }
+  .venture-item h4{
+    font-family:'Jost', sans-serif;
+    letter-spacing:0.03em;
+    font-size:1rem;
+    color: var(--gold-bright);
+    margin: 0 0 4px;
+  }
+  .venture-item p{
+    margin:0;
+    font-size:0.92rem;
+    color: var(--parchment-dim);
+    line-height:1.6;
+  }
+
+  @media (max-width: 720px){
+    .layout{ grid-template-columns: 1fr; }
+    .chapter-nav{
+      position:static; flex-direction:row; flex-wrap:wrap;
+      border-left:none; border-top:1px solid var(--line);
+      padding-left:0; padding-top:14px; gap: 8px 20px;
+    }
+    .street-grid{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <a class="mark" href="index.html">The Lund Codex</a>
+  <nav>
+    <a href="general-rules.html">I · Rules</a>
+    <a href="item-tables.html">II · Items</a>
+    <a href="arcana-tables.html">III · Arcana</a>
+    <a href="world-information.html" class="current">IV · World</a>
+    <a href="character-generation.html">V · Characters</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="eyebrow">Chapter IV</div>
+  <h1>World Information</h1>
+  <p class="lede">
+    The City of Lund — the only city that ever mattered, matters, or ever will matter.
+    At least, that's what it says about itself.
+  </p>
+</div>
+
+<main class="content">
+  <div class="layout">
+    <nav class="chapter-nav" aria-label="Section navigation">
+      <a href="#overview">Overview</a>
+      <a href="#the-city">The City</a>
+      <a href="#streets">The Streets</a>
+      <a href="#spokes">The Spokes</a>
+      <a href="#lundercity">The Lundercity</a>
+      <a href="#lake-arcane">Lake Arcane</a>
+      <a href="#colleges">The Floating Colleges</a>
+      <a href="#citizenship">Citizenship &amp; Debt</a>
+      <a href="#ventures">Business Ventures</a>
+    </nav>
+
+    <div>
+      <section class="lore" id="overview">
+        <span class="num-tag">4.1</span>
+        <h2>Overview</h2>
+        <p>Lund is the magical hub of innovation in spellcasting — every wizard's dream made real, and it knows it. Magic suffuses everything here. It makes life easier. It makes life bearable. For those who have it.</p>
+        <p>Those without magic are second-class citizens. Those without magic <em>and</em> without money are lower still. It is not a kind city to be poor in, and Lund does not pretend otherwise.</p>
+        <p class="flavor">Every Fatekin begins play carrying a significant debt that must be repaid — it's the reason most of them picked up a weapon or a spellbook in the first place. Adventuring is, by a wide margin, the most lucrative work in town.</p>
+      </section>
+
+      <section class="lore" id="the-city">
+        <span class="num-tag">4.2</span>
+        <h2>The City</h2>
+        <p>Lund is circular, walled, and airborne — a flying island propelled by magic, ringed by an enormous wall, drifting over what seems to be an endless ocean on its home plane.</p>
+        <p>Eight major streets run the full width of the city, each crossing straight through its center like spokes on a wheel — though the city has its own word for the wedge-shaped districts those streets create. See The Spokes, below.</p>
+        <p class="flavor">Lund only ever built up, because it couldn't build out. A walled island has nowhere to sprawl — so every generation simply built on top of the last one, and never looked back down to see what got left behind.</p>
+      </section>
+
+      <section class="lore" id="streets">
+        <span class="num-tag">4.3</span>
+        <h2>The Streets</h2>
+        <p>Eight streets run all the way across Lund. What's actually sold and built along each one is a matter for another day — for now, here's what each street is known for.</p>
+        <div class="street-grid">
+          <div class="street-card">
+            <h3>This Street</h3>
+            <span class="role-tag">"The Strip" · Entertainment</span>
+            <p>The main street for excitement — food, shopping, casinos, and everything Lund wants visitors to see first.</p>
+          </div>
+          <div class="street-card">
+            <h3>That Street</h3>
+            <span class="role-tag">The Artsy Street</span>
+            <p>Galleries, performance, and the sort of magic that's made to be looked at rather than used.</p>
+          </div>
+          <div class="street-card">
+            <h3>The Street</h3>
+            <span class="role-tag">The Cheap Street</span>
+            <p>Affordable finds for affordable incomes — Lund's closest thing to a bargain.</p>
+          </div>
+          <div class="street-card">
+            <h3>My Street</h3>
+            <span class="role-tag">Parks &amp; Recreation</span>
+            <p>Open green space and public entertainment, such as it is inside a walled, floating city.</p>
+          </div>
+          <div class="street-card">
+            <h3>Your Street</h3>
+            <span class="role-tag">District of Lesser Affairs</span>
+            <p>Bureaucracy, permits, and the paperwork side of a city that runs on magically inscribed law.</p>
+          </div>
+          <div class="street-card">
+            <h3>Our Street</h3>
+            <span class="role-tag">Enlightened District</span>
+            <p>Academies, libraries, and the institutions that keep Lund's magical innovation flowing.</p>
+          </div>
+          <div class="street-card">
+            <h3>Another Street</h3>
+            <span class="role-tag">Industrial &amp; Residential</span>
+            <p>Where the city's engines — and most of its people — actually live and work.</p>
+          </div>
+          <div class="street-card">
+            <h3>The Next Street</h3>
+            <span class="role-tag">Trades District</span>
+            <p>Guild halls, workshops, and the trade licenses that keep them legal.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="lore" id="spokes">
+        <span class="num-tag">4.4</span>
+        <h2>The Spokes</h2>
+        <p>The wedge of the city between any two adjacent streets is called a Spoke. Each Spoke runs its own local government, headed by a body of officials called Spokesmen — and each Spoke writes and enforces its own laws, sometimes in sharp contrast to the Spoke next door.</p>
+        <div class="callout">
+          <span class="label">Birth Spoke vs. Residential Spoke</span>
+          <p>Every citizen is born into a Spoke, and that birth Spoke stays on record for life — but most citizens also carry a current residential Spoke, if they've moved. Both are tracked, and both matter to whoever's asking.</p>
+        </div>
+      </section>
+
+      <section class="lore" id="lundercity">
+        <span class="num-tag">4.5</span>
+        <h2>The Lundercity</h2>
+        <p>Every generation Lund built upward instead of outward, and every generation left something behind rather than tear it down. What's left is a labyrinth of fractured, abandoned structures buried beneath the city proper — colloquially, the Lundercity. It holds every piece of Lund's history the surface would rather forget.</p>
+        <p class="flavor">The Lundercity is exempt from the Laws of Lund. No Spoke's Spokesmen claim it, no writ reaches it, and no tattoo tracks anyone who disappears into it. Naturally, it's become home to a thriving assortment of criminal enterprises and organizations that the city above finds it easier to ignore than to root out.</p>
+      </section>
+
+      <section class="lore" id="lake-arcane">
+        <span class="num-tag">4.6</span>
+        <h2>Lake Arcane</h2>
+        <p>At the exact center of Lund sits the Lake Arcane, a magically generated source of pristinely clean water and the primary water supply for the entire city. By any practical measure it's also a national park — one of the only stretches of open water and greenery Lund has left.</p>
+        <p>It is also fiercely guarded. A wall rings the lake as surely as one rings the city, and admission is limited to citizens whose residential Spoke happens to be a Park Allowed Spoke. Everyone else drinks what's piped out to them and looks at the water from a distance.</p>
+      </section>
+
+      <section class="lore" id="colleges">
+        <span class="num-tag">4.7</span>
+        <h2>The Floating Colleges</h2>
+        <p>Scattered across the sky above Lund — and clustered thickest above the Lake Arcane — are freestanding structures that function as colleges, teaching the magic the whole city runs on. The most prestigious of them floats directly above the Lake Arcane itself: the College of Enlightenment.</p>
+      </section>
+
+      <section class="lore" id="citizenship">
+        <span class="num-tag">4.8</span>
+        <h2>Citizenship &amp; Debt</h2>
+        <p>Every citizen of Lund bears an identification stamp — a magically inscribed tattoo on the forearm, recording everything the city considers worth keeping tabs on: birth Spoke, residential Spoke, and whatever else a given official is entitled to read off it.</p>
+        <p>Debt is the other constant. Every Fatekin starts with one, measured the same way everything else in Lund is measured — in Xchange-Credit. Paying it down is rarely fast, and almost never gentle, which is exactly why the adventuring trade exists at all.</p>
+      </section>
+
+      <section class="lore" id="ventures">
+        <span class="num-tag">4.9</span>
+        <h2>Business Ventures</h2>
+        <p>What's actually built along each of Lund's eight streets — shops, guilds, casinos, and considerably stranger enterprises. Sorted by street; not remotely exhaustive.</p>
+        <div class="cat-tabs" role="tablist" aria-label="Street">
+          <button class="cat-tab active" data-street="this">This Street</button>
+          <button class="cat-tab" data-street="that">That Street</button>
+          <button class="cat-tab" data-street="the">The Street</button>
+          <button class="cat-tab" data-street="my">My Street</button>
+          <button class="cat-tab" data-street="your">Your Street</button>
+          <button class="cat-tab" data-street="our">Our Street</button>
+          <button class="cat-tab" data-street="another">Another Street</button>
+          <button class="cat-tab" data-street="thenext">The Next Street</button>
+        </div>
+        <div class="venture-list" id="ventureList"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <span>World Information — Chapter IV</span>
+  <span><a href="index.html">↑ Back to Index</a></span>
+</footer>
+
+<script src="locations-data.js"></script>
+<script>
+  function renderVentures(streetKey){
+    const list = LOCATIONS_DATA[streetKey] || [];
+    const container = document.getElementById('ventureList');
+    container.innerHTML = list.map(loc => `
+      <div class="venture-item">
+        <h4>${loc.name}</h4>
+        ${loc.desc ? `<p>${loc.desc}</p>` : ''}
+      </div>
+    `).join('');
+  }
+
+  renderVentures('this');
+
+  const streetTabs = document.querySelectorAll('.cat-tab');
+  streetTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      streetTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      renderVentures(tab.dataset.street);
+    });
+  });
+</script>
+
+</body>
+</html>

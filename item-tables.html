@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Item Tables — The Lund Codex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Almendra+SC&family=Jost:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lund-theme.css">
+<style>
+  /* ---------- Weapon Qualities glossary ---------- */
+  .qualities-block{ margin-bottom:52px; }
+  .qualities-block h2{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size:1.55rem;
+    color: var(--gold-bright);
+    margin: 0 0 6px;
+  }
+  .qualities-block .sub{
+    font-family:'Jost', sans-serif;
+    font-style:italic;
+    color: var(--parchment-dim);
+    font-size:0.95rem;
+    margin: 0 0 20px;
+  }
+  .quality-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:16px;
+  }
+  .quality-card{
+    border: 1px solid var(--line);
+    background: rgba(31,26,52,0.4);
+    border-radius:8px;
+    padding: 14px 18px;
+  }
+  .quality-card h3{
+    font-family:'Jost', sans-serif;
+    font-size:0.88rem;
+    letter-spacing:0.095em;
+    text-transform:uppercase;
+    color: var(--gold-bright);
+    margin:0 0 6px;
+  }
+  .quality-card p{
+    margin:0;
+    font-size:0.9rem;
+    color: var(--parchment-dim);
+    line-height:1.55;
+  }
+
+  /* ---------- inline quality terms + tooltip ---------- */
+  .qterm{
+    border-bottom: 1px dotted var(--gold);
+    cursor: help;
+    color: var(--gold-bright);
+    white-space: nowrap;
+  }
+  #qualityTooltip{
+    position: fixed;
+    z-index: 200;
+    max-width: 260px;
+    background: linear-gradient(180deg, var(--parchment), #e2d5b0);
+    border: 1px solid var(--gold-bright);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family:'Jost', sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #2a2118;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.12s ease, transform 0.12s ease;
+    pointer-events: none;
+  }
+  #qualityTooltip.visible{ opacity:1; transform:translateY(0); }
+  #qualityTooltip .qt-title{
+    display:block;
+    font-family:'Jost', sans-serif;
+    font-size:0.7rem;
+    letter-spacing:0.135em;
+    text-transform:uppercase;
+    color: var(--burgundy);
+    margin-bottom:4px;
+  }
+  #qualityTooltip .qt-pin-hint{
+    display:block;
+    margin-top:6px;
+    font-family:'Jost', sans-serif;
+    font-size:0.6rem;
+    letter-spacing:0.095em;
+    text-transform:uppercase;
+    color: var(--teal);
+    opacity:0.8;
+  }
+
+  /* ---------- tabs ---------- */
+  .cat-tabs{
+    display:flex; flex-wrap:wrap; gap:8px;
+    margin-bottom:36px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom:18px;
+  }
+  .cat-tab{
+    font-family:'Jost', sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.115em;
+    text-transform:uppercase;
+    color: var(--parchment-dim);
+    background: rgba(31,26,52,0.5);
+    border: 1px solid var(--line);
+    border-radius:999px;
+    padding: 9px 18px;
+    cursor:pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .cat-tab:hover{ color: var(--parchment); }
+  .cat-tab.active{
+    background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+    color: #2a2118;
+    border-color: var(--gold-bright);
+  }
+
+  .item-section{ margin-bottom:52px; }
+  .item-section.hidden{ display:none; }
+
+  .item-subhead{
+    font-family:'Jost', sans-serif;
+    font-size:1.05rem;
+    letter-spacing:0.075em;
+    color: var(--gold-bright);
+    margin: 0 0 14px;
+    padding-top: 6px;
+  }
+  .item-subhead:first-child{ padding-top:0; }
+
+  table.items{
+    width:100%;
+    table-layout: fixed;
+    border-collapse:collapse;
+    border-top: 1px solid var(--line);
+    font-size:0.94rem;
+    margin-bottom:40px;
+  }
+  table.items td.cost{
+    width: 110px;
+    text-align:right;
+  }
+  table.items td{
+    padding: 12px;
+    border-bottom: 1px solid rgba(184,147,63,0.15);
+    color: var(--parchment-dim);
+    vertical-align: top;
+    overflow-wrap: break-word;
+  }
+  table.items .entry-name{ color: var(--parchment); font-style:italic; }
+  table.items .detail{ color: var(--parchment-dim); font-style:normal; }
+  table.items tr:hover td{ background: rgba(184,147,63,0.05); }
+  table.items td.cost{ white-space:nowrap; color: var(--gold); font-style:normal; font-family:'Jost', sans-serif;
+    letter-spacing:0.03em; }
+
+  table.items .item-list{ list-style:none; margin:0; padding:0; }
+  table.items .item-list li{ margin-bottom:8px; }
+  table.items .item-list li:last-child{ margin-bottom:0; }
+
+  @media (max-width:640px){
+    table.items{ font-size:0.85rem; }
+    table.items td.cost{ width: 76px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <a class="mark" href="index.html">The Lund Codex</a>
+  <nav>
+    <a href="general-rules.html">I · Rules</a>
+    <a href="item-tables.html" class="current">II · Items</a>
+    <a href="arcana-tables.html">III · Arcana</a>
+    <a href="world-information.html">IV · World</a>
+    <a href="character-generation.html">V · Characters</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="eyebrow">Chapter II</div>
+  <h1>Item Tables</h1>
+  <p class="lede">
+    Everything a character might carry, buy, or find — weapons, armor, and the volatile
+    little surprises sold out of a satchel. Costs are listed in Xchange-Credit, shorthand
+    <em>x</em>.
+  </p>
+</div>
+
+<main class="content">
+
+  <div class="qualities-block">
+    <h2>Weapon Qualities</h2>
+    <div class="quality-grid">
+      <div class="quality-card">
+        <h3>Hefty</h3>
+        <p>The weapon can be wielded with one hand, but you cannot hold two in either hand.</p>
+      </div>
+      <div class="quality-card">
+        <h3>Bulky</h3>
+        <p>Takes up an additional inventory slot. If it's a weapon, it also requires two hands to use.</p>
+      </div>
+      <div class="quality-card">
+        <h3>Long</h3>
+        <p>The weapon is Impaired when used in tight spaces, and it requires two hands to use.</p>
+      </div>
+      <div class="quality-card">
+        <h3>Blast</h3>
+        <p>The weapon can be used to make Blast attacks naturally.</p>
+      </div>
+      <div class="quality-card">
+        <h3>Short-Range</h3>
+        <p>A quality of ranged weapons, denoting an effective range of up to 10 meters.</p>
+      </div>
+      <div class="quality-card">
+        <h3>Long-Range</h3>
+        <p>A quality of ranged weapons, denoting an effective range of up to 50 meters.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-tabs" role="tablist" aria-label="Item rarity">
+    <button class="cat-tab active" data-cat="common">Common</button>
+    <button class="cat-tab" data-cat="uncommon">Uncommon</button>
+  </div>
+
+  <!-- ============================= COMMON ============================= -->
+  <section class="item-section" data-cat="common">
+
+    <h3 class="item-subhead">Common Armor</h3>
+    <table class="items">
+      <tr><td><span class="entry-name">Shield</span> <span class="detail">(+1 Armor)</span></td><td class="cost">150x</td></tr>
+      <tr><td><span class="entry-name">Helmet</span> <span class="detail">(+1 Armor)</span></td><td class="cost">150x</td></tr>
+      <tr><td><span class="entry-name">Chainmail or Brigandine</span> <span class="detail">(+1 Armor, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">400x</td></tr>
+      <tr><td><span class="entry-name">Set of Plate</span> <span class="detail">(+1 Armor, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">800x</td></tr>
+    </table>
+
+    <h3 class="item-subhead">Common Weapons</h3>
+    <table class="items">
+      <tr><td><span class="entry-name">Dagger, Cudgel, Sickle, Staff, etc.</span> <span class="detail">(d6 damage)</span></td><td class="cost">50x</td></tr>
+      <tr><td><span class="entry-name">Spear, Sword, Mace, Axe, Flail, etc.</span> <span class="detail">(d8 damage, <span class="qterm" data-q="hefty">Hefty</span>)</span></td><td class="cost">150x</td></tr>
+      <tr><td><span class="entry-name">Halberd, War Hammer, Long Sword, etc.</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">300x</td></tr>
+      <tr><td><span class="entry-name">Slinger-Wand</span> <span class="detail">(d6 damage, <span class="qterm" data-q="short-range">Short-Range</span>) — can throw Bombs</span></td><td class="cost">50x</td></tr>
+      <tr><td><span class="entry-name">Bow</span> <span class="detail">(d6 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">200x</td></tr>
+      <tr><td><span class="entry-name">Crossbow</span> <span class="detail">(d8 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>) — can fire syringes</span></td><td class="cost">300x</td></tr>
+    </table>
+
+    <h3 class="item-subhead">Common Consumables</h3>
+    <table class="items">
+      <tr>
+        <td>
+          <ul class="item-list">
+            <li><span class="entry-name">VOW-Surplus Firebombs</span> — 1d6 fire per round</li>
+            <li><span class="entry-name">Slam-Bombs</span> — slams all windows and doors</li>
+            <li><span class="entry-name">Spike-Bombs</span> — 1d8 <span class="qterm" data-q="blast">Blast</span> at feet</li>
+          </ul>
+        </td>
+        <td class="cost">50x</td>
+      </tr>
+      <tr>
+        <td>
+          <ul class="item-list">
+            <li><span class="entry-name">VOW-Surplus Flashbombs</span> — Grace save or Blinded for 1 round</li>
+            <li><span class="entry-name">Smokebombs</span> — Impairs all attacks made within the smoke</li>
+            <li><span class="entry-name">Safety-Fire-Bombs</span> — doesn't harm living tissue</li>
+            <li><span class="entry-name">Trench-Bombs</span> — 1d10 <span class="qterm" data-q="blast">Blast</span></li>
+          </ul>
+        </td>
+        <td class="cost">100x</td>
+      </tr>
+      <tr>
+        <td>
+          <ul class="item-list">
+            <li><span class="entry-name">Illithyck-Poison Capsule</span> — lose 1d12 Vigor if consumed or injected</li>
+            <li><span class="entry-name">Sleepmist</span> — inhaled; Vigor save or unconscious</li>
+            <li><span class="entry-name">Antitox-Syringe</span> — neutralizes toxins, with violent expulsions</li>
+          </ul>
+        </td>
+        <td class="cost">50x</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ============================= UNCOMMON ============================= -->
+  <section class="item-section hidden" data-cat="uncommon">
+
+    <h3 class="item-subhead">Uncommon Armor</h3>
+    <table class="items">
+      <tr><td><span class="entry-name">Shield</span> <span class="detail">(+1 Armor, 1d6 Attack)</span></td><td class="cost">350x</td></tr>
+      <tr><td><span class="entry-name">Weavemail or Ceramic Brigandine</span> <span class="detail">(+1 Armor)</span></td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Set of Ceramic Plate</span> <span class="detail">(+1 Armor)</span></td><td class="cost">1500x</td></tr>
+    </table>
+
+    <h3 class="item-subhead">Uncommon Weapons</h3>
+    <table class="items">
+      <tr><td><span class="entry-name">Noble Weapons: Spear, Side Sword, Mace, Axe, Flail, etc.</span> <span class="detail">(d8 damage)</span></td><td class="cost">500x</td></tr>
+      <tr><td><span class="entry-name">Masterwork Weapons: Longsword, etc.</span> <span class="detail">(2d8 damage, <span class="qterm" data-q="hefty">Hefty</span>)</span></td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Old War Weapons: Greatsword, Waraxe</span> <span class="detail">(2d10 damage, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">1200x</td></tr>
+      <tr><td><span class="entry-name">Longbow</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long">Long</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">600x</td></tr>
+      <tr><td><span class="entry-name">Scatterwand</span> <span class="detail">(1d8 <span class="qterm" data-q="blast">Blast</span>, <span class="qterm" data-q="hefty">Hefty</span>, <span class="qterm" data-q="short-range">Short-Range</span>)</span></td><td class="cost">600x</td></tr>
+      <tr><td><span class="entry-name">Long-Wand</span> <span class="detail">(1d12, <span class="qterm" data-q="long">Long</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Launch-Wand</span> <span class="detail">(2d6 damage, <span class="qterm" data-q="bulky">Bulky</span>) — can fire syringes and Bombs</span></td><td class="cost">800x</td></tr>
+    </table>
+
+    <h3 class="item-subhead">Uncommon Consumables</h3>
+    <table class="items">
+      <tr>
+        <td>
+          <span style="display:block; margin-bottom:8px; color:var(--gold-bright); font-style:normal; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.115em; text-transform:uppercase;">VOW-Surplus Branded</span>
+          <ul class="item-list">
+            <li><span class="entry-name">Tinybomb</span> — 1d8 <span class="qterm" data-q="blast">Blast</span>; fits under the tongue</li>
+            <li><span class="entry-name">Toxic Smokebombs</span> — Impairs all attacks made within the smoke; 1d6 ongoing damage</li>
+            <li><span class="entry-name">Vault-Bombs</span> — 1d12, Large <span class="qterm" data-q="blast">Blast</span></li>
+          </ul>
+        </td>
+        <td class="cost">75x</td>
+      </tr>
+      <tr>
+        <td>
+          <span style="display:block; margin-bottom:8px; color:var(--gold-bright); font-style:normal; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.115em; text-transform:uppercase;">Trove Branded</span>
+          <ul class="item-list">
+            <li><span class="entry-name">Timebombs</span> — slows time in a 10 ft sphere for 60 seconds</li>
+            <li><span class="entry-name">Anti-Magic Bombs</span> — does no harm, but disables anything magical in the blast for 1 minute</li>
+            <li><span class="entry-name">Crank-Bombs</span> — roll a d6 every turn to add to its damage before throwing; if damage exceeds 12, it explodes in your hand</li>
+          </ul>
+        </td>
+        <td class="cost">150x</td>
+      </tr>
+      <tr>
+        <td>
+          <span style="display:block; margin-bottom:8px; color:var(--gold-bright); font-style:normal; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.115em; text-transform:uppercase;">Magimend Branded</span>
+          <ul class="item-list">
+            <li><span class="entry-name">Sedative Assortment</span> — enough for the whole party; lulls the mind for an hour, but regains 6 Spirit</li>
+            <li><span class="entry-name">Stitcher-Drone</span> — enough for the whole party; stitches wounds for an hour, but regains 6 Vigor</li>
+            <li><span class="entry-name">Stimulant Rig</span> — enough for the whole party; mixing the concoction takes an hour, but regains 6 Grace</li>
+          </ul>
+        </td>
+        <td class="cost">500x</td>
+      </tr>
+    </table>
+    <p style="font-family:'Jost',sans-serif; font-style:italic; color:var(--parchment-dim); font-size:0.88rem; margin-top:-24px;">Magimend's line is the source of the Remedies described in Chapter I — see Rest &amp; Recovery.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <span>Item Tables — Chapter II</span>
+  <span><a href="index.html">↑ Back to Index</a></span>
+</footer>
+
+<div id="qualityTooltip"></div>
+
+<script>
+  const QUALITY_DEFS = {
+    "hefty": "Hefty — the weapon can be wielded with one hand, but you cannot hold two in either hand.",
+    "bulky": "Bulky — takes up an additional inventory slot. If it's a weapon, it also requires two hands to use.",
+    "long": "Long — the weapon is Impaired when used in tight spaces, and it requires two hands to use.",
+    "blast": "Blast — the weapon can be used to make Blast attacks naturally.",
+    "short-range": "Short-Range — effective range of up to 10 meters.",
+    "long-range": "Long-Range — effective range of up to 50 meters."
+  };
+
+  const tabs = document.querySelectorAll('.cat-tab');
+  const sections = document.querySelectorAll('.item-section');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const cat = tab.dataset.cat;
+      sections.forEach(s => s.classList.toggle('hidden', s.dataset.cat !== cat));
+    });
+  });
+
+  /* ---------- Quality term tooltips, pinnable with Shift ---------- */
+  let shiftHeld = false;
+  let pinnedOpen = false;
+  const tooltipEl = document.getElementById('qualityTooltip');
+
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Shift') shiftHeld = true;
+  });
+  document.addEventListener('keyup', (e) => {
+    if(e.key === 'Shift'){
+      shiftHeld = false;
+      if(pinnedOpen){
+        hideTooltip();
+      }
+    }
+  });
+
+  function showTooltip(term, x, y){
+    const key = term.dataset.q;
+    const def = QUALITY_DEFS[key];
+    if(!def) return;
+    tooltipEl.innerHTML = `<span class="qt-title">${key.replace('-', ' ')}</span>${def}<span class="qt-pin-hint">Hold Shift to pin</span>`;
+    positionTooltip(x, y);
+    tooltipEl.classList.add('visible');
+  }
+
+  function positionTooltip(x, y){
+    const padding = 14;
+    let left = x + padding;
+    let top = y + padding;
+    const rect = tooltipEl.getBoundingClientRect();
+    if(left + rect.width > window.innerWidth - 10) left = x - rect.width - padding;
+    if(top + rect.height > window.innerHeight - 10) top = y - rect.height - padding;
+    tooltipEl.style.left = left + 'px';
+    tooltipEl.style.top = top + 'px';
+  }
+
+  function hideTooltip(){
+    tooltipEl.classList.remove('visible');
+    pinnedOpen = false;
+  }
+
+  document.querySelectorAll('.qterm').forEach(term => {
+    term.addEventListener('mouseenter', (e) => {
+      showTooltip(term, e.clientX, e.clientY);
+    });
+    term.addEventListener('mousemove', (e) => {
+      if(!pinnedOpen) positionTooltip(e.clientX, e.clientY);
+    });
+    term.addEventListener('mouseleave', () => {
+      if(shiftHeld){
+        pinnedOpen = true;
+      } else {
+        hideTooltip();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

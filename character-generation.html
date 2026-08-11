@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Character Generation Tools — The Lund Codex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Almendra+SC&family=Jost:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://commons.wikimedia.org">
+<link rel="preconnect" href="https://upload.wikimedia.org">
+<link rel="stylesheet" href="lund-theme.css">
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<style>
+  :root{
+    --card-red: #4a0e16;
+  }
+  .steps{ counter-reset: step; margin-bottom:56px; }
+  .step{
+    display:grid;
+    grid-template-columns: 44px 1fr;
+    gap:18px;
+    margin-bottom:30px;
+  }
+  .step .step-num{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size:1.55rem;
+    color: var(--gold);
+    line-height:1;
+  }
+  .step h3{
+    font-family:'Jost', sans-serif;
+    letter-spacing:0.03em;
+    font-size:1.05rem;
+    color: var(--gold-bright);
+    margin:0 0 6px;
+  }
+  .step p{ margin:0; color: var(--parchment); line-height:1.65; font-size:0.98rem; }
+
+  /* ---------- roller tool ---------- */
+  .roller-section{
+    max-width: 1180px;
+    margin: 0 auto 56px;
+    padding: 0 clamp(20px,6vw,32px);
+  }
+  .tool-card{
+    border: 1px solid var(--line);
+    background: rgba(31,26,52,0.4);
+    border-radius:10px;
+    padding: clamp(28px,4vw,44px) clamp(20px,5vw,40px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+  .tool-card h2{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size:1.45rem;
+    color: var(--gold-bright);
+    margin:0 0 6px;
+  }
+  .tool-card .tool-desc{
+    font-family:'Jost', sans-serif;
+    font-style:italic;
+    color: var(--parchment-dim);
+    font-size:0.94rem;
+    margin: 0 0 24px;
+  }
+
+  .roll-btn{
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold-bright);
+    font-family:'Jost', sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.155em;
+    text-transform:uppercase;
+    padding: 12px 26px;
+    border-radius:999px;
+    cursor:pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    margin-bottom:32px;
+  }
+  .roll-btn:hover{ background: var(--gold); color:#2a2118; }
+
+  .level-tabs{
+    display:flex; gap:8px; justify-content:center;
+    margin-bottom:22px;
+  }
+
+  /* Assignment slots are the one boxed element left in this tool, by design */
+  .assign-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:20px;
+    width:100%;
+    max-width:720px;
+    margin-bottom:30px;
+  }
+  .assign-slot{
+    text-align:center;
+    border-radius:8px;
+    transition: background 0.15s ease;
+  }
+  .assign-slot .label{
+    font-family:'Jost', sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.155em;
+    text-transform:uppercase;
+    color: var(--teal-bright);
+    display:block;
+    margin-bottom:10px;
+  }
+  .assign-value{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size:2.1rem;
+    color: var(--parchment-dim);
+    padding: 9px 4px;
+    border-radius:6px;
+    transition: color 0.15s ease;
+  }
+  .assign-value.filled{
+    color: var(--parchment);
+    cursor: grab;
+  }
+  .assign-value.filled:active{ cursor: grabbing; }
+  .assign-slot.drag-over{ background: rgba(184,147,63,0.14); }
+  .assign-slot.drag-over .assign-value{ color: var(--gold-bright); }
+  .assign-slot.selected-swap{ background: rgba(184,147,63,0.14); }
+  .assign-slot.selected-swap .assign-value{ color: var(--gold-bright); }
+
+  .assign-hint{
+    font-family:'Jost', sans-serif;
+    font-style:italic;
+    font-size:0.85rem;
+    color: var(--parchment-dim);
+    text-align:center;
+    margin: -14px 0 20px;
+  }
+
+  /* Guard roll: styled to match the Virtue displays above it, no callout treatment */
+  .guard-slot .value{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size:2.1rem;
+    color: var(--parchment);
+    padding: 9px 4px;
+  }
+
+  .bonus-btn{
+    display:none;
+    margin-top:8px;
+    font-family:'Jost', sans-serif;
+    font-size:0.66rem;
+    letter-spacing:0.095em;
+    text-transform:uppercase;
+    padding: 4px 12px;
+    border-radius:999px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold-bright);
+    cursor:pointer;
+    transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+  }
+  .bonus-btn.eligible{ display:inline-block; }
+  .bonus-btn.active{ background: var(--gold); color:#2a2118; }
+  .bonus-btn:disabled{ opacity:0.3; cursor:not-allowed; }
+
+  .export-btn{ display:none; }
+  .export-btn.visible{ display:inline-block; }
+  .export-status{
+    font-family:'Jost', sans-serif;
+    font-style:italic;
+    font-size:0.9rem;
+    color: var(--parchment-dim);
+    margin: 12px 0 0;
+    min-height: 20px;
+    text-align:center;
+  }
+  .export-status.error{ color: var(--rose); }
+  .export-status.success{ color: var(--teal-bright); }
+
+  @media (max-width:560px){
+    .assign-grid{ grid-template-columns: repeat(2,1fr); gap:14px; }
+    .assign-value{ font-size:1.65rem; }
+  }
+
+  /* ---------- fate draw (wider than the main content column) ---------- */
+  .fate-section{
+    max-width: 1180px;
+    margin: 0 auto 80px;
+    padding: 0 clamp(20px,6vw,32px);
+  }
+  .fate-card{
+    border: 1px solid var(--line);
+    background: rgba(31,26,52,0.4);
+    border-radius:10px;
+    padding: clamp(28px,4vw,44px) clamp(20px,5vw,40px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+  .fate-card h2{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size:1.65rem;
+    color: var(--gold-bright);
+    margin:0 0 6px;
+  }
+  .fate-card .tool-desc{
+    font-family:'Jost', sans-serif;
+    font-style:italic;
+    color: var(--parchment-dim);
+    font-size:1rem;
+    margin: 0 0 22px;
+    max-width:60ch;
+  }
+
+  .fate-tabs{ display:flex; gap:8px; margin-bottom:30px; }
+  .fate-tab{
+    font-family:'Jost', sans-serif;
+    font-size:0.7rem;
+    letter-spacing:0.135em;
+    text-transform:uppercase;
+    color: var(--parchment-dim);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius:999px;
+    padding: 8px 18px;
+    cursor:pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .fate-tab.active{ background: var(--gold); color:#2a2118; border-color: var(--gold); }
+
+  .fate-table{
+    display:flex;
+    justify-content:center;
+    gap: clamp(20px,4vw,48px);
+    flex-wrap:wrap;
+    width:100%;
+    margin-bottom:28px;
+  }
+  .fate-slot{ display:flex; flex-direction:column; align-items:center; gap:12px; width: clamp(220px, 24vw, 300px); }
+  .card-frame{
+    width: clamp(220px, 24vw, 300px);
+    height: clamp(330px, 36vw, 450px);
+    perspective:1400px;
+    position:relative;
+  }
+  .card-frame::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:5;
+    pointer-events:none;
+    border-radius:14px;
+    background: linear-gradient(115deg,
+      transparent 40%,
+      rgba(255,255,255,0.16) 50%,
+      transparent 60%);
+    background-size: 220% 220%;
+    background-position: 0% 0%;
+    opacity:0;
+    transition: opacity 0.35s ease;
+  }
+  .card-frame.flipped:hover::after{
+    opacity:1;
+    animation: cardShimmerLoop 1.2s linear infinite;
+  }
+  @keyframes cardShimmerLoop{
+    0%{ background-position: 0% 0%; }
+    100%{ background-position: 100% 100%; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .card-frame.flipped:hover::after{ animation: none; opacity:0; }
+  }
+  .card-frame .tilt-wrap{
+    width:100%; height:100%;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .card-frame .flip-inner{
+    position:relative; width:100%; height:100%;
+    transform-style: preserve-3d;
+    transition: transform 0.9s cubic-bezier(.2,.8,.25,1);
+  }
+  .card-frame.flipped .flip-inner{ transform: rotateY(180deg); }
+  .card-frame.flipped{ cursor:pointer; }
+  .card-face{
+    position:absolute; inset:0;
+    border-radius:14px;
+    backface-visibility:hidden;
+    overflow:hidden;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.5);
+  }
+  .card-back{
+    background:
+      radial-gradient(circle at 50% 50%, rgba(184,147,63,0.18), transparent 60%),
+      linear-gradient(160deg, #241d3d, #150f26 70%);
+    border: 2px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .card-back svg{ width:70%; height:70%; opacity:0.9; }
+  .card-front{
+    transform: rotateY(180deg);
+    background: #1a1420;
+    border: 2px solid var(--gold);
+    color: #2a2118;
+    display:flex; flex-direction:column;
+    text-align:center;
+  }
+  .card-art-wrap{
+    width:100%;
+    height:75%;
+    flex-shrink:0;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 50% 30%, rgba(184,147,63,0.25), transparent 65%),
+      linear-gradient(160deg, #2a2140, #17111f 75%);
+  }
+  .card-art-wrap img{
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position: top center;
+    display:block;
+  }
+  .card-text-zone{
+    flex:1; min-height:0;
+    position:relative;
+    background: linear-gradient(180deg, var(--parchment), #e2d5b0);
+    padding: clamp(10px,1.4vw,14px) clamp(14px,1.8vw,18px) clamp(14px,1.8vw,18px);
+    display:flex; flex-direction:column;
+  }
+  .card-inner{ display:flex; flex-direction:column; justify-content:center; flex:1; min-height:0; }
+  .card-num{
+    font-family:'Jost', sans-serif;
+    font-size: clamp(11px, 1.1vw, 12.5px);
+    letter-spacing:0.175em;
+    color: var(--card-red);
+    text-transform:uppercase;
+  }
+  .card-name{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size: clamp(17px, 1.8vw, 20px);
+    line-height:1.2;
+    margin: 4px 0 2px;
+    color:#2a2118;
+  }
+  .card-job{
+    display:block;
+    font-family:'Jost', sans-serif;
+    font-weight:600;
+    font-style:italic;
+    font-size: clamp(10.5px, 1.05vw, 12px);
+    color: var(--card-red);
+    margin-bottom:8px;
+  }
+  .card-scroll{ flex:1; min-height:0; overflow-y:auto; padding:0 2px; }
+  .card-traits{
+    margin-top:8px; padding-top:8px;
+    border-top: 1px solid rgba(122,35,49,0.25);
+    display:flex; flex-direction:column; gap:6px;
+    text-align:left;
+  }
+  .trait-row{ display:flex; flex-direction:column; gap:1px; }
+  .trait-label{
+    font-family:'Jost', sans-serif;
+    font-size: clamp(10px, 1vw, 11px);
+    letter-spacing:0.135em;
+    text-transform:uppercase;
+    color: var(--card-red);
+  }
+  .trait-value{
+    font-family:'Jost', sans-serif;
+    font-size: clamp(11px, 1.05vw, 12px);
+    line-height:1.3;
+    color:#3a2f22;
+    white-space:pre-line;
+  }
+  .trait-value em, .modal-trait-value em, .g-label + em{ font-style:italic; }
+  .gear-list{
+    list-style: none;
+    margin: 2px 0 0;
+    padding: 0;
+  }
+  .gear-list li{
+    position:relative;
+    padding-left:12px;
+    margin-bottom:5px;
+    line-height:1.35;
+  }
+  .gear-list li:last-child{ margin-bottom:0; }
+  .gear-list li::before{
+    content:"–";
+    position:absolute;
+    left:0;
+    opacity:0.6;
+  }
+  .gear-list em{ font-style:italic; }
+  .expand-hint{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    padding: 7px 0 6px;
+    font-family:'Jost', sans-serif;
+    font-size:9.5px;
+    letter-spacing:0.135em;
+    text-transform:uppercase;
+    color: var(--card-red);
+    text-align:center;
+    background: linear-gradient(0deg, #e2d5b0 55%, rgba(226,213,176,0));
+    transform: translateY(100%);
+    opacity:0;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    pointer-events:none;
+  }
+  .card-frame.flipped:hover .expand-hint,
+  .card-frame.flipped:focus-within .expand-hint{
+    transform: translateY(0);
+    opacity:1;
+  }
+
+  .suit-bonus-block{
+    margin-top:8px;
+    padding-top:8px;
+    border-top: 1px solid rgba(122,35,49,0.25);
+    text-align:left;
+  }
+  .suit-bonus-title{
+    margin:0 0 4px;
+    font-family:'Jost', sans-serif;
+    font-size: clamp(9px, 0.9vw, 10px);
+    letter-spacing:0.135em;
+    text-transform:uppercase;
+    color: var(--card-red);
+  }
+  .card-suit-bonus-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    font-family:'Jost', sans-serif;
+    font-size: clamp(10.5px, 1vw, 11.5px);
+    color:#3a2f22;
+  }
+  .card-suit-bonus-list li{
+    position:relative;
+    padding-left:12px;
+    margin-bottom:4px;
+    line-height:1.35;
+  }
+  .card-suit-bonus-list li:last-child{ margin-bottom:0; }
+  .card-suit-bonus-list li::before{
+    content:"–";
+    position:absolute;
+    left:0;
+    opacity:0.6;
+  }
+
+  .fate-note{
+    max-width:600px;
+    text-align:center;
+    font-family:'Jost', sans-serif;
+    font-style:italic;
+    color: var(--parchment-dim);
+    font-size:0.96rem;
+    line-height:1.55;
+    min-height:22px;
+    margin-bottom:22px;
+  }
+
+  /* ---------- fate detail modal ---------- */
+  .fate-modal-backdrop{
+    position:fixed; inset:0;
+    background: rgba(11,9,19,0.82);
+    backdrop-filter: blur(4px);
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 24px;
+    opacity:0;
+    visibility:hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  }
+  .fate-modal-backdrop.open{
+    opacity:1;
+    visibility:visible;
+    transition: opacity 0.3s ease, visibility 0s linear 0s;
+  }
+  .fate-modal{
+    position:relative;
+    width: 100%;
+    max-width: 560px;
+    max-height: 86vh;
+    overflow-y:auto;
+    background: linear-gradient(180deg, var(--parchment), #e2d5b0);
+    border: 2px solid var(--gold-bright);
+    border-radius:16px;
+    color:#2a2118;
+    padding: 40px 36px 32px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+    transform-origin: center center;
+  }
+  .fate-modal-close{
+    position:absolute; top:14px; right:14px;
+    width:32px; height:32px;
+    border-radius:50%;
+    border: 1px solid var(--card-red);
+    background: rgba(74,14,22,0.08);
+    color: var(--card-red);
+    font-family:'Jost', sans-serif;
+    letter-spacing:0.03em;
+    font-size:18px;
+    line-height:1;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .fate-modal-close:hover{ background: var(--card-red); color: var(--parchment); }
+  .fate-modal .modal-num{
+    font-family:'Jost', sans-serif;
+    font-size:0.8rem;
+    letter-spacing:0.175em;
+    text-transform:uppercase;
+    color: var(--card-red);
+  }
+  .fate-modal .modal-name{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size:1.9rem;
+    margin: 4px 0 4px;
+    color:#2a2118;
+  }
+  .fate-modal .modal-job{
+    display:block;
+    font-family:'Jost', sans-serif;
+    font-weight:600;
+    font-style:italic;
+    font-size:0.9rem;
+    color: var(--card-red);
+    margin-bottom:14px;
+  }
+  .fate-choice-note{
+    font-family:'Jost', sans-serif;
+    font-weight:600;
+    font-style:italic;
+    font-size:0.95em;
+    color: var(--card-red);
+    margin: 6px 0 !important;
+  }
+  .fate-modal .modal-art{
+    width: min(100%, 300px);
+    aspect-ratio: 4 / 7;
+    max-height:60vh;
+    margin: 0 auto 16px;
+    border-radius:10px;
+    overflow:hidden;
+    border: 1px solid rgba(122,35,49,0.3);
+    background:
+      radial-gradient(circle at 50% 30%, rgba(184,147,63,0.2), transparent 65%),
+      linear-gradient(160deg, #2a2140, #17111f 75%);
+  }
+  .fate-modal .modal-art img{
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position: top center;
+    display:block;
+  }
+  .fate-modal .modal-meaning{
+    font-family:'Jost', sans-serif;
+    font-style:italic;
+    font-size:1.05rem;
+    line-height:1.55;
+    color:#3a2f22;
+    margin: 0 0 22px;
+    text-align:center;
+  }
+  .fate-modal .modal-traits{
+    display:flex; flex-direction:column; gap:16px;
+    border-top: 1px solid rgba(122,35,49,0.3);
+    padding-top:18px;
+    text-align:left;
+  }
+  .fate-modal .suit-bonus-block{
+    margin-top:18px;
+    padding-top:18px;
+    border-top: 1px solid rgba(122,35,49,0.3);
+    text-align:left;
+  }
+  .fate-modal .suit-bonus-title{
+    margin:0 0 8px;
+    font-family:'Jost', sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.155em;
+    text-transform:uppercase;
+    color: var(--card-red);
+  }
+  .modal-suit-bonus-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    font-family:'Jost', sans-serif;
+    font-size:0.95rem;
+    color:#2a2118;
+  }
+  .modal-suit-bonus-list li{
+    position:relative;
+    padding-left:16px;
+    margin-bottom:8px;
+    line-height:1.45;
+  }
+  .modal-suit-bonus-list li:last-child{ margin-bottom:0; }
+  .modal-suit-bonus-list li::before{
+    content:"–";
+    position:absolute;
+    left:0;
+    opacity:0.6;
+  }
+  .fate-modal .modal-trait-label{
+    font-family:'Jost', sans-serif;
+    font-size:0.75rem;
+    letter-spacing:0.175em;
+    text-transform:uppercase;
+    color: var(--card-red);
+    display:block;
+    margin-bottom:4px;
+  }
+  .fate-modal .modal-trait-value{
+    font-family:'Jost', sans-serif;
+    font-size:0.98rem;
+    line-height:1.5;
+    color:#2a2118;
+    white-space:pre-line;
+  }
+
+  .glossary-trigger{
+    background: transparent;
+    border: 1px solid var(--teal-bright);
+    color: var(--teal-bright);
+    font-family:'Jost', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.135em;
+    text-transform:uppercase;
+    padding: 9px 20px;
+    border-radius:999px;
+    cursor:pointer;
+    margin-bottom:26px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .glossary-trigger:hover{ background: var(--teal-bright); color:#16211d; }
+
+  .glossary-modal{
+    max-width: 860px;
+    text-align:left;
+  }
+  .glossary-modal .glossary-header{ text-align:center; margin-bottom:18px; }
+  .glossary-modal .glossary-header h2{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size:1.65rem;
+    color:#2a2118;
+    margin:0 0 6px;
+  }
+  .glossary-modal .glossary-header p{
+    font-family:'Jost', sans-serif;
+    font-style:italic;
+    color:#4a3f30;
+    font-size:0.94rem;
+    margin:0;
+  }
+  .glossary-controls{
+    display:flex; flex-wrap:wrap; gap:10px;
+    align-items:center; justify-content:space-between;
+    margin-bottom:16px;
+  }
+  .glossary-filters{ display:flex; flex-wrap:wrap; gap:6px; }
+  .glossary-filter-btn{
+    font-family:'Jost', sans-serif;
+    font-size:0.62rem;
+    letter-spacing:0.115em;
+    text-transform:uppercase;
+    padding: 6px 13px;
+    border-radius:999px;
+    border: 1px solid rgba(122,35,49,0.35);
+    background: transparent;
+    color:#5a4632;
+    cursor:pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .glossary-filter-btn.active{ background: var(--burgundy); color: var(--parchment); border-color: var(--burgundy); }
+  .copy-all-btn{
+    font-family:'Jost', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.115em;
+    text-transform:uppercase;
+    padding: 7px 16px;
+    border-radius:999px;
+    border: 1px solid var(--card-red);
+    background: transparent;
+    color: var(--card-red);
+    cursor:pointer;
+    white-space:nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .copy-all-btn:hover{ background: var(--card-red); color: var(--parchment); }
+  .copy-all-btn.copied{ background: var(--teal); border-color: var(--teal); color: var(--parchment); }
+
+  .glossary-list{
+    max-height:56vh;
+    overflow-y:auto;
+    padding-right:8px;
+    border-top: 1px solid rgba(122,35,49,0.2);
+  }
+  .glossary-item{
+    padding:14px 4px;
+    border-bottom: 1px solid rgba(122,35,49,0.15);
+  }
+  .glossary-item.gl-hidden{ display:none; }
+  .glossary-item-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:12px; margin-bottom:4px;
+  }
+  .glossary-item-name{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size:1.1rem;
+    color:#2a2118;
+  }
+  .glossary-item-tag{
+    font-family:'Jost', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.135em;
+    text-transform:uppercase;
+    color: var(--card-red);
+    margin-left:8px;
+  }
+  .glossary-item-body p{
+    margin:2px 0;
+    font-family:'Jost', sans-serif;
+    font-size:0.88rem;
+    line-height:1.45;
+    color:#3a2f22;
+    white-space:pre-line;
+  }
+  .glossary-item-body .g-label{
+    font-family:'Jost', sans-serif;
+    font-size:0.7rem;
+    letter-spacing:0.115em;
+    text-transform:uppercase;
+    color: var(--card-red);
+    margin-right:4px;
+  }
+  .g-gear-block{ margin:2px 0; }
+  .g-gear-block .gear-list{
+    margin-top:4px;
+    font-family:'Jost', sans-serif;
+    font-size:0.88rem;
+    color:#3a2f22;
+  }
+  .glossary-item-body .suit-bonus-block{
+    margin-top:10px;
+    padding-top:10px;
+    border-top: 1px solid rgba(122,35,49,0.2);
+  }
+  .glossary-item-body .suit-bonus-title{
+    margin:0 0 4px;
+    font-family:'Jost', sans-serif;
+    font-size:0.7rem;
+    letter-spacing:0.115em;
+    text-transform:uppercase;
+    color: var(--card-red);
+  }
+  .g-suit-bonus-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    font-family:'Jost', sans-serif;
+    font-size:0.88rem;
+    color:#3a2f22;
+  }
+  .g-suit-bonus-list li{
+    position:relative;
+    padding-left:12px;
+    margin-bottom:4px;
+    line-height:1.45;
+  }
+  .g-suit-bonus-list li:last-child{ margin-bottom:0; }
+  .g-suit-bonus-list li::before{
+    content:"–";
+    position:absolute;
+    left:0;
+    opacity:0.6;
+  }
+  .copy-btn{
+    font-family:'Jost', sans-serif;
+    font-size:0.66rem;
+    letter-spacing:0.095em;
+    text-transform:uppercase;
+    padding: 4px 11px;
+    border-radius:999px;
+    border: 1px solid rgba(74,14,22,0.4);
+    background: rgba(74,14,22,0.06);
+    color: var(--card-red);
+    cursor:pointer;
+    white-space:nowrap;
+    flex-shrink:0;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .copy-btn:hover{ background: var(--card-red); color: var(--parchment); }
+  .copy-btn.copied{ background: var(--teal); border-color: var(--teal); color: var(--parchment); }
+
+  @media (max-width: 640px){
+    .glossary-modal{ padding: 28px 18px 22px; }
+    .glossary-item-head{ flex-wrap:wrap; }
+  }
+
+  @media (max-width: 720px){
+    .fate-table{ gap:22px; }
+    .fate-slot{ width: 46%; min-width:160px; }
+    .card-frame{ width:100%; height: 340px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <a class="mark" href="index.html">The Lund Codex</a>
+
+  <nav>
+    <a href="general-rules.html">I · Rules</a>
+    <a href="item-tables.html">II · Items</a>
+    <a href="arcana-tables.html">III · Arcana</a>
+    <a href="world-information.html">IV · World</a>
+    <a href="character-generation.html" class="current">V · Characters</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="eyebrow">Chapter V</div>
+  <h1>Character Generation Tools</h1>
+  <p class="lede">
+    From first breath to first adventure — follow the steps below, roll your Virtues and
+    Guard, then draw your Fate to find the thread your story starts on.
+  </p>
+</div>
+
+<main class="content">
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">1</span>
+      <div>
+        <h3>Roll Your Virtues &amp; Guard</h3>
+        <p>Choose a starting level if your GM allows it, then use the roller below — roll three dice pools and assign them to VIGOR, GRACE, and SPIRIT as you like, then roll GUARD.</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">2</span>
+      <div>
+        <h3>Draw Your Starting Fate</h3>
+        <p>Draw three cards below and choose one to keep as your starting Fate. Its suit (Wands, Cups, Swords, or Pentacles) determines which Feats and spells you can choose from next.</p>
+        <p class="flavor" style="font-size:0.9rem; color:var(--parchment-dim); font-style:italic; margin-top:8px;">Each Fate offers a Spell or a Gift — choose one, never both. Its Starting Gear only comes with you if this card is your starting Fate at Level 1; a Fate kept later, from advancement, grants just the Spell or Gift.</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">3</span>
+      <div>
+        <h3>Choose 2 Feats or Spells</h3>
+        <p>Pick two total from your Fate's suit, drawn from the Feats in Chapter I and the spell list in Chapter III — two Feats, two spells, or one of each. Deny and Focus are universal Feats, open to any Fatekin regardless of suit.</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">4</span>
+      <div>
+        <h3>Select Starting Gear</h3>
+        <p>Every Fatekin starts with 300x to spend from the Common Items list in Chapter II, if they wish. Your Fate's suit also grants a bonus gift on top of whatever you buy:</p>
+        <ul style="margin:10px 0 0; padding-left:22px; color:var(--parchment); line-height:1.7; font-size:0.98rem;">
+          <li><strong>Wands</strong> — an extra spell from the Wands spell list</li>
+          <li><strong>Cups</strong> — 3x Uncommon Consumables (Bombs, Remedies, or Poisons)</li>
+          <li><strong>Swords</strong> — a Common Weapon, Shield, or Helm</li>
+          <li><strong>Pentacles</strong> — an extra 300x</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="roller-section">
+  <div class="tool-card">
+    <h2>Virtue &amp; Guard Roller</h2>
+    <p class="tool-desc" id="rollerDesc">VIGOR, GRACE, and SPIRIT are rolled as three separate 1d6+1d12 pools and fill in automatically — drag between them to mix and match if you'd rather have a different combination. GUARD is rolled separately, 1d6.</p>
+
+    <div class="level-tabs" role="tablist" aria-label="Starting level">
+      <button class="fate-tab active" data-level="1">Level 1</button>
+      <button class="fate-tab" data-level="2">Level 2</button>
+      <button class="fate-tab" data-level="3">Level 3</button>
+    </div>
+
+    <div class="assign-grid" id="assignGrid">
+      <div class="assign-slot" data-virtue="vigor">
+        <span class="label">Vigor</span>
+        <div class="assign-value" id="slot-vigor">—</div>
+        <button class="bonus-btn" id="bonus-vigor" data-virtue="vigor">+1</button>
+      </div>
+      <div class="assign-slot" data-virtue="grace">
+        <span class="label">Grace</span>
+        <div class="assign-value" id="slot-grace">—</div>
+        <button class="bonus-btn" id="bonus-grace" data-virtue="grace">+1</button>
+      </div>
+      <div class="assign-slot" data-virtue="spirit">
+        <span class="label">Spirit</span>
+        <div class="assign-value" id="slot-spirit">—</div>
+        <button class="bonus-btn" id="bonus-spirit" data-virtue="spirit">+1</button>
+      </div>
+      <div class="assign-slot guard-slot">
+        <span class="label">Guard</span>
+        <div class="value" id="val-guard">—</div>
+      </div>
+    </div>
+
+    <p class="assign-hint" id="assignHint">Drag a Virtue onto another to mix and match — or tap one, then tap another to swap.</p>
+
+    <button class="roll-btn" id="rollBtn">Roll Virtues</button>
+
+    <button class="roll-btn export-btn" id="exportSheetBtn" style="margin-top:20px;">Download Filled Character Sheet</button>
+    <p class="export-status" id="exportStatus">&nbsp;</p>
+  </div>
+</div>
+
+<div class="fate-section">
+  <div class="fate-card">
+    <h2>Fate Draw</h2>
+    <p class="tool-desc">A reading of three, drawn the same way the Codex reads any fate — clear your mind, then draw. Click a revealed card for the full reading.</p>
+    <p class="tool-desc" style="font-size:0.78rem; opacity:0.7; margin-top:-14px;">Card art: the 1909 Rider–Waite–Smith tarot (public domain), originally sourced from Wikimedia Commons.</p>
+
+    <div class="fate-tabs" role="tablist" aria-label="Choose deck">
+      <button class="fate-tab active" id="tab-minor">Minor Arcana</button>
+      <button class="fate-tab" id="tab-major">Major Arcana</button>
+    </div>
+
+    <button class="glossary-trigger" id="glossaryTrigger">View Full Glossary</button>
+
+    <div class="fate-table">
+      <div class="fate-slot">
+        <div class="card-frame" id="frame-0">
+          <div class="tilt-wrap">
+          <div class="flip-inner">
+            <div class="card-face card-back">
+              <svg viewBox="0 0 100 100">
+                <defs>
+                  <radialGradient id="mg0" cx="50%" cy="50%" r="60%">
+                    <stop offset="0%" stop-color="#d8b45f" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="#d8b45f" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <circle cx="50" cy="50" r="45" fill="url(#mg0)"/>
+                <g stroke="#d8b45f" fill="none" stroke-width="0.7">
+                  <circle cx="50" cy="50" r="38"/><circle cx="50" cy="50" r="28"/><circle cx="50" cy="50" r="14"/>
+                  <path d="M50 12 L50 88 M12 50 L88 50 M21 21 L79 79 M79 21 L21 79" opacity="0.5"/>
+                </g>
+              </svg>
+            </div>
+            <div class="card-face card-front" id="face-0"><div class="card-inner"></div></div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fate-slot">
+        <div class="card-frame" id="frame-1">
+          <div class="tilt-wrap">
+          <div class="flip-inner">
+            <div class="card-face card-back">
+              <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="url(#mg0)"/>
+                <g stroke="#d8b45f" fill="none" stroke-width="0.7">
+                  <circle cx="50" cy="50" r="38"/><circle cx="50" cy="50" r="28"/><circle cx="50" cy="50" r="14"/>
+                  <path d="M50 12 L50 88 M12 50 L88 50 M21 21 L79 79 M79 21 L21 79" opacity="0.5"/>
+                </g>
+              </svg>
+            </div>
+            <div class="card-face card-front" id="face-1"><div class="card-inner"></div></div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fate-slot">
+        <div class="card-frame" id="frame-2">
+          <div class="tilt-wrap">
+          <div class="flip-inner">
+            <div class="card-face card-back">
+              <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="url(#mg0)"/>
+                <g stroke="#d8b45f" fill="none" stroke-width="0.7">
+                  <circle cx="50" cy="50" r="38"/><circle cx="50" cy="50" r="28"/><circle cx="50" cy="50" r="14"/>
+                  <path d="M50 12 L50 88 M12 50 L88 50 M21 21 L79 79 M79 21 L21 79" opacity="0.5"/>
+                </g>
+              </svg>
+            </div>
+            <div class="card-face card-front" id="face-2"><div class="card-inner"></div></div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="fate-note" id="fateNote"></p>
+    <button class="roll-btn" id="drawBtn">Draw Three Cards</button>
+  </div>
+</div>
+
+<div class="fate-modal-backdrop" id="fateModalBackdrop">
+  <div class="fate-modal themed-scroll-parchment" id="fateModal" role="dialog" aria-modal="true" aria-label="Card detail">
+    <button class="fate-modal-close" id="fateModalClose" aria-label="Close">×</button>
+    <div id="fateModalContent"></div>
+  </div>
+</div>
+
+<div class="fate-modal-backdrop" id="glossaryModalBackdrop">
+  <div class="fate-modal glossary-modal themed-scroll-parchment" id="glossaryModal" role="dialog" aria-modal="true" aria-label="Card Glossary">
+    <button class="fate-modal-close" id="glossaryModalClose" aria-label="Close">×</button>
+    <div class="glossary-header">
+      <h2>Arcana Glossary</h2>
+      <p>Every card in the deck — Major and Minor Arcana alike. Copy any entry straight into your notes.</p>
+    </div>
+    <div class="glossary-controls">
+      <div class="glossary-filters" id="glossaryFilters">
+        <button class="glossary-filter-btn active" data-filter="all">All</button>
+        <button class="glossary-filter-btn" data-filter="major">Major</button>
+        <button class="glossary-filter-btn" data-filter="Wands">Wands</button>
+        <button class="glossary-filter-btn" data-filter="Cups">Cups</button>
+        <button class="glossary-filter-btn" data-filter="Swords">Swords</button>
+        <button class="glossary-filter-btn" data-filter="Pentacles">Pentacles</button>
+      </div>
+      <button class="copy-all-btn" id="copyAllBtn">Copy All Visible</button>
+    </div>
+    <div class="glossary-list themed-scroll-parchment" id="glossaryList"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span>Character Generation Tools — Chapter V</span>
+  <span><a href="index.html">↑ Back to Index</a></span>
+</footer>
+
+<script src="fates-data.js"></script>
+<script>
+  /* ---------- Virtue & Guard roller: auto-fill, drag/tap to swap ---------- */
+  function rollDie(sides){ return 1 + Math.floor(Math.random() * sides); }
+
+  const ROLLER_DESCRIPTIONS = {
+    1: "VIGOR, GRACE, and SPIRIT are rolled as three separate 1d6+1d12 pools and fill in automatically — drag between them to mix and match if you'd rather have a different combination. GUARD is rolled separately, 1d6.",
+    2: "Starting at Level 2: roll three separate 3d6 pools for your Virtues — they fill in automatically, and you can drag between them to mix and match. GUARD is rolled as 2d6. Then add +1 to any two Virtues.",
+    3: "Starting at Level 3: roll three separate 2d6+5 pools for your Virtues — they fill in automatically, and you can drag between them to mix and match. GUARD is rolled as 2d6+6. Then add +2 to any two Virtues."
+  };
+
+  const BONUS_CONFIG = {
+    1: { amount: 0, count: 0 },
+    2: { amount: 1, count: 2 },
+    3: { amount: 2, count: 2 }
+  };
+
+  function rollVirtuePool(level){
+    if(level === 1){
+      const d6 = rollDie(6), d12 = rollDie(12);
+      return { total: d6 + d12, detail: `1d6(${d6}) + 1d12(${d12})` };
+    }
+    if(level === 2){
+      const rolls = [rollDie(6), rollDie(6), rollDie(6)];
+      return { total: rolls.reduce((a,b) => a+b, 0), detail: `3d6 (${rolls.join(', ')})` };
+    }
+    const rolls = [rollDie(6), rollDie(6)];
+    return { total: rolls[0] + rolls[1] + 5, detail: `2d6 (${rolls.join(', ')}) + 5` };
+  }
+
+  function rollGuard(level){
+    if(level === 1){
+      const d = rollDie(6);
+      return { total: d, detail: `1d6 (${d})` };
+    }
+    if(level === 2){
+      const rolls = [rollDie(6), rollDie(6)];
+      return { total: rolls[0] + rolls[1], detail: `2d6 (${rolls.join(', ')})` };
+    }
+    const rolls = [rollDie(6), rollDie(6)];
+    return { total: rolls[0] + rolls[1] + 6, detail: `2d6 (${rolls.join(', ')}) + 6` };
+  }
+
+  let currentLevel = 1;
+  let rollerPool = [];
+  let rollerAssignment = { vigor: null, grace: null, spirit: null };
+  let rollerGuard = null;
+  let rollerBonusSelected = [];
+
+  const VIRTUE_KEYS = ['vigor', 'grace', 'spirit'];
+
+  let selectedVirtue = null;
+
+  function displayedValue(virtue){
+    const idx = rollerAssignment[virtue];
+    if(idx === null || !rollerPool[idx]) return null;
+    const base = rollerPool[idx].total;
+    const cfg = BONUS_CONFIG[currentLevel];
+    const bonus = rollerBonusSelected.includes(virtue) ? cfg.amount : 0;
+    return Math.min(19, base + bonus);
+  }
+
+  function renderAssignSlots(){
+    const cfg = BONUS_CONFIG[currentLevel];
+    VIRTUE_KEYS.forEach(virtue => {
+      const slot = document.querySelector(`.assign-slot[data-virtue="${virtue}"]`);
+      const valueEl = document.getElementById(`slot-${virtue}`);
+      const bonusBtn = document.getElementById(`bonus-${virtue}`);
+      const idx = rollerAssignment[virtue];
+      const val = displayedValue(virtue);
+      if(val !== null){
+        valueEl.textContent = val;
+        valueEl.classList.add('filled');
+        slot.setAttribute('draggable', 'true');
+      } else {
+        valueEl.textContent = '—';
+        valueEl.classList.remove('filled');
+        slot.setAttribute('draggable', 'false');
+      }
+      slot.classList.toggle('selected-swap', selectedVirtue === virtue);
+
+      bonusBtn.textContent = '+' + cfg.amount;
+      bonusBtn.classList.toggle('eligible', cfg.count > 0 && idx !== null);
+      const isActive = rollerBonusSelected.includes(virtue);
+      bonusBtn.classList.toggle('active', isActive);
+      const limitReached = cfg.count > 0 && rollerBonusSelected.length >= cfg.count && !isActive;
+      bonusBtn.disabled = idx === null || limitReached;
+    });
+    updateExportReadiness();
+  }
+
+  function swapVirtues(a, b){
+    if(a === b) return;
+    const temp = rollerAssignment[a];
+    rollerAssignment[a] = rollerAssignment[b];
+    rollerAssignment[b] = temp;
+  }
+
+  document.querySelectorAll('.assign-slot[data-virtue]').forEach(slot => {
+    const virtue = slot.dataset.virtue;
+
+    slot.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      slot.classList.add('drag-over');
+    });
+    slot.addEventListener('dragleave', () => slot.classList.remove('drag-over'));
+    slot.addEventListener('drop', (e) => {
+      e.preventDefault();
+      slot.classList.remove('drag-over');
+      let data;
+      try{ data = JSON.parse(e.dataTransfer.getData('text/plain')); } catch(err){ return; }
+      if(data.from === 'virtue'){
+        swapVirtues(data.virtue, virtue);
+        selectedVirtue = null;
+        renderAssignSlots();
+      }
+    });
+
+    slot.addEventListener('dragstart', (e) => {
+      if(rollerAssignment[virtue] === null){ e.preventDefault(); return; }
+      e.dataTransfer.setData('text/plain', JSON.stringify({ from: 'virtue', virtue }));
+      e.dataTransfer.effectAllowed = 'move';
+    });
+
+    slot.addEventListener('click', (e) => {
+      if(e.target.closest('.bonus-btn')) return;
+      if(rollerAssignment[virtue] === null) return;
+      if(selectedVirtue === null){
+        selectedVirtue = virtue;
+      } else if(selectedVirtue === virtue){
+        selectedVirtue = null;
+      } else {
+        swapVirtues(selectedVirtue, virtue);
+        selectedVirtue = null;
+      }
+      renderAssignSlots();
+    });
+  });
+
+  document.querySelectorAll('.bonus-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if(btn.disabled) return;
+      const virtue = btn.dataset.virtue;
+      const cfg = BONUS_CONFIG[currentLevel];
+      const idx = rollerBonusSelected.indexOf(virtue);
+      if(idx > -1){
+        rollerBonusSelected.splice(idx, 1);
+      } else {
+        if(rollerBonusSelected.length >= cfg.count) return;
+        rollerBonusSelected.push(virtue);
+      }
+      renderAssignSlots();
+    });
+  });
+
+  function updateExportReadiness(){
+    const exportBtn = document.getElementById('exportSheetBtn');
+    const allAssigned = VIRTUE_KEYS.every(v => rollerAssignment[v] !== null);
+    const cfg = BONUS_CONFIG[currentLevel];
+    const bonusReady = cfg.count === 0 || rollerBonusSelected.length === cfg.count;
+    if(allAssigned && bonusReady && rollerGuard){
+      exportBtn.classList.add('visible');
+    } else {
+      exportBtn.classList.remove('visible');
+      document.getElementById('exportStatus').textContent = '\u00A0';
+    }
+  }
+
+  function resetRollerState(){
+    rollerPool = [];
+    rollerAssignment = { vigor: null, grace: null, spirit: null };
+    rollerGuard = null;
+    rollerBonusSelected = [];
+    selectedVirtue = null;
+    document.getElementById('val-guard').textContent = '—';
+    renderAssignSlots();
+  }
+
+  document.querySelectorAll('.level-tabs .fate-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.level-tabs .fate-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentLevel = parseInt(tab.dataset.level, 10);
+      document.getElementById('rollerDesc').textContent = ROLLER_DESCRIPTIONS[currentLevel];
+      resetRollerState();
+    });
+  });
+
+  document.getElementById('rollBtn').addEventListener('click', () => {
+    rollerPool = [rollVirtuePool(currentLevel), rollVirtuePool(currentLevel), rollVirtuePool(currentLevel)];
+    rollerAssignment = { vigor: 0, grace: 1, spirit: 2 };
+    rollerGuard = rollGuard(currentLevel);
+    rollerBonusSelected = [];
+    selectedVirtue = null;
+    document.getElementById('val-guard').textContent = rollerGuard.total;
+    renderAssignSlots();
+  });
+
+  renderAssignSlots();
+
+  /* ---------- Export filled character sheet ----------
+     The sheet DOES have real fillable text fields (41 of them) — an earlier
+     inspection missed this because it only resolved widget-level attributes,
+     not the parent field they inherit /FT and /T from. These are the actual
+     field names, mapped by their on-page position. */
+  const SHEET_FILE = 'Lund_Sheet_v6.pdf';
+  const SHEET_FIELDS = {
+    vigorCurrent:  'text_22cllq',
+    vigorMax:      'text_23orrm',
+    graceCurrent:  'text_24typs',
+    graceMax:      'text_25cdks',
+    spiritCurrent: 'text_26qfgn',
+    spiritMax:     'text_27wzsm',
+    guardCurrent:  'text_84sdbb',
+    guardMax:      'text_85jini'
+  };
+
+  function getFinalRollerValues(){
+    const allAssigned = VIRTUE_KEYS.every(v => rollerAssignment[v] !== null);
+    const cfg = BONUS_CONFIG[currentLevel];
+    const bonusReady = cfg.count === 0 || rollerBonusSelected.length === cfg.count;
+    if(!allAssigned || !bonusReady || !rollerGuard) return null;
+    const values = {};
+    VIRTUE_KEYS.forEach(v => { values[v] = displayedValue(v); });
+    values.guard = rollerGuard.total;
+    return values;
+  }
+
+  async function exportFilledSheet(){
+    const statusEl = document.getElementById('exportStatus');
+    const values = getFinalRollerValues();
+    if(!values){
+      statusEl.textContent = 'Finish rolling and assigning your Virtues (and Guard) above first.';
+      statusEl.className = 'export-status error';
+      return;
+    }
+    statusEl.textContent = 'Preparing your sheet…';
+    statusEl.className = 'export-status';
+    try{
+      const existingBytes = await fetch(SHEET_FILE).then(res => {
+        if(!res.ok) throw new Error('not-found');
+        return res.arrayBuffer();
+      });
+      const { PDFDocument } = PDFLib;
+      const pdfDoc = await PDFDocument.load(existingBytes);
+      const form = pdfDoc.getForm();
+
+      const setField = (fieldName, value) => {
+        try{
+          form.getTextField(fieldName).setText(String(value));
+        } catch(e){
+          console.warn(`Sheet field "${fieldName}" not found — the PDF may have changed.`, e);
+        }
+      };
+
+      setField(SHEET_FIELDS.vigorCurrent, values.vigor);
+      setField(SHEET_FIELDS.vigorMax, values.vigor);
+      setField(SHEET_FIELDS.graceCurrent, values.grace);
+      setField(SHEET_FIELDS.graceMax, values.grace);
+      setField(SHEET_FIELDS.spiritCurrent, values.spirit);
+      setField(SHEET_FIELDS.spiritMax, values.spirit);
+      setField(SHEET_FIELDS.guardCurrent, values.guard);
+      setField(SHEET_FIELDS.guardMax, values.guard);
+
+      const filledBytes = await pdfDoc.save();
+      const blob = new Blob([filledBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'character-sheet-filled.pdf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      statusEl.textContent = 'Downloaded! Current and Maximum are both set to your rolled totals — the fields stay editable in your PDF viewer from here.';
+      statusEl.className = 'export-status success';
+    } catch(err){
+      statusEl.textContent = `Couldn't load ${SHEET_FILE} — make sure it's in the same folder as this page.`;
+      statusEl.className = 'export-status error';
+    }
+  }
+
+  document.getElementById('exportSheetBtn').addEventListener('click', exportFilledSheet);
+  const TAROT_DECK = [
+    { name: "The Fool", arcana: "major", num: "0", up: "A leap taken before all the answers are in. Beginnings, trust, an open road." },
+    { name: "The Magician", arcana: "major", num: "I", up: "Every tool already in hand. Willpower, resourcefulness, turning idea into act." },
+    { name: "The High Priestess", arcana: "major", num: "II", up: "The answer that arrives in silence. Intuition, hidden knowledge, the unconscious." },
+    { name: "The Empress", arcana: "major", num: "III", up: "Something ready to grow on its own. Abundance, nurturing, creativity in motion." },
+    { name: "The Emperor", arcana: "major", num: "IV", up: "A structure strong enough to build on. Authority, order, steady discipline." },
+    { name: "The Hierophant", arcana: "major", num: "V", up: "Wisdom passed down through steady hands. Tradition, mentorship, shared belief." },
+    { name: "The Lovers", arcana: "major", num: "VI", up: "A choice made with the whole self. Union, alignment of values, a meaningful bond." },
+    { name: "The Chariot", arcana: "major", num: "VII", up: "Two forces pulling made to pull together. Willpower, victory through focus, forward motion." },
+    { name: "Strength", arcana: "major", num: "VIII", up: "The quiet kind of power. Courage met with gentleness, patience, inner resolve." },
+    { name: "The Hermit", arcana: "major", num: "IX", up: "A lantern carried alone, on purpose. Introspection, guidance from within, solitary search." },
+    { name: "Wheel of Fortune", arcana: "major", num: "X", up: "The turn that was always coming. Cycles, change, a shift set in motion." },
+    { name: "Justice", arcana: "major", num: "XI", up: "The scale settling where it should. Fairness, truth, cause meeting its effect." },
+    { name: "The Hanged Man", arcana: "major", num: "XII", up: "The view that only comes from stillness. Surrender, new perspective, pause with purpose." },
+    { name: "Death", arcana: "major", num: "XIII", up: "An ending that clears the ground. Transformation, release, one chapter closing for another." },
+    { name: "Temperance", arcana: "major", num: "XIV", up: "Two things mixed until they balance. Moderation, patience, harmony between opposites." },
+    { name: "The Devil", arcana: "major", num: "XV", up: "A chain you could put down but haven't. Attachment, temptation, self-imposed limits." },
+    { name: "The Tower", arcana: "major", num: "XVI", up: "A structure that couldn't stand as it was. Sudden upheaval, revelation, disruption that clears space." },
+    { name: "The Star", arcana: "major", num: "XVII", up: "Light after the wreckage. Hope, renewal, quiet faith in what comes next." },
+    { name: "The Moon", arcana: "major", num: "XVIII", up: "A path visible only in outline. Illusion, intuition, fears not yet named." },
+    { name: "The Sun", arcana: "major", num: "XIX", up: "Nothing left to hide from the light. Joy, vitality, clear and open success." },
+    { name: "Judgement", arcana: "major", num: "XX", up: "A reckoning that leads to renewal. Awakening, reflection, a call finally answered." },
+    { name: "The World", arcana: "major", num: "XXI", up: "The circle closing where it began. Completion, fulfillment, a cycle achieved." },
+    { name: "Ace of Wands", arcana: "minor", suit: "Wands", num: "Ace", up: "A spark before the fire catches. Inspiration, new energy, the start of a passion." },
+    { name: "Two of Wands", arcana: "minor", suit: "Wands", num: "2", up: "A map spread out before the journey. Planning, discovery, weighing what's next." },
+    { name: "Three of Wands", arcana: "minor", suit: "Wands", num: "3", up: "The first ships now visible on the horizon. Expansion, foresight, early progress." },
+    { name: "Four of Wands", arcana: "minor", suit: "Wands", num: "4", up: "A threshold worth celebrating. Homecoming, community, milestone reached." },
+    { name: "Five of Wands", arcana: "minor", suit: "Wands", num: "5", up: "Many hands, all pulling different ways. Competition, friction, conflict without malice." },
+    { name: "Six of Wands", arcana: "minor", suit: "Wands", num: "6", up: "A win worth being seen. Recognition, victory, public success." },
+    { name: "Seven of Wands", arcana: "minor", suit: "Wands", num: "7", up: "Ground worth defending. Perseverance, standing firm, holding your position." },
+    { name: "Eight of Wands", arcana: "minor", suit: "Wands", num: "8", up: "Everything moving at once. Swift action, momentum, news arriving fast." },
+    { name: "Nine of Wands", arcana: "minor", suit: "Wands", num: "9", up: "Tired but still standing. Resilience, one more effort, guarded strength." },
+    { name: "Ten of Wands", arcana: "minor", suit: "Wands", num: "10", up: "More carried than one back should bear. Burden, responsibility, the weight before relief." },
+    { name: "Page of Wands", arcana: "minor", suit: "Wands", num: "Page", up: "Curiosity that hasn't learned caution yet. Enthusiasm, exploration, a message worth chasing." },
+    { name: "Knight of Wands", arcana: "minor", suit: "Wands", num: "Knight", up: "Riding out before the plan is finished. Passion, impulsiveness, bold energetic action." },
+    { name: "Queen of Wands", arcana: "minor", suit: "Wands", num: "Queen", up: "Warmth that commands a room without asking. Confidence, vibrance, independent determination." },
+    { name: "King of Wands", arcana: "minor", suit: "Wands", num: "King", up: "Vision steady enough for others to follow. Leadership, bold vision, entrepreneurial drive." },
+    { name: "Ace of Cups", arcana: "minor", suit: "Cups", num: "Ace", up: "A cup that's just begun to fill. New love, emotional opening, compassion offered." },
+    { name: "Two of Cups", arcana: "minor", suit: "Cups", num: "2", up: "Two glasses raised toward each other. Partnership, mutual attraction, connection in balance." },
+    { name: "Three of Cups", arcana: "minor", suit: "Cups", num: "3", up: "Glasses lifted in good company. Celebration, friendship, shared joy." },
+    { name: "Four of Cups", arcana: "minor", suit: "Cups", num: "4", up: "An offer that goes unnoticed. Apathy, contemplation, discontent with what's already there." },
+    { name: "Five of Cups", arcana: "minor", suit: "Cups", num: "5", up: "Three spilled, two still standing. Loss, regret, grief that hasn't looked up yet." },
+    { name: "Six of Cups", arcana: "minor", suit: "Cups", num: "6", up: "A memory returning, gently. Nostalgia, childhood, reconnection with the past." },
+    { name: "Seven of Cups", arcana: "minor", suit: "Cups", num: "7", up: "Too many visions, none yet chosen. Fantasy, choices, wishful thinking." },
+    { name: "Eight of Cups", arcana: "minor", suit: "Cups", num: "8", up: "Cups left behind, on purpose. Walking away, seeking something deeper, disillusionment." },
+    { name: "Nine of Cups", arcana: "minor", suit: "Cups", num: "9", up: "Every wish already granted. Contentment, satisfaction, emotional fulfillment." },
+    { name: "Ten of Cups", arcana: "minor", suit: "Cups", num: "10", up: "A house full and at peace. Harmony, lasting happiness, emotional fulfillment shared." },
+    { name: "Page of Cups", arcana: "minor", suit: "Cups", num: "Page", up: "A feeling arriving before it's understood. Creative intuition, emotional openness, a gentle surprise." },
+    { name: "Knight of Cups", arcana: "minor", suit: "Cups", num: "Knight", up: "An offer made with an open hand. Romance, idealism, following the heart." },
+    { name: "Queen of Cups", arcana: "minor", suit: "Cups", num: "Queen", up: "Feeling held without being overwhelmed by it. Compassion, emotional security, intuitive care." },
+    { name: "King of Cups", arcana: "minor", suit: "Cups", num: "King", up: "A calm that holds even in the storm. Emotional maturity, balance, wise compassion." },
+    { name: "Ace of Swords", arcana: "minor", suit: "Swords", num: "Ace", up: "A single clear thought cutting through. Clarity, breakthrough, truth stated plainly." },
+    { name: "Two of Swords", arcana: "minor", suit: "Swords", num: "2", up: "A decision deferred by choice. Stalemate, avoidance, weighing two truths blindfolded." },
+    { name: "Three of Swords", arcana: "minor", suit: "Swords", num: "3", up: "A truth that cuts on its way in. Heartbreak, grief, painful clarity." },
+    { name: "Four of Swords", arcana: "minor", suit: "Swords", num: "4", up: "A rest taken before the next fight. Recovery, stillness, deliberate withdrawal." },
+    { name: "Five of Swords", arcana: "minor", suit: "Swords", num: "5", up: "A win that costs more than it's worth. Conflict, hollow victory, self-interest." },
+    { name: "Six of Swords", arcana: "minor", suit: "Swords", num: "6", up: "A boat pulling away from rough water. Transition, moving on, gradual healing." },
+    { name: "Seven of Swords", arcana: "minor", suit: "Swords", num: "7", up: "Taking only what can be carried quietly. Strategy, deception, acting alone." },
+    { name: "Eight of Swords", arcana: "minor", suit: "Swords", num: "8", up: "Bound by a rope that isn't actually tied. Restriction, self-imposed limits, feeling trapped." },
+    { name: "Nine of Swords", arcana: "minor", suit: "Swords", num: "9", up: "The worry that visits at 3am. Anxiety, worst-case thinking, sleepless dread." },
+    { name: "Ten of Swords", arcana: "minor", suit: "Swords", num: "10", up: "The end that couldn't be avoided. Painful ending, defeat, rock bottom." },
+    { name: "Page of Swords", arcana: "minor", suit: "Swords", num: "Page", up: "Every question asked at once. Curiosity, vigilance, restless new ideas." },
+    { name: "Knight of Swords", arcana: "minor", suit: "Swords", num: "Knight", up: "Charging in before the ground is checked. Ambition, directness, fast decisive action." },
+    { name: "Queen of Swords", arcana: "minor", suit: "Swords", num: "Queen", up: "Honesty that doesn't flinch. Clarity, independence, perceptive and unsentimental truth." },
+    { name: "King of Swords", arcana: "minor", suit: "Swords", num: "King", up: "A verdict reached without bias. Authority, truth, clear and structured thinking." },
+    { name: "Ace of Pentacles", arcana: "minor", suit: "Pentacles", num: "Ace", up: "A seed with good soil around it. New opportunity, prosperity, a solid beginning." },
+    { name: "Two of Pentacles", arcana: "minor", suit: "Pentacles", num: "2", up: "Two plates spinning, both still in the air. Balance, adaptability, juggling priorities." },
+    { name: "Three of Pentacles", arcana: "minor", suit: "Pentacles", num: "3", up: "Different hands building the same thing. Collaboration, skill, work worth being proud of." },
+    { name: "Four of Pentacles", arcana: "minor", suit: "Pentacles", num: "4", up: "A grip held tight around what's earned. Security, control, saving for later." },
+    { name: "Five of Pentacles", arcana: "minor", suit: "Pentacles", num: "5", up: "Out in the cold, past a lit window. Hardship, isolation, feeling left out in need." },
+    { name: "Six of Pentacles", arcana: "minor", suit: "Pentacles", num: "6", up: "A hand given, and a hand received. Generosity, fair exchange, support in balance." },
+    { name: "Seven of Pentacles", arcana: "minor", suit: "Pentacles", num: "7", up: "A harvest not quite ready yet. Patience, assessment, long-term investment paying off slowly." },
+    { name: "Eight of Pentacles", arcana: "minor", suit: "Pentacles", num: "8", up: "The same motion, refined a hundred times. Mastery, diligence, craft taken seriously." },
+    { name: "Nine of Pentacles", arcana: "minor", suit: "Pentacles", num: "9", up: "A garden earned and enjoyed alone. Self-sufficiency, comfort, independence rewarded." },
+    { name: "Ten of Pentacles", arcana: "minor", suit: "Pentacles", num: "10", up: "Wealth that outlasts the person who built it. Legacy, security, family and long-term success." },
+    { name: "Page of Pentacles", arcana: "minor", suit: "Pentacles", num: "Page", up: "A plan sketched out with care. Ambition, studiousness, a practical new opportunity." },
+    { name: "Knight of Pentacles", arcana: "minor", suit: "Pentacles", num: "Knight", up: "Slow, deliberate, and getting there anyway. Reliability, patience, methodical steady progress." },
+    { name: "Queen of Pentacles", arcana: "minor", suit: "Pentacles", num: "Queen", up: "A home run with warmth and practicality both. Nurturing, resourcefulness, grounded abundance." },
+    { name: "King of Pentacles", arcana: "minor", suit: "Pentacles", num: "King", up: "Wealth built with patient, steady hands. Abundance, security, generous and grounded leadership." },
+  ];
+
+  const SUIT_GLYPH = {
+    Wands: '<svg viewBox="0 0 44 44"><line x1="22" y1="4" x2="22" y2="40" stroke="#7a2331" stroke-width="3" stroke-linecap="round"/><circle cx="22" cy="6" r="3" fill="#b8933f"/></svg>',
+    Cups: '<svg viewBox="0 0 44 44"><path d="M10 8 Q10 26 22 26 Q34 26 34 8 Z" fill="none" stroke="#7a2331" stroke-width="2.5"/><line x1="22" y1="26" x2="22" y2="34" stroke="#7a2331" stroke-width="2.5"/><line x1="14" y1="38" x2="30" y2="38" stroke="#7a2331" stroke-width="2.5" stroke-linecap="round"/></svg>',
+    Swords: '<svg viewBox="0 0 44 44"><line x1="22" y1="3" x2="22" y2="34" stroke="#7a2331" stroke-width="2.5"/><line x1="12" y1="14" x2="32" y2="14" stroke="#7a2331" stroke-width="2.5"/><path d="M15 34 L29 34 L22 41 Z" fill="#7a2331"/></svg>',
+    Pentacles: '<svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="17" fill="none" stroke="#7a2331" stroke-width="2"/><path d="M22 8 L26.5 18.5 L38 18.5 L28.5 25.5 L32 36 L22 29 L12 36 L15.5 25.5 L6 18.5 L17.5 18.5 Z" fill="none" stroke="#b8933f" stroke-width="1.4"/></svg>',
+    major: '<svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="16" fill="none" stroke="#b8933f" stroke-width="2"/><circle cx="22" cy="22" r="6" fill="#7a2331"/></svg>'
+  };
+
+
+  function flavorFor(card){ return FATE_FLAVOR[card.name] || {}; }
+  function glyphFor(card){ return SUIT_GLYPH[card.suit] || SUIT_GLYPH.major; }
+
+  /* Italicizes the "Name" portion of a "Name (tags): description" string,
+     leaving any trailing parenthetical tags un-italicized. Used for
+     displaying Spell and Gift text; never used for clipboard copy text,
+     which stays plain. */
+  function italicizeName(str){
+    if(!str) return str;
+    const colonIdx = str.indexOf(': ');
+    if(colonIdx === -1) return str;
+    const namePart = str.slice(0, colonIdx).trim();
+    const rest = str.slice(colonIdx + 2);
+    const tagMatch = namePart.match(/^(.*?)\s*(\([^)]*\))\s*$/);
+    if(tagMatch){
+      return `<em>${tagMatch[1].trim()}</em> ${tagMatch[2]}: ${rest}`;
+    }
+    return `<em>${namePart}</em>: ${rest}`;
+  }
+
+  /* Renders a gear array as an HTML bulleted list, each item's name italicized. */
+  function gearListHtml(gear){
+    if(!gear || !gear.length) return '';
+    return `<ul class="gear-list">${gear.map(g =>
+      `<li><em>${g.name}</em>${g.desc ? ': ' + g.desc : ''}</li>`
+    ).join('')}</ul>`;
+  }
+
+  /* Renders a gear array as a plain-text bulleted list for clipboard copy. */
+  function gearListPlainText(gear){
+    if(!gear || !gear.length) return '';
+    return gear.map(g => `- ${g.name}${g.desc ? ': ' + g.desc : ''}`).join('\n');
+  }
+
+  const SUIT_BONUSES = {
+    Wands: ["Pick 2 Spells or Feats from the Wands or Universal list", "An extra spell from the Wands spell list"],
+    Cups: ["Pick 2 Spells or Feats from the Cups or Universal list", "3x Uncommon Consumables (Bombs, Remedies, or Poisons)"],
+    Swords: ["Pick 2 Spells or Feats from the Swords or Universal list", "Any Common Weapon, Helm, or Shield"],
+    Pentacles: ["Pick 2 Spells or Feats from the Pentacles or Universal list", "An extra 300x"]
+  };
+
+  function suitBonusHtml(card, listClass){
+    if(card.arcana !== 'minor' || !SUIT_BONUSES[card.suit]) return '';
+    const items = SUIT_BONUSES[card.suit];
+    return `
+      <div class="suit-bonus-block">
+        <h4 class="suit-bonus-title">Suit of ${card.suit}</h4>
+        <ul class="${listClass}">${items.map(i => `<li>${i}</li>`).join('')}</ul>
+      </div>
+    `;
+  }
+
+  function suitBonusPlainText(card){
+    if(card.arcana !== 'minor' || !SUIT_BONUSES[card.suit]) return '';
+    const items = SUIT_BONUSES[card.suit];
+    return `\nSuit of ${card.suit}:\n` + items.map(i => `- ${i}`).join('\n');
+  }
+
+  /* ---------- Card art: public-domain Rider-Waite-Smith (1909) scans via Wikimedia Commons ---------- */
+  const MAJOR_ART_SLUGS = [
+    "Fool","Magician","High_Priestess","Empress","Emperor","Hierophant","Lovers","Chariot",
+    "Strength","Hermit","Wheel_of_Fortune","Justice","Hanged_Man","Death","Temperance",
+    "Devil","Tower","Star","Moon","Sun","Judgement","World"
+  ];
+  const MINOR_ART_PREFIX = { Wands: "Wands", Cups: "Cups", Swords: "Swords", Pentacles: "Pents" };
+  const MINOR_ART_NUM = {
+    Ace:"01", "2":"02", "3":"03", "4":"04", "5":"05", "6":"06", "7":"07",
+    "8":"08", "9":"09", "10":"10", Page:"11", Knight:"12", Queen:"13", King:"14"
+  };
+  function cardArtUrl(card){
+    let filename;
+    if(card.arcana === 'major'){
+      const idx = MAJOR_DECK.indexOf(card);
+      filename = `RWS_Tarot_${String(idx).padStart(2,'0')}_${MAJOR_ART_SLUGS[idx]}.jpg`;
+    } else {
+      const prefix = MINOR_ART_PREFIX[card.suit];
+      const num = MINOR_ART_NUM[card.num];
+      if(!prefix || !num) return null;
+      filename = `${prefix}${num}.jpg`;
+    }
+    return `images/${filename}`;
+  }
+  function cardArtHtml(card, className){
+    const url = cardArtUrl(card);
+    if(!url) return '';
+    return `<img src="${url}" alt="${card.name} — Rider-Waite-Smith tarot illustration (public domain)" loading="lazy" decoding="async" onerror="this.closest('${className}').style.display='none'">`;
+  }
+
+  const MINOR_DECK = TAROT_DECK.filter(c => c.arcana === 'minor');
+  const MAJOR_DECK = TAROT_DECK.filter(c => c.arcana === 'major');
+  let currentDeck = MINOR_DECK;
+
+  const tabMinor = document.getElementById('tab-minor');
+  const tabMajor = document.getElementById('tab-major');
+  const drawBtn = document.getElementById('drawBtn');
+  const fateNote = document.getElementById('fateNote');
+
+  /* ---------- 3D tilt-on-hover for the Fate Draw cards ---------- */
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!prefersReducedMotion){
+    const MAX_TILT = 14; // degrees
+    for(let i = 0; i < 3; i++){
+      const frame = document.getElementById('frame-' + i);
+      const tiltWrap = frame.querySelector('.tilt-wrap');
+      frame.addEventListener('mousemove', (e) => {
+        const rect = frame.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width;
+        const py = (e.clientY - rect.top) / rect.height;
+        const rotateY = (px - 0.5) * MAX_TILT * 2;
+        const rotateX = (0.5 - py) * MAX_TILT * 2;
+        tiltWrap.style.transition = 'none';
+        tiltWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      frame.addEventListener('mouseleave', () => {
+        tiltWrap.style.transition = 'transform 0.5s ease';
+        tiltWrap.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+  }
+
+  function resetFateTable(){
+    for(let i=0;i<3;i++){ document.getElementById('frame-'+i).classList.remove('flipped'); }
+    fateNote.textContent = '';
+    drawBtn.textContent = 'Draw Three Cards';
+    drawBtn.disabled = false;
+  }
+
+  tabMinor.addEventListener('click', () => {
+    if(currentDeck === MINOR_DECK) return;
+    currentDeck = MINOR_DECK;
+    tabMinor.classList.add('active'); tabMajor.classList.remove('active');
+    resetFateTable();
+  });
+  tabMajor.addEventListener('click', () => {
+    if(currentDeck === MAJOR_DECK) return;
+    currentDeck = MAJOR_DECK;
+    tabMajor.classList.add('active'); tabMinor.classList.remove('active');
+    resetFateTable();
+  });
+
+  function pickThree(deck){
+    const idx = [...Array(deck.length).keys()];
+    for(let i = idx.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i+1));
+      [idx[i], idx[j]] = [idx[j], idx[i]];
+    }
+    return idx.slice(0,3).map(i => deck[i]);
+  }
+
+  let drawnCards = [null, null, null];
+
+  drawBtn.addEventListener('click', () => {
+    drawBtn.disabled = true;
+    drawBtn.textContent = 'Shuffling…';
+    fateNote.textContent = '';
+    for(let i=0;i<3;i++){ document.getElementById('frame-'+i).classList.remove('flipped'); }
+
+    const draw = pickThree(currentDeck);
+    drawnCards = draw;
+
+    setTimeout(() => {
+      draw.forEach((c, i) => {
+        const face = document.getElementById('face-'+i);
+        const frame = document.getElementById('frame-'+i);
+        const flavor = flavorFor(c);
+        const jobTitleHtml = flavor.jobTitle ? `<span class="card-job">${flavor.jobTitle}</span>` : '';
+        face.innerHTML = `
+          <div class="card-art-wrap">${cardArtHtml(c, '.card-art-wrap')}</div>
+          <div class="card-text-zone">
+            <div class="card-inner">
+              <span class="card-num">${c.arcana === 'major' ? 'Major · ' + c.num : c.suit + ' · ' + c.num}</span>
+              <h3 class="card-name">${c.name}</h3>
+              ${jobTitleHtml}
+              <span class="expand-hint">Tap for full reading</span>
+            </div>
+          </div>
+        `;
+        setTimeout(() => frame.classList.add('flipped'), 60 + i * 180);
+      });
+
+      setTimeout(() => {
+        drawBtn.textContent = 'Draw Again';
+        drawBtn.disabled = false;
+        fateNote.textContent = `${draw[0].name} — ${draw[1].name} — ${draw[2].name}`;
+      }, 60 + 3 * 180 + 500);
+    }, 500);
+  });
+
+  /* ---------- expand to detail modal ---------- */
+  const fateModalBackdrop = document.getElementById('fateModalBackdrop');
+  const fateModalContent = document.getElementById('fateModalContent');
+  const fateModalClose = document.getElementById('fateModalClose');
+  const fateModal = document.getElementById('fateModal');
+  let modalSourceEl = null;
+
+  function openFateModal(index, sourceEl){
+    const c = drawnCards[index];
+    if(!c) return;
+    const flavor = flavorFor(c);
+    const modalTraitRow = (label, value) => value
+      ? `<div><span class="modal-trait-label">${label}</span><div class="modal-trait-value">${italicizeName(value)}</div></div>`
+      : '';
+    const modalGearRow = (label, gear) => (gear && gear.length)
+      ? `<div><span class="modal-trait-label">${label}</span><div class="modal-trait-value">${gearListHtml(gear)}</div></div>`
+      : '';
+    const modalJobTitleHtml = flavor.jobTitle ? `<span class="modal-job">${flavor.jobTitle}</span>` : '';
+    const modalChoiceNoteHtml = (flavor.spell && flavor.gift)
+      ? `<p class="fate-choice-note">Choose one: Spell or Gift.</p>` : '';
+    fateModalContent.innerHTML = `
+      <span class="modal-num">${c.arcana === 'major' ? 'Major · ' + c.num : c.suit + ' · ' + c.num}</span>
+      <h3 class="modal-name">${c.name}</h3>
+      ${modalJobTitleHtml}
+      <div class="modal-art">${cardArtHtml(c, '.modal-art')}</div>
+      <p class="modal-meaning">${c.up}</p>
+      ${modalChoiceNoteHtml}
+      <div class="modal-traits">
+        ${modalTraitRow('Spell', flavor.spell)}
+        ${modalTraitRow('Gift', flavor.gift)}
+        ${modalGearRow('Starting Gear (Lvl 1 only)', flavor.gear)}
+      </div>
+      ${suitBonusHtml(c, 'modal-suit-bonus-list')}
+    `;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    modalSourceEl = (sourceEl && !reduceMotion) ? sourceEl : null;
+
+    if(!modalSourceEl){
+      fateModalBackdrop.classList.add('open');
+      return;
+    }
+
+    const cardRect = sourceEl.getBoundingClientRect();
+    fateModalBackdrop.classList.add('open');
+    const modalRect = fateModal.getBoundingClientRect();
+
+    const scaleX = cardRect.width / modalRect.width;
+    const scaleY = cardRect.height / modalRect.height;
+    const dx = (cardRect.left + cardRect.width / 2) - (modalRect.left + modalRect.width / 2);
+    const dy = (cardRect.top + cardRect.height / 2) - (modalRect.top + modalRect.height / 2);
+
+    fateModal.style.transition = 'none';
+    fateModal.style.opacity = '0.4';
+    fateModal.style.transform = `translate(${dx}px, ${dy}px) scale(${scaleX}, ${scaleY})`;
+
+    // force reflow so the starting transform is applied before we animate away from it
+    void fateModal.offsetWidth;
+
+    fateModal.style.transition = 'transform 0.5s cubic-bezier(.2,.8,.25,1), opacity 0.35s ease';
+    fateModal.style.transform = 'translate(0, 0) scale(1, 1)';
+    fateModal.style.opacity = '1';
+  }
+
+  function closeFateModal(){
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if(modalSourceEl && !reduceMotion && fateModalBackdrop.classList.contains('open')){
+      const cardRect = modalSourceEl.getBoundingClientRect();
+      const modalRect = fateModal.getBoundingClientRect();
+
+      const scaleX = cardRect.width / modalRect.width;
+      const scaleY = cardRect.height / modalRect.height;
+      const dx = (cardRect.left + cardRect.width / 2) - (modalRect.left + modalRect.width / 2);
+      const dy = (cardRect.top + cardRect.height / 2) - (modalRect.top + modalRect.height / 2);
+
+      fateModal.style.transition = 'transform 0.45s cubic-bezier(.4,0,.2,1), opacity 0.35s ease';
+      fateModal.style.transform = `translate(${dx}px, ${dy}px) scale(${scaleX}, ${scaleY})`;
+      fateModal.style.opacity = '0.3';
+    }
+
+    fateModalBackdrop.classList.remove('open');
+    // clear inline transform/opacity after the animation finishes so it's ready fresh next open
+    setTimeout(() => {
+      fateModal.style.transition = '';
+      fateModal.style.transform = '';
+      fateModal.style.opacity = '';
+      modalSourceEl = null;
+    }, 450);
+  }
+
+  [0,1,2].forEach(i => {
+    document.getElementById('frame-'+i).addEventListener('click', (e) => {
+      const frame = document.getElementById('frame-'+i);
+      if(frame.classList.contains('flipped')){
+        openFateModal(i, frame);
+      }
+    });
+  });
+
+  fateModalClose.addEventListener('click', closeFateModal);
+  fateModalBackdrop.addEventListener('click', (e) => {
+    if(e.target === fateModalBackdrop) closeFateModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') closeFateModal();
+    if(e.key === 'Escape') closeGlossaryModal();
+  });
+
+  /* ---------- Glossary ---------- */
+  function cardCategory(c){ return c.arcana === 'major' ? 'major' : c.suit; }
+
+  function cardPlainText(c){
+    const flavor = flavorFor(c);
+    const tag = c.arcana === 'major' ? `Major · ${c.num}` : `${c.suit} · ${c.num}`;
+    const lines = [`${c.name} (${tag})`];
+    if(flavor.jobTitle) lines.push(`Job: ${flavor.jobTitle}`);
+    lines.push(`Meaning: ${c.up}`);
+    if(flavor.spell) lines.push(`Spell: ${flavor.spell}`);
+    if(flavor.gift) lines.push(`Gift: ${flavor.gift}`);
+    if(flavor.spell && flavor.gift) lines.push(`(Choose one: Spell or Gift.)`);
+    if(flavor.gear && flavor.gear.length){
+      lines.push(`Starting Gear (Level 1 only):`);
+      lines.push(gearListPlainText(flavor.gear));
+    }
+    const suitText = suitBonusPlainText(c);
+    if(suitText) lines.push(suitText);
+    return lines.join('\n');
+  }
+
+  async function copyToClipboard(text, btn, activeLabel, doneLabel){
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        await navigator.clipboard.writeText(text);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      btn.textContent = doneLabel;
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = activeLabel;
+        btn.classList.remove('copied');
+      }, 1400);
+    } catch(err){
+      btn.textContent = 'Copy failed';
+      setTimeout(() => { btn.textContent = activeLabel; }, 1400);
+    }
+  }
+
+  const glossaryList = document.getElementById('glossaryList');
+  let glossaryBuilt = false;
+  const glossaryEntries = [];
+
+  function buildGlossary(){
+    if(glossaryBuilt) return;
+    const ordered = [...MAJOR_DECK, ...MINOR_DECK];
+    ordered.forEach(c => {
+      const tag = c.arcana === 'major' ? `Major · ${c.num}` : `${c.suit} · ${c.num}`;
+      const flavor = flavorFor(c);
+      const item = document.createElement('div');
+      item.className = 'glossary-item';
+      item.dataset.category = cardCategory(c);
+      const traitLine = (label, value) => value
+        ? `<p><span class="g-label">${label}</span>${italicizeName(value)}</p>`
+        : '';
+      const gearLine = (label, gear) => (gear && gear.length)
+        ? `<div class="g-gear-block"><span class="g-label">${label}</span>${gearListHtml(gear)}</div>`
+        : '';
+      const jobLine = flavor.jobTitle ? `<p><span class="g-label">Job</span>${flavor.jobTitle}</p>` : '';
+      const choiceLine = (flavor.spell && flavor.gift)
+        ? `<p class="fate-choice-note">Choose one: Spell or Gift.</p>` : '';
+      item.innerHTML = `
+        <div class="glossary-item-head">
+          <span class="glossary-item-name">${c.name}<span class="glossary-item-tag">${tag}</span></span>
+          <button class="copy-btn" type="button">Copy</button>
+        </div>
+        <div class="glossary-item-body">
+          ${jobLine}
+          <p><span class="g-label">Meaning</span>${c.up}</p>
+          ${traitLine('Spell', flavor.spell)}
+          ${traitLine('Gift', flavor.gift)}
+          ${choiceLine}
+          ${gearLine('Starting Gear (Lvl 1 only)', flavor.gear)}
+          ${suitBonusHtml(c, 'g-suit-bonus-list')}
+        </div>
+      `;
+      const text = cardPlainText(c);
+      const btn = item.querySelector('.copy-btn');
+      btn.addEventListener('click', () => {
+        copyToClipboard(text, btn, 'Copy', 'Copied!');
+      });
+      glossaryList.appendChild(item);
+      glossaryEntries.push({ el: item, text });
+    });
+    glossaryBuilt = true;
+  }
+
+  const glossaryTrigger = document.getElementById('glossaryTrigger');
+  const glossaryModalBackdrop = document.getElementById('glossaryModalBackdrop');
+  const glossaryModalClose = document.getElementById('glossaryModalClose');
+  const glossaryFilters = document.getElementById('glossaryFilters');
+  const copyAllBtn = document.getElementById('copyAllBtn');
+
+  function openGlossaryModal(){
+    buildGlossary();
+    glossaryModalBackdrop.classList.add('open');
+  }
+  function closeGlossaryModal(){
+    glossaryModalBackdrop.classList.remove('open');
+  }
+
+  glossaryTrigger.addEventListener('click', openGlossaryModal);
+  glossaryModalClose.addEventListener('click', closeGlossaryModal);
+  glossaryModalBackdrop.addEventListener('click', (e) => {
+    if(e.target === glossaryModalBackdrop) closeGlossaryModal();
+  });
+
+  glossaryFilters.addEventListener('click', (e) => {
+    const btn = e.target.closest('.glossary-filter-btn');
+    if(!btn) return;
+    glossaryFilters.querySelectorAll('.glossary-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    glossaryList.querySelectorAll('.glossary-item').forEach(item => {
+      const show = filter === 'all' || item.dataset.category === filter;
+      item.classList.toggle('gl-hidden', !show);
+    });
+  });
+
+  copyAllBtn.addEventListener('click', () => {
+    const texts = glossaryEntries
+      .filter(entry => !entry.el.classList.contains('gl-hidden'))
+      .map(entry => entry.text);
+    copyToClipboard(texts.join('\n\n'), copyAllBtn, 'Copy All Visible', 'Copied!');
+  });
+</script>
+
+</body>
+</html>

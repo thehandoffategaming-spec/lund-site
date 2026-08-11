@@ -1,0 +1,225 @@
+/* ================= Lund Codex — shared theme ================= */
+:root{
+  --ink: #14111f;
+  --ink-deep: #0b0913;
+  --panel: #1f1a34;
+  --parchment: #ece2c8;
+  --parchment-dim: #d8c9a0;
+  --gold: #b8933f;
+  --gold-bright: #d8b45f;
+  --burgundy: #7a2331;
+  --rose: #e0929b;
+  --teal: #3c6e64;
+  --teal-bright: #6fc4b3;
+  --line: rgba(184,147,63,0.35);
+  --line-soft: rgba(184,147,63,0.2);
+  --text-muted: rgba(236,226,200,0.62);
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+  margin:0;
+  background: var(--ink);
+  color: var(--parchment);
+  font-family: 'Jost', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* Layer 1: slow-drifting ambient glow. Fixed positioning means page content
+   scrolls over a static backdrop — a simple, cheap parallax effect. */
+body::before{
+  content:"";
+  position:fixed; inset:-8%;
+  pointer-events:none;
+  z-index:-2;
+  background:
+    radial-gradient(ellipse 900px 700px at 18% 8%, rgba(184,147,63,0.16), transparent 60%),
+    radial-gradient(ellipse 800px 650px at 88% 12%, rgba(122,35,49,0.14), transparent 60%),
+    radial-gradient(ellipse 1000px 800px at 50% 105%, rgba(60,110,100,0.12), transparent 65%),
+    radial-gradient(ellipse 700px 700px at 95% 85%, rgba(184,147,63,0.10), transparent 60%);
+  animation: driftGlow 50s ease-in-out infinite alternate;
+}
+
+@keyframes driftGlow{
+  0%{ transform: translate(0,0) scale(1); }
+  100%{ transform: translate(-2.5%, 2%) scale(1.04); }
+}
+
+/* Layer 2: stars, vignette, and fine grain — also fixed, sits just above the glow */
+body::after{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:-1;
+  animation: skyBreathe 9s ease-in-out infinite;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(236,226,200,0.55), transparent 60%),
+    radial-gradient(1px 1px at 80% 30%, rgba(236,226,200,0.45), transparent 60%),
+    radial-gradient(1.5px 1.5px at 60% 70%, rgba(236,226,200,0.4), transparent 60%),
+    radial-gradient(1px 1px at 25% 80%, rgba(236,226,200,0.45), transparent 60%),
+    radial-gradient(1px 1px at 90% 85%, rgba(236,226,200,0.35), transparent 60%),
+    radial-gradient(1.5px 1.5px at 40% 45%, rgba(236,226,200,0.35), transparent 60%),
+    radial-gradient(1px 1px at 70% 10%, rgba(236,226,200,0.45), transparent 60%),
+    radial-gradient(1px 1px at 15% 55%, rgba(236,226,200,0.3), transparent 60%),
+    radial-gradient(1px 1px at 55% 92%, rgba(236,226,200,0.3), transparent 60%),
+    radial-gradient(1px 1px at 35% 15%, rgba(236,226,200,0.35), transparent 60%),
+    radial-gradient(ellipse 80% 80% at 50% 50%, transparent 55%, rgba(11,9,19,0.55) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+@keyframes skyBreathe{
+  0%, 100%{ opacity:0.72; }
+  50%{ opacity:0.86; }
+}
+
+a{ color:inherit; text-decoration:none; }
+
+/* ---------- sticky nav, shared across every page ---------- */
+header.mast{
+  position:sticky; top:0; z-index:20;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px clamp(20px,5vw,56px);
+  background: rgba(11,9,19,0.88);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line-soft);
+}
+header.mast .mark{
+  font-family:'Almendra SC', serif;
+  letter-spacing:0.095em;
+  font-size:1.1rem;
+  color: var(--gold-bright);
+}
+header.mast nav{ display:flex; gap:clamp(10px,2vw,26px); flex-wrap:wrap; }
+header.mast nav a{
+  font-family:'Jost', sans-serif;
+  font-size:0.68rem;
+  letter-spacing:0.135em;
+  text-transform:uppercase;
+  color: var(--parchment-dim);
+  white-space:nowrap;
+  transition: color 0.2s ease;
+}
+header.mast nav a:hover, header.mast nav a:focus-visible{ color: var(--gold-bright); }
+header.mast nav a.current{ color: var(--gold-bright); }
+
+@media (max-width: 780px){
+  header.mast nav{ display:none; }
+}
+
+/* ---------- shared page hero ---------- */
+.page-hero{
+  position:relative; z-index:2;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(48px,8vw,88px) clamp(20px,6vw,32px) 0;
+}
+.eyebrow{
+  font-family:'Jost', sans-serif;
+  font-size:0.68rem;
+  letter-spacing:0.335em;
+  text-transform:uppercase;
+  color: var(--gold-bright);
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:22px;
+}
+.eyebrow::before, .eyebrow::after{
+  content:""; flex:1; height:1px; background: var(--line);
+}
+.page-hero h1{
+  font-family:'Almendra SC', serif;
+  font-size: clamp(2.3rem, 5.5vw, 3.7rem);
+  line-height:1.08;
+  letter-spacing:0.045em;
+  margin:0 0 16px;
+  color: var(--parchment);
+  text-shadow: 0 0 30px rgba(184,147,63,0.25);
+}
+.page-hero .lede{
+  max-width: 62ch;
+  font-size: 1.1rem;
+  font-style:italic;
+  line-height:1.6;
+  color: var(--parchment-dim);
+  margin: 0 0 40px;
+}
+
+main.content{
+  position:relative; z-index:2;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 clamp(20px,6vw,32px) 80px;
+}
+
+/* ---------- shared footer ---------- */
+footer.site-footer{
+  position:relative; z-index:2;
+  max-width:880px;
+  margin: 0 auto;
+  padding: 32px clamp(20px,6vw,32px) 60px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+  font-family:'Jost', sans-serif;
+  font-size:0.65rem;
+  letter-spacing:0.135em;
+  text-transform:uppercase;
+  color: rgba(216,201,160,0.4);
+  border-top: 1px solid var(--line-soft);
+}
+
+/* ---------- themed scrollbars: dark ink & gold, matching the rest of the site ---------- */
+html{
+  scrollbar-color: var(--gold) var(--ink-deep);
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar{
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track{
+  background: var(--ink-deep);
+}
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  border-radius: 8px;
+  border: 2px solid var(--ink-deep);
+}
+::-webkit-scrollbar-thumb:hover{
+  background: var(--gold-bright);
+}
+::-webkit-scrollbar-corner{
+  background: var(--ink-deep);
+}
+
+/* Variant for scroll containers that sit on a light parchment surface
+   (card text, modals, glossary list) — dark gold-on-ink would be unreadable there. */
+.themed-scroll-parchment{
+  scrollbar-color: var(--burgundy) rgba(122,35,49,0.1);
+  scrollbar-width: thin;
+}
+.themed-scroll-parchment::-webkit-scrollbar{
+  width: 8px;
+  height: 8px;
+}
+.themed-scroll-parchment::-webkit-scrollbar-track{
+  background: rgba(122,35,49,0.08);
+}
+.themed-scroll-parchment::-webkit-scrollbar-thumb{
+  background: var(--burgundy);
+  border-radius: 6px;
+  border: none;
+}
+.themed-scroll-parchment::-webkit-scrollbar-thumb:hover{
+  background: var(--teal);
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ transition-duration: 0.001ms !important; scroll-behavior:auto !important; }
+  body::before, body::after{ animation: none !important; }
+}

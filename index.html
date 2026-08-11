@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Lund Codex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Almendra+SC&family=Jost:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lund-theme.css">
+<style>
+  /* ---------- homepage-only: table of contents ---------- */
+  .toc{
+    border-top: 1px solid var(--line);
+  }
+
+  .toc-item{
+    position:relative;
+    display:flex;
+    align-items:baseline;
+    gap: clamp(16px,3vw,32px);
+    padding: 26px 4px;
+    border-bottom: 1px solid var(--line);
+    cursor:pointer;
+    overflow:hidden;
+  }
+
+  .toc-item .num{
+    font-family:'Jost', sans-serif;
+    letter-spacing:0.03em;
+    font-size:0.85rem;
+    color: var(--gold);
+    min-width: 2.4ch;
+    transition: color 0.3s ease;
+  }
+
+  .toc-item .title-wrap{
+    flex:1;
+    min-width:0;
+    transition: transform 0.35s ease;
+  }
+
+  .toc-item .title{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size: clamp(1.45rem, 3.3vw, 1.9rem);
+    color: var(--parchment);
+    transition: color 0.3s ease;
+    display:block;
+  }
+
+  .toc-item .desc{
+    display:block;
+    font-family:'Jost', sans-serif;
+    font-style:italic;
+    font-size:1rem;
+    color: var(--text-muted);
+    max-height:0;
+    opacity:0;
+    transform: translateY(-4px);
+    transition: max-height 0.35s ease, opacity 0.3s ease, transform 0.3s ease, margin 0.3s ease;
+    margin-top:0;
+  }
+
+  .toc-item:hover, .toc-item:focus-visible{ outline:none; }
+  .toc-item:hover .num, .toc-item:focus-visible .num{ color: var(--gold-bright); }
+  .toc-item:hover .title-wrap, .toc-item:focus-visible .title-wrap{ transform: translateX(6px); }
+  .toc-item:hover .title, .toc-item:focus-visible .title{ color: var(--gold-bright); }
+  .toc-item:hover .desc, .toc-item:focus-visible .desc{
+    max-height: 3.2em;
+    opacity:1;
+    margin-top:8px;
+  }
+
+  @media (max-width: 560px){
+    .toc-item{ flex-wrap:wrap; }
+  }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <a class="mark" href="index.html">The Lund Codex</a>
+  <nav>
+    <a href="general-rules.html">I · Rules</a>
+    <a href="item-tables.html">II · Items</a>
+    <a href="arcana-tables.html">III · Arcana</a>
+    <a href="world-information.html">IV · World</a>
+    <a href="character-generation.html">V · Characters</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="eyebrow">Est. at the table, kept in the margins</div>
+  <h1>The Lund <span style="color:var(--gold-bright)">Codex</span></h1>
+  <p class="lede">
+    Everything the table needs to run a session, indexed like the reference book it is.
+    Five chapters. No hunting through appendices.
+  </p>
+</div>
+
+<main class="content">
+  <nav class="toc" aria-label="Main navigation">
+    <a class="toc-item" href="general-rules.html">
+      <span class="num">I.</span>
+      <span class="title-wrap">
+        <span class="title">General Rules</span>
+        <span class="desc">Core mechanics, checks, and how the dice resolve them.</span>
+      </span>
+    </a>
+
+    <a class="toc-item" href="item-tables.html">
+      <span class="num">II.</span>
+      <span class="title-wrap">
+        <span class="title">Item Tables</span>
+        <span class="desc">Weapons, gear, and curiosities, tallied and priced.</span>
+      </span>
+    </a>
+
+    <a class="toc-item" href="arcana-tables.html">
+      <span class="num">III.</span>
+      <span class="title-wrap">
+        <span class="title">Arcana Tables</span>
+        <span class="desc">Spells, rites, and what it costs to bend the world.</span>
+      </span>
+    </a>
+
+    <a class="toc-item" href="world-information.html">
+      <span class="num">IV.</span>
+      <span class="title-wrap">
+        <span class="title">World Information</span>
+        <span class="desc">History, factions, geography — the setting's bones.</span>
+      </span>
+    </a>
+
+    <a class="toc-item" href="character-generation.html">
+      <span class="num">V.</span>
+      <span class="title-wrap">
+        <span class="title">Character Generation Tools</span>
+        <span class="desc">Build a character from first breath to first adventure.</span>
+      </span>
+    </a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <span>A living reference — updated as the campaign grows.</span>
+  <span>Chapters I–V</span>
+</footer>
+
+</body>
+</html>
