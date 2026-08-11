@@ -210,7 +210,7 @@ const FATE_FLAVOR = {
   },
   "Three of Cups": {
     jobTitle: "High-Class Mixologist",
-    spell: "Befuddling Cruor, transmuted from aniseed liquor, wild strawberry moonshine, and a bit of blood. Imbibed, it causes long-lasting Confusion; ignited, it creates a Blast of fire (1d6) that temporarily blinds — and Impairs — anyone it wounds.",
+    spell: "Befuddling Cruor: Transmuted from aniseed liquor, wild strawberry moonshine, and a bit of blood. Imbibed, it causes long-lasting Confusion; ignited, it creates a Blast of fire (1d6) that temporarily blinds — and Impairs — anyone it wounds.",
     gift: "Slinger: Adept in the art of the toss. When you attack with a thrown weapon, such as a bomb, you re-roll 1s and 2s on damage rolls, but must use the new rolls.",
     gear: [
       { name: "Muddler's Club", desc: "1d4 — if it causes a wound, the target is Impaired on their next turn." },

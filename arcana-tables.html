@@ -124,6 +124,17 @@
     overflow-wrap: break-word;
   }
   table.arcana td.spell-name{ color: var(--parchment); font-style:italic; width:16%; }
+  table.arcana td.spell-name .spell-source{
+    display:block;
+    font-style:normal;
+    font-family:'Jost', sans-serif;
+    font-size:0.62rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color: var(--parchment-dim);
+    opacity:0.6;
+    margin-top:3px;
+  }
   table.arcana td.tags-cell{ width:25%; }
   table.arcana tr:hover td{ background: rgba(184,147,63,0.05); }
   table.arcana td.cost{
@@ -218,9 +229,9 @@
   <div class="eyebrow">Chapter III</div>
   <h1>Arcana Tables</h1>
   <p class="lede">
-    Every spell belongs to one of the four suits of the Arcana — Wands, Cups, Swords, or Pentacles.
-    Cast during your action, spend the listed cost, and pay it in full. Spells are grouped by the
-    Fate tier needed to learn them.
+    Every spell belongs to one of the four suits of the Arcana — Wands, Cups, Swords, or Pentacles —
+    or is granted uniquely by a Major or Minor Arcana Fate card. Cast during your action, spend the
+    listed cost, and pay it in full. Suit spells are grouped by the Fate tier needed to learn them.
   </p>
 </div>
 
@@ -236,6 +247,8 @@
     <button class="cat-tab" data-school="cups">Cups</button>
     <button class="cat-tab" data-school="swords">Swords</button>
     <button class="cat-tab" data-school="pentacles">Pentacles</button>
+    <button class="cat-tab" data-school="major">Major</button>
+    <button class="cat-tab" data-school="minor">Minor</button>
   </div>
 
   <p class="no-results" id="arcanaNoResults">No spells match your search.</p>
@@ -259,6 +272,18 @@
     <h2>Pentacles</h2>
     <div class="fate-tier-group" id="table-pentacles"></div>
   </section>
+
+  <section class="school-section hidden" data-school="major">
+    <h2>Major Arcana</h2>
+    <p class="fate-tier-note">One unique spell per Major Arcana Fate card — chosen instead of that card's Gift when it's drawn.</p>
+    <div id="table-major"></div>
+  </section>
+
+  <section class="school-section hidden" data-school="minor">
+    <h2>Minor Arcana</h2>
+    <p class="fate-tier-note">One unique spell per Minor Arcana Fate card — chosen instead of that card's Gift when it's drawn.</p>
+    <div id="table-minor"></div>
+  </section>
 </main>
 
 <footer class="site-footer">
@@ -269,9 +294,13 @@
 <div id="qualityTooltip"></div>
 
 <script src="spells-data.js"></script>
+<script src="fates-data.js"></script>
 <script>
   const KNOWN_TAG_DEFS = {
     "self": "Self — the spell affects only its caster.",
+    "target": "Target — the spell targets a creature or object, rather than the caster or an area.",
+    "attack": "Attack — the spell deals damage through an Attack, resolved like a normal Attack: Guard and Armor reduce the damage before it lands.",
+    "virtue damage": "Virtue Damage — the spell deals damage directly to a Virtue, ignoring both Guard and Armor entirely.",
     "touch": "Touch — the spell requires physical contact with its target, within a meter.",
     "short-range": "Short-Range — effective within 10 meters.",
     "long-range": "Long-Range — effective within 50 meters.",
@@ -281,7 +310,9 @@
   };
 
   function costLabel(cost){
-    return cost === 0 ? 'Free' : String(cost);
+    if(cost === 0) return 'Free';
+    if(cost === null || cost === undefined) return '<span style="opacity:0.4;">—</span>';
+    return String(cost);
   }
 
   function renderTags(tags){
@@ -302,7 +333,7 @@
   function renderSpellRows(spells){
     return spells.map(spell => `
       <tr>
-        <td class="spell-name">${spell.name}</td>
+        <td class="spell-name">${spell.name}${spell.source ? `<span class="spell-source">${spell.source}</span>` : ''}</td>
         <td class="tags-cell">${renderTags(spell.tags)}</td>
         <td>${spell.effect}</td>
         <td class="cost">${costLabel(spell.cost)}</td>
@@ -310,20 +341,82 @@
     `).join('');
   }
 
-  /* ---------- Search ---------- */
-  const SUITS = ['wands', 'cups', 'swords', 'pentacles'];
+  /* ---------- Major / Minor Arcana, derived from Fate card data ---------- */
+  const MAJOR_ARCANA_NAMES = [
+    "The Fool", "The Magician", "The High Priestess", "The Empress", "The Emperor", "The Hierophant",
+    "The Lovers", "The Chariot", "Strength", "The Hermit", "Wheel of Fortune", "Justice", "The Hanged Man",
+    "Death", "Temperance", "The Devil", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World"
+  ];
+
+  // Fate spells are written as "Name (cost, tags): effect" or "Name: effect" (no cost/tags).
+  // Parse that free text into the same {name, tags, cost, effect} shape SPELLS_DATA uses.
+  function parseFateSpell(cardName, raw){
+    if(!raw) return null;
+    let name, paren, effect;
+    let m = raw.match(/^(.+?)\s*\(([^)]*)\):\s*([\s\S]*)$/);
+    if(m){
+      name = m[1].trim();
+      paren = m[2].trim();
+      effect = m[3].trim();
+    } else {
+      m = raw.match(/^(.+?):\s*([\s\S]*)$/);
+      if(!m) return null;
+      name = m[1].trim();
+      paren = '';
+      effect = m[2].trim();
+    }
+    let cost = null;
+    let tags = [];
+    if(paren){
+      const parts = paren.split(',').map(p => p.trim()).filter(Boolean);
+      if(parts.length && /^\d+$/.test(parts[0])){
+        cost = parseInt(parts[0], 10);
+        tags = parts.slice(1);
+      } else {
+        tags = parts;
+      }
+    }
+    return { name, tags, cost, effect, source: cardName };
+  }
+
+  function buildFateSpellList(cardNames){
+    return cardNames
+      .map(cardName => parseFateSpell(cardName, (FATE_FLAVOR[cardName] || {}).spell))
+      .filter(Boolean);
+  }
+
+  const MINOR_ARCANA_NAMES = Object.keys(FATE_FLAVOR).filter(n => !MAJOR_ARCANA_NAMES.includes(n));
+  const MAJOR_SPELLS = buildFateSpellList(MAJOR_ARCANA_NAMES);
+  const MINOR_SPELLS = buildFateSpellList(MINOR_ARCANA_NAMES);
+
+  /* ---------- Search & rendering, across all six categories ---------- */
+  const CATEGORIES = {
+    wands:     { mode: 'tiered', spells: () => SPELLS_DATA.wands },
+    cups:      { mode: 'tiered', spells: () => SPELLS_DATA.cups },
+    swords:    { mode: 'tiered', spells: () => SPELLS_DATA.swords },
+    pentacles: { mode: 'tiered', spells: () => SPELLS_DATA.pentacles },
+    major:     { mode: 'flat', spells: () => MAJOR_SPELLS },
+    minor:     { mode: 'flat', spells: () => MINOR_SPELLS }
+  };
   let searchQuery = '';
 
   function matchesQuery(spell, q){
     if(!q) return true;
-    const haystack = [spell.name, spell.effect, ...(spell.tags || [])].join(' ').toLowerCase();
+    const haystack = [spell.name, spell.effect, spell.source, ...(spell.tags || [])].filter(Boolean).join(' ').toLowerCase();
     return haystack.includes(q);
   }
 
-  function renderTable(suitKey, containerId){
+  function renderTable(categoryKey, containerId){
     const q = searchQuery.trim().toLowerCase();
-    const spells = (SPELLS_DATA[suitKey] || []).filter(s => matchesQuery(s, q));
+    const cfg = CATEGORIES[categoryKey];
+    const spells = cfg.spells().filter(s => matchesQuery(s, q));
     const container = document.getElementById(containerId);
+
+    if(cfg.mode === 'flat'){
+      container.innerHTML = spells.length ? `<table class="arcana">${renderSpellRows(spells)}</table>` : '';
+      return;
+    }
+
     container.innerHTML = FATE_TIERS.map(tier => {
       const tierSpells = spells
         .filter(s => tier.test(s.cost))
@@ -340,7 +433,7 @@
   }
 
   function renderAllTables(){
-    SUITS.forEach(suit => renderTable(suit, `table-${suit}`));
+    Object.keys(CATEGORIES).forEach(key => renderTable(key, `table-${key}`));
   }
 
   renderAllTables();
@@ -351,9 +444,9 @@
   const searchClear = document.getElementById('arcanaSearchClear');
   const noResultsEl = document.getElementById('arcanaNoResults');
 
-  function suitHasResults(suit){
+  function categoryHasResults(key){
     const q = searchQuery.trim().toLowerCase();
-    return (SPELLS_DATA[suit] || []).some(s => matchesQuery(s, q));
+    return CATEGORIES[key].spells().some(s => matchesQuery(s, q));
   }
 
   function updateVisibility(){
@@ -361,11 +454,11 @@
     searchClear.classList.toggle('visible', q.length > 0);
 
     if(q){
-      // Search mode: show every suit that has a match, ignore the active tab,
+      // Search mode: show every category that has a match, ignore the active tab,
       // and dim the tabs since they're not driving the view right now.
       let anyVisible = false;
       sections.forEach(s => {
-        const has = suitHasResults(s.dataset.school);
+        const has = categoryHasResults(s.dataset.school);
         s.classList.toggle('hidden', !has);
         if(has) anyVisible = true;
       });

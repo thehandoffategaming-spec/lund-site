@@ -23,11 +23,12 @@
 
      { name: "New Spell Name", tags: ["Long-Range", "Blast"], cost: 4, effect: "What it does, in plain terms." },
 
-   A few tags (Self, Touch, Short-Range, Long-Range, Blast, Curse) match
-   terms already defined in Chapter I and get a hover tooltip automatically
-   — just spell them the same way shown above and it'll be picked up.
-   Any other tag (Attack, Direct Damage, Any Target, Line, Curse/Cure, etc.)
-   still displays as a badge, just without a tooltip.
+   A few tags (Self, Target, Touch, Short-Range, Long-Range, Extreme-Range,
+   Blast, Curse, Attack, Virtue Damage) match terms already defined in
+   Chapter I and get a hover tooltip automatically — just spell them the
+   same way shown above and it'll be picked up.
+   Any other tag (Line, Curse/Cure, etc.) still displays as a badge, just
+   without a tooltip.
 
    IMPORTANT — SYSTEM COMPATIBILITY
    This system has no DCs and no flat "+X to a check" bonuses. All Checks
@@ -50,15 +51,15 @@ const SPELLS_DATA = {
     { name: "Curious Spark", tags: [], cost: 0, effect: "A small flame answers to your will; enough to light a candle or a temper." },
     { name: "Swift Ignition", tags: [], cost: 0, effect: "Set unattended kindling alight from up to 30 ft away." },
     { name: "Colorflame", tags: ["Short-Range", "Blast", "Attack", "Self"], cost: 2, effect: "d8 Blast of fire, short-range fan, from self. Flames created are vibrantly colored, short-lived, and spiteful of the caster if not given fuel." },
-    { name: "Stygian Mist", tags: ["Long-Range", "Blast", "Any Target", "Direct Damage"], cost: 2, effect: "Blast, at long range, deals 1d4 Spirit damage to any creature breathing within. The mist lingers for a round after cast." },
-    { name: "Heat Sponge", tags: ["Long-Range", "Blast", "Attack", "Any Target"], cost: 2, effect: "Remove heat from an area in a Blast at range; 1d8 cold attack to anything within. You become very sweaty after casting — continued use could lead to heatstroke." },
+    { name: "Stygian Mist", tags: ["Long-Range", "Blast", "Target", "Virtue Damage"], cost: 2, effect: "Blast, at long range, deals 1d4 Spirit damage to any creature breathing within. The mist lingers for a round after cast." },
+    { name: "Heat Sponge", tags: ["Long-Range", "Blast", "Attack", "Target"], cost: 2, effect: "Remove heat from an area in a Blast at range; 1d8 cold attack to anything within. You become very sweaty after casting — continued use could lead to heatstroke." },
     { name: "Thunderclap", tags: ["Short-Range", "Blast", "Attack", "Self"], cost: 2, effect: "1d8 thunder Blast directly in front of you, throws objects and wounded creatures backwards. Very loud — continued use could lead to hearing loss." },
     { name: "Stormblade", tags: ["Long-Range", "Blast", "Attack", "Line"], cost: 2, effect: "1d8 lightning Blast in a straight line. Can be cast on a weapon with a touch, adding this spell's effect to its next attack. The wielder becomes the target of all lightning effects while active." },
-    { name: "Witherwave", tags: ["Long-Range", "Blast", "Self", "Direct Damage"], cost: 2, effect: "Emit a warbling undulation that causes flesh to slough from bone. Creatures within a large radial Blast emanating from you lose 1d4 Vigor. If this damage would cause a critical wound, the creature's flesh and muscle fall away from their skeleton, which turns black and brittle." },
+    { name: "Witherwave", tags: ["Long-Range", "Blast", "Self", "Virtue Damage"], cost: 2, effect: "Emit a warbling undulation that causes flesh to slough from bone. Creatures within a large radial Blast emanating from you lose 1d4 Vigor. If this damage would cause a critical wound, the creature's flesh and muscle fall away from their skeleton, which turns black and brittle." },
     { name: "Knitting of Bone", tags: ["Touch", "Attack", "Curse/Cure"], cost: 2, effect: "With a touch you forcefully fuse someone's bones together. Useful for healing a break — but if used offensively as a Curse, roll a 1d8 attack; if you wound, you can fuse a target's joints (elbows, knees) so they can no longer move." },
-    { name: "Osteous Maw", tags: ["Long-Range", "Curse", "Any Target"], cost: 4, effect: "A target at range feels their teeth begin to grow at an uncontrollable rate for the next minute, curling back into their own jaw. They take an extra 1d6 on attacks made against them and cannot speak or cast verbal spells." },
-    { name: "Strikethief", tags: ["Short-Range", "Curse", "Any Target"], cost: 2, effect: "You steal the momentum from an enemy's attack. Remove one Attack die from their next melee attack, and your next melee attack adds the Attack die they would have used, until you cast this spell again." },
-    { name: "Blood Crystals", tags: ["Touch", "Curse", "Direct Damage"], cost: 4, effect: "With a touch, you seed a target's bloodstream with growing crystal shards. They immediately lose 1d6 Vigor, then lose 1d4 more at the start of each of their turns until the Curse is lifted." },
+    { name: "Osteous Maw", tags: ["Long-Range", "Curse", "Target"], cost: 4, effect: "A target at range feels their teeth begin to grow at an uncontrollable rate for the next minute, curling back into their own jaw. They take an extra 1d6 on attacks made against them and cannot speak or cast verbal spells." },
+    { name: "Strikethief", tags: ["Short-Range", "Curse", "Target"], cost: 2, effect: "You steal the momentum from an enemy's attack. Remove one Attack die from their next melee attack, and your next melee attack adds the Attack die they would have used, until you cast this spell again." },
+    { name: "Blood Crystals", tags: ["Touch", "Curse", "Virtue Damage"], cost: 4, effect: "With a touch, you seed a target's bloodstream with growing crystal shards. They immediately lose 1d6 Vigor, then lose 1d4 more at the start of each of their turns until the Curse is lifted." },
     { name: "Cthuggic Bolt", tags: ["Long-Range", "Attack"], cost: 2, effect: "A writhing bolt of impossible geometry lances toward your target. Make an Attack using 2d10; any creature it damages must pass a Spirit save or become Shaken." },
     { name: "Charging Flame", tags: [], cost: 4, effect: "Wreathe an ally's weapon in fire for the next three Strikes." },
     { name: "Fire Bolt", tags: ["Long-Range"], cost: 0, effect: "A mote of crackling flame leaps from your hand. Deals 1d8 fire damage." },
@@ -74,12 +75,9 @@ const SPELLS_DATA = {
     { name: "Thunderwave", tags: ["Short-Range", "Blast"], cost: 2, effect: "A wave of booming force sweeps outward. Deals 1d8 damage and physically repels all nearby creatures." },
     { name: "Fireball", tags: ["Long-Range", "Blast"], cost: 2, effect: "A flaming bead explodes in a roar. 1d12 damage to everything in the BLAST." },
     { name: "Lightning Bolt", tags: ["Long-Range", "Blast"], cost: 2, effect: "A strike of lightning blasts in a straight line dealing 2d6 damage." },
-    { name: "Bless", tags: ["Short-Range"], cost: 2, effect: "Bless up to 3 allies. Their attacks are enhanced (+1d6) for the duration of the encounter." },
     { name: "Burning Hands", tags: ["Short-Range", "Blast"], cost: 2, effect: "A thin sheet of roaring flame shoots from your fingers dealing 1d10 damage to all caught in front of you." },
     { name: "Guiding Bolt", tags: ["Long-Range", "Curse"], cost: 2, effect: "A flash of divine light streaks toward a target dealing 2d6 damage. The next physical attack on them is enhanced (+1d6)." },
     { name: "Scorching Ray", tags: ["Long-Range"], cost: 2, effect: "Hurl three rays of fire at targets within range. Each individual ray deals 1d8 fire damage." },
-    { name: "Shatter", tags: ["Long-Range", "Blast"], cost: 2, effect: "A sudden loud ringing noise painfully erupts. Deals 1d10 damage (2d10 to inorganic targets like stone/metal)." },
-    { name: "Daylight", tags: ["Long-Range"], cost: 2, effect: "A 60-foot radius sphere of magical bright light sheds from an object suppressing any magical darkness." },
     { name: "Wall of Fire", tags: ["Short-Range", "Blast"], cost: 4, effect: "A blazing wall of fire up to 60ft long springs up for the remainder of the encounter. Passing through the wall deals 2d8 damage automatically." },
     { name: "Flame Strike", tags: ["Long-Range", "Blast"], cost: 4, effect: "A vertical column of divine fire roars down from the sky dealing 2d6 fire and 2d6 radiant damage to the zone." },
     { name: "Chain Lightning", tags: ["Long-Range"], cost: 4, effect: "A massive bolt arcs into a primary target then forks into 3 more dealing 2d8 lightning damage to each." },
@@ -90,8 +88,6 @@ const SPELLS_DATA = {
     { name: "Delayed Blast Fireball", tags: ["Long-Range", "Blast"], cost: 8, effect: "Create a flaming bead on the ground. Explosion damage increases by +1d6 for every round you wait to detonate- up to a maximum of 10." },
     { name: "Prismatic Spray", tags: ["Short-Range", "Blast", "Curse"], cost: 8, effect: "Eight multi-colored beams flash. Roll 1d8 per target. 1 - 4d8 Fire, 2 - 4d8 Acid, 3 - 4d8 Lightning, 4 - 4d8 Poison, 5 - 4d8 Cold, 6 - Target is Petrified, 7 - Target is Permanently Blinded, 8 - Target is hit by two rays." },
     { name: "Crown of Stars", tags: ["Self"], cost: 8, effect: "Seven star-like motes orbit your head. When cast, and on your turns you can launch one of them to deal 2d12 radiant damage." },
-    { name: "Time Stop", tags: ["Self"], cost: 8, effect: "Cease the flow of time for 1d4+1 consecutive turns to move and act freely." },
-    { name: "Wish", tags: ["Special"], cost: 8, effect: "Alter reality. Duplicate lower spells perfectly or state a grand desire which permanently reduces max SPIRIT by 1d8." },
     { name: "Storm of Vengeance", tags: ["Long-Range", "Blast"], cost: 8, effect: "A churning black storm cloud cloaks the sky raining acid, lightning, and freezing hail over a massive territory. Eventually destroying everything underneath." }
   ],
   cups: [
@@ -112,7 +108,6 @@ const SPELLS_DATA = {
     { name: "Fear", tags: ["Short-Range", "Blast", "Curse"], cost: 2, effect: "Project an image of worst fears. All in a cone must make a SPIRIT Save or drop what they hold and flee in panic." },
     { name: "Major Image", tags: ["Long-Range"], cost: 2, effect: "Create a massive realistic illusion of an object creature or phenomenon complete with sound and smell." },
     { name: "Revivify", tags: ["Touch"], cost: 2, effect: "Touch a creature dead for less than a minute. Drag their soul back- restoring them to life with 1 VIGOR." },
-    { name: "Sanctuary", tags: ["Short-Range"], cost: 2, effect: "Ward a creature. Foes attempting to attack must pass a SPIRIT Save first or choose another target. If the warded creature does anything other than move, the spell ends." },
     { name: "Mirror Image", tags: ["Self"], cost: 2, effect: "Two illusory duplicates appear around you. When you are hit, an illusion pops, instead of you getting hit." },
     { name: "Polymorph", tags: ["Short-Range", "Curse"], cost: 4, effect: "Transform a creature into a harmless beast. SPIRIT Save to negate. Snaps back instantly if the beast takes damage." },
     { name: "Greater Invisibility", tags: ["Touch"], cost: 4, effect: "Target becomes completely transparent. Attacks are enhanced (+1d8), enemy attacks are impaired; ends if dispelled." },
@@ -153,9 +148,7 @@ const SPELLS_DATA = {
     { name: "Cloudkill", tags: ["Long-Range", "Blast"], cost: 4, effect: "Rolling yellow-green poisonous gas flows out dealing 1d8 damage directly to VIGOR to any creature caught within. Disapates after a minute." },
     { name: "Cone of Cold", tags: ["Long-Range", "Blast"], cost: 4, effect: "Blast frigid air from your hands - 2d10 cold damage attack, freezes slain targets solid into ice." },
     { name: "Wind Walk", tags: ["Touch"], cost: 4, effect: "You and up to 10 companions dissolve into gaseous cloud-like forms for the next hour- or earlier if the caster chooses to end the spell. Movement speed is incredibly fast." },
-    { name: "Steel Wind Strike", tags: ["Long-Range"], cost: 4, effect: "Moving like the wind, make a melee attack against up to 4 targets you can see." },
     { name: "Reverse Gravity", tags: ["Long-Range", "Blast"], cost: 8, effect: "Reverse gravity in a massive area. Targets fall upward 100 feet into the air until the spell ends after a minute." },
-    { name: "Gate", tags: ["Long-Range"], cost: 8, effect: "Rip open a literal tear in the cosmos to another plane of existence or call forth a specific named entity." },
     { name: "Whirlwind", tags: ["Long-Range", "Blast"], cost: 8, effect: "Summon a 30ft tall howling tornado. Sucks up objects and traps creatures inside its vortex. You can move it at the start of your turn. Disapates after a minute." },
     { name: "Blade of Disaster", tags: ["Short-Range"], cost: 8, effect: "Manifest a planar tear shaped like a black sword. It attacks any target of your choice, once per round slicing for 3d12 force damage on an attack." },
     { name: "Psychic Scream", tags: ["Long-Range", "Blast"], cost: 8, effect: "Unleash a wave of overwhelming intellectual pressure. Targets in BLAST make a Spirit save or take 3d6 direct SPIRIT damage. If this reduces them to 0 SPIRIT their head explodes." }
@@ -190,10 +183,11 @@ const SPELLS_DATA = {
     { name: "Raise Dead", tags: ["Touch"], cost: 4, effect: "Return a soul to a corpse dead no longer than 10 days. Fully closes lethal wounds but target's VIRTUES are set to 1 until they complete a Full-Rest." },
     { name: "Finger of Death", tags: ["Short-Range"], cost: 8, effect: "Negative energy courses through a target - 4d10 necrotic damage attack. If slain they rise as a loyal Zombie." },
     { name: "Earthquake", tags: ["Long-Range", "Blast"], cost: 8, effect: "Trigger an intense seismic tremor. Fissures open, structures collapse, and all standing targets are pinned prone until the start of the caster's next turn." },
-    { name: "Power Word: Kill", tags: ["Short-Range"], cost: 8, effect: "Utter a word of cosmic power. Target with 12 VIGOR or fewer drops dead on the spot with no Save." },
     { name: "Regenerate", tags: ["Touch"], cost: 8, effect: "Stimulate cellular recovery. Restores 3d4 VIGOR and severed body parts re-grow completely over the next hour." },
     { name: "Clone", tags: ["Special"], cost: 8, effect: "Grows an inert identical duplicate of a living creature- which is complete after the passing of an age. If the original dies their soul transfers safely to the clone." },
     { name: "Mighty Fortress", tags: ["Long-Range"], cost: 8, effect: "Command stone and wood to erupt from the soil constructing a massive fully provisioned defensive castle." },
-    { name: "True Resurrection", tags: ["Touch"], cost: 8, effect: "Touch a creature dead up to a century. Restores them to life replacing missing parts and sets all Virtues to 1 until they complete a Full-Rest." }
+    { name: "True Resurrection", tags: ["Touch"], cost: 8, effect: "Touch a creature dead up to a century. Restores them to life replacing missing parts and sets all Virtues to 1 until they complete a Full-Rest." },
+    { name: "Bless", tags: ["Short-Range"], cost: 2, effect: "Bless up to 3 allies. Their attacks are enhanced (+1d6) for the duration of the encounter." },
+    { name: "Daylight", tags: ["Long-Range"], cost: 2, effect: "A 60-foot radius sphere of magical bright light sheds from an object suppressing any magical darkness." }
   ]
 };
