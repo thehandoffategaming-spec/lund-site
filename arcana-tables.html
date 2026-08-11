@@ -9,6 +9,53 @@
 <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Almendra+SC&family=Jost:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="lund-theme.css">
 <style>
+  .search-bar{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:24px;
+    background: rgba(31,26,52,0.5);
+    border: 1px solid var(--line);
+    border-radius:999px;
+    padding: 11px 20px;
+  }
+  .search-bar svg{ flex:none; opacity:0.55; color: var(--parchment-dim); }
+  .search-bar input{
+    flex:1;
+    min-width:0;
+    background:transparent;
+    border:none;
+    outline:none;
+    color: var(--parchment);
+    font-family:'Jost', sans-serif;
+    font-size:0.9rem;
+    letter-spacing:0.02em;
+  }
+  .search-bar input::placeholder{ color: var(--parchment-dim); opacity:0.65; }
+  .search-clear{
+    flex:none;
+    background:none;
+    border:none;
+    color: var(--parchment-dim);
+    cursor:pointer;
+    font-size:1.1rem;
+    line-height:1;
+    padding:2px 4px;
+    display:none;
+    transition: color 0.2s ease;
+  }
+  .search-clear.visible{ display:inline-block; }
+  .search-clear:hover{ color: var(--gold-bright); }
+
+  .no-results{
+    font-family:'Jost', sans-serif;
+    font-style:italic;
+    font-size:0.95rem;
+    color: var(--parchment-dim);
+    text-align:center;
+    padding: 40px 0;
+    display:none;
+  }
+  .no-results.visible{ display:block; }
+
   .cat-tabs{
     display:flex; flex-wrap:wrap; gap:8px;
     margin-bottom:36px;
@@ -178,12 +225,20 @@
 </div>
 
 <main class="content">
+  <div class="search-bar">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <input type="text" id="arcanaSearch" placeholder="Search spells by name, effect, or tag…" autocomplete="off">
+    <button class="search-clear" id="arcanaSearchClear" type="button" aria-label="Clear search">×</button>
+  </div>
+
   <div class="cat-tabs" role="tablist" aria-label="Arcana suit">
     <button class="cat-tab active" data-school="wands">Wands</button>
     <button class="cat-tab" data-school="cups">Cups</button>
     <button class="cat-tab" data-school="swords">Swords</button>
     <button class="cat-tab" data-school="pentacles">Pentacles</button>
   </div>
+
+  <p class="no-results" id="arcanaNoResults">No spells match your search.</p>
 
   <section class="school-section" data-school="wands">
     <h2>Wands</h2>
@@ -255,8 +310,19 @@
     `).join('');
   }
 
+  /* ---------- Search ---------- */
+  const SUITS = ['wands', 'cups', 'swords', 'pentacles'];
+  let searchQuery = '';
+
+  function matchesQuery(spell, q){
+    if(!q) return true;
+    const haystack = [spell.name, spell.effect, ...(spell.tags || [])].join(' ').toLowerCase();
+    return haystack.includes(q);
+  }
+
   function renderTable(suitKey, containerId){
-    const spells = SPELLS_DATA[suitKey] || [];
+    const q = searchQuery.trim().toLowerCase();
+    const spells = (SPELLS_DATA[suitKey] || []).filter(s => matchesQuery(s, q));
     const container = document.getElementById(containerId);
     container.innerHTML = FATE_TIERS.map(tier => {
       const tierSpells = spells
@@ -273,18 +339,73 @@
     }).join('');
   }
 
-  ['wands', 'cups', 'swords', 'pentacles'].forEach(suit => {
-    renderTable(suit, `table-${suit}`);
-  });
+  function renderAllTables(){
+    SUITS.forEach(suit => renderTable(suit, `table-${suit}`));
+  }
+
+  renderAllTables();
 
   const tabs = document.querySelectorAll('.cat-tab');
   const sections = document.querySelectorAll('.school-section');
+  const searchInput = document.getElementById('arcanaSearch');
+  const searchClear = document.getElementById('arcanaSearchClear');
+  const noResultsEl = document.getElementById('arcanaNoResults');
+
+  function suitHasResults(suit){
+    const q = searchQuery.trim().toLowerCase();
+    return (SPELLS_DATA[suit] || []).some(s => matchesQuery(s, q));
+  }
+
+  function updateVisibility(){
+    const q = searchQuery.trim();
+    searchClear.classList.toggle('visible', q.length > 0);
+
+    if(q){
+      // Search mode: show every suit that has a match, ignore the active tab,
+      // and dim the tabs since they're not driving the view right now.
+      let anyVisible = false;
+      sections.forEach(s => {
+        const has = suitHasResults(s.dataset.school);
+        s.classList.toggle('hidden', !has);
+        if(has) anyVisible = true;
+      });
+      tabs.forEach(t => t.classList.remove('active'));
+      noResultsEl.classList.toggle('visible', !anyVisible);
+    } else {
+      // Normal mode: restore single-tab browsing.
+      noResultsEl.classList.remove('visible');
+      const activeTab = document.querySelector('.cat-tab.active') || tabs[0];
+      activeTab.classList.add('active');
+      sections.forEach(s => s.classList.toggle('hidden', s.dataset.school !== activeTab.dataset.school));
+    }
+  }
+
+  searchInput.addEventListener('input', () => {
+    searchQuery = searchInput.value;
+    renderAllTables();
+    updateVisibility();
+  });
+
+  searchClear.addEventListener('click', () => {
+    searchQuery = '';
+    searchInput.value = '';
+    renderAllTables();
+    updateVisibility();
+    searchInput.focus();
+  });
+
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
+      // Picking a suit tab always exits search mode and browses that suit.
+      searchQuery = '';
+      searchInput.value = '';
+      renderAllTables();
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       const school = tab.dataset.school;
       sections.forEach(s => s.classList.toggle('hidden', s.dataset.school !== school));
+      searchClear.classList.remove('visible');
+      noResultsEl.classList.remove('visible');
     });
   });
 
