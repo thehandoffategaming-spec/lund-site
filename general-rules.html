@@ -235,6 +235,7 @@
       <a href="#fatigue">Fatigue</a>
       <a href="#damage">Damage</a>
       <a href="#scars">Scars</a>
+      <a href="#magical-scars">Magical Scars</a>
       <a href="#conditions">Conditions</a>
       <a href="#inventory">Inventory &amp; Encumbrance</a>
       <a href="#recovery">Rest &amp; Recovery</a>
@@ -471,7 +472,7 @@
       <section class="rule" id="scars">
         <span class="num-tag">1.11</span>
         <h2>Scars</h2>
-        <p>When a Scar is gained, take the die that caused it and roll it again, consulting the table below for the specific Scar caused.</p>
+        <p>When a Scar is gained, take the die that caused it and roll it again, consulting the table below for the specific Scar caused. Keep track of every scar a Fatekin receives — this tally is permanent and never resets. On subsequent scar rolls, add the number of current scars to the roll. A Scar's ongoing effects clear at the end of a season, or if remedied by a specialist, but the tally itself remains. For every 3 scars a Fatekin receives, they gain one Experience.</p>
         <p class="flavor">Virtue Loss through a Scar is not Damage, so it can never Mortally Wound or Slay the victim. Scars are only gained through real, deadly combat — never through training or a bloodless duel.</p>
         <table class="rule-table">
           <tr><th>Roll</th><th>Scar</th><th>Effect</th></tr>
@@ -489,12 +490,36 @@
           <tr><td>12</td><td>Humiliation</td><td>A most dolorous stroke. When you achieve revenge, if your max Guard is 12 or less, increase it by d6.</td></tr>
 		  <tr><td>13</td><td>Organ Failure</td><td>Your Vigor is permanently reduced by 2d6 until you receive an adequate transplant.</td></tr>
 		  <tr><td>14</td><td>Tramautic Injury</td><td>Lose 2d6 Vigor immediately, Then lose the ability to 1) see, 2) hear, 3) talk or 4) Breathe until patched up. Once patched, gain 1d6 guard if less than 10.</td></tr>
-		  <tr><td>15+</td><td>Glorious Death</td><td>Your wounds catch up to your Luck- you fall dead in the most glorious way possible. Nothing can prevent this.</td></tr>
+		  <tr><td>15+</td><td>Glorious Death</td><td>Your wounds catch up to your Luck- you fall dead in the most glorious way possible.</td></tr>
+        </table>
+      </section>
+
+      <section class="rule" id="magical-scars">
+        <span class="num-tag">1.12</span>
+        <h2>Magical Scars</h2>
+        <p>A Fatekin gains a Magical Scar when a spell functioning as an Attack reduces them to exactly 0 Guard, or when a spell specifically states that it inflicts one — some spells cost their own caster a Magical Scar as part of what they do. When a Magical Scar is gained, take the die that caused it (the highest, if several) and roll it again, consulting the table below for the specific Scar caused. Keep track of every Magical Scar a Fatekin receives, separately from ordinary Scars — this tally is permanent and never resets. On subsequent Magical Scar rolls, add the number of current Magical Scars to the roll. A Magical Scar's ongoing effects clear at the end of a season, or if remedied by a specialist, but the tally itself remains. For every 3 Magical Scars a Fatekin receives, they gain one Experience.</p>
+        <p class="flavor">Virtue Loss through a Magical Scar is not Damage, so it can never Mortally Wound or Slay the victim. Magical Scars are only gained from spells — never from a mundane wound.</p>
+        <table class="rule-table">
+          <tr><th>Roll</th><th>Scar</th><th>Effect</th></tr>
+          <tr><td>1</td><td>Arcane Feedback</td><td>Jolted by the lingering effects of the spell, you lose 1d6 Vigor, but regain 1d6 Spirit, as the very air seems to jolt your mind.</td></tr>
+          <tr><td>2</td><td>Spellshock</td><td>The feedback seizes your throat and tongue. You cannot speak for the next minute.</td></tr>
+          <tr><td>3</td><td>Arcane Overload</td><td>You lose 1d6 Spirit as the magic wounds you. Your next attack gains one free Gambit as a surge of magic is expelled from you.</td></tr>
+          <tr><td>4</td><td>Lingering Wound</td><td>The magic sits inside your wound, damaging you further. Attacks against you are Enhanced until patched up or dispelled.</td></tr>
+          <tr><td>5</td><td>Frayed Nerves</td><td>Lose 1d6 Grace immediately. Gain 1d4 Grace when rested-up if Grace is 10 or less.</td></tr>
+          <tr><td>6</td><td>Soul-Torn</td><td>Your very spirit is pulled, and begins to tear at the seams. You lose 2d6 Spirit.</td></tr>
+          <tr><td>7</td><td>Kilned-Spirit</td><td>Lose 1d6 Vigor immediately. Your spirit is strengthened by the pain of magic — increase your Spirit by 1d4 if 10 or less.</td></tr>
+          <tr><td>8</td><td>Recursion</td><td>The magic that wounds you affects you for a second time immediately. You suffer Virtue Loss equal to the spell's damage, minus any bolsters.</td></tr>
+          <tr><td>9</td><td>Reorientation</td><td>The magic that wounds you channels deep into your mind, changing it permanently. Re-roll your SPIRIT virtue on 1d6+1d12 and take the new roll if higher.</td></tr>
+          <tr><td>10</td><td>Malignus</td><td>The magic that wounds you is pervasive — you are now Cursed and cannot benefit from Feats until your Curse is removed.</td></tr>
+          <tr><td>11</td><td>Dissolved in Void</td><td>The magic that wounds you causes your body to be pulled apart violently — lose 1d6 Vigor. You re-form in a liminal space, before being torn apart again and returning to the spot you left — lose 1d6 Vigor again.</td></tr>
+          <tr><td>12</td><td>Mutation</td><td>The magic that wounds you reverberates into foul growth within you. A hideous mutation occurs somewhere on your body — roll 1d4: 1 Head, 2 Torso, 3 Arms, 4 Legs. You have Disadvantage on all social Checks.</td></tr>
+          <tr><td>13</td><td>Branded</td><td>Magic has etched itself into your mind and body. You are permanently marked with magic and learn one new spell of your choice.</td></tr>
+          <tr><td>14+</td><td>Unmage</td><td>The magic that wounds you fractures your mind. You permanently lose the ability to cast spells.</td></tr>
         </table>
       </section>
 
       <section class="rule" id="conditions">
-        <span class="num-tag">1.12</span>
+        <span class="num-tag">1.13</span>
         <h2>Conditions</h2>
         <p>Conditions describe temporary states that alter what a character can do. They stack unless noted otherwise, and clear according to their own rules — not automatically at the end of combat.</p>
         <table class="rule-table">
@@ -512,7 +537,7 @@
       </section>
 
       <section class="rule" id="inventory">
-        <span class="num-tag">1.13</span>
+        <span class="num-tag">1.14</span>
         <h2>Inventory &amp; Encumbrance</h2>
         <p>Every character sheet has ten slots for Items and ten slots for Spells. If a character fills their tenth Item slot, they become <strong>Encumbered</strong> — and while Encumbered, their Guard is set to 0.</p>
 
@@ -529,7 +554,7 @@
       </section>
 
       <section class="rule" id="recovery">
-        <span class="num-tag">1.14</span>
+        <span class="num-tag">1.15</span>
         <h2>Rest &amp; Recovery</h2>
         <p>There are three types of Rest:</p>
         <ul>
@@ -569,7 +594,7 @@
       </section>
 
       <section class="rule" id="advancement">
-        <span class="num-tag">1.15</span>
+        <span class="num-tag">1.16</span>
         <h2>Advancement</h2>
         <p>There are three levels of play in this system. A Fatekin grows more capable both through choices made at character creation and through advancement during play.</p>
 
