@@ -240,12 +240,39 @@
         <h3>Fixed</h3>
         <p>Requires at least one turn of set-up before use.</p>
       </div>
+      <div class="quality-card">
+        <h3>Hidden</h3>
+        <p>Can be easily hidden on your person, avoiding detection without a Check.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qualities-block">
+    <h2>Armor Qualities</h2>
+    <div class="quality-grid">
+      <div class="quality-card">
+        <h3>Underlayer</h3>
+        <p>Armor worn beneath other armor. You can wear one Underlayer and one Outerlayer at the same time, and both grant their Armor.</p>
+      </div>
+      <div class="quality-card">
+        <h3>Outerlayer</h3>
+        <p>Armor worn over other armor. You can wear one Underlayer and one Outerlayer at the same time, and both grant their Armor.</p>
+      </div>
+      <div class="quality-card">
+        <h3>Helmet</h3>
+        <p>Armor worn on the head. It is its own armor category, neither Underlayer nor Outerlayer, so it stacks with both.</p>
+      </div>
+      <div class="quality-card">
+        <h3>Shield</h3>
+        <p>Armor carried in the hand. It is its own armor category, neither Underlayer nor Outerlayer, so it stacks with both.</p>
+      </div>
     </div>
   </div>
 
   <div class="cat-tabs" role="tablist" aria-label="Item rarity">
     <button class="cat-tab active" data-cat="common">Common</button>
     <button class="cat-tab" data-cat="uncommon">Uncommon</button>
+    <button class="cat-tab" data-cat="special">Special</button>
   </div>
 
   <!-- ============================= COMMON ============================= -->
@@ -253,10 +280,10 @@
 
     <h3 class="item-subhead">Common Armor</h3>
     <table class="items">
-      <tr><td><span class="entry-name">Shield</span> <span class="detail">(+1 Armor)</span></td><td class="cost">150x</td></tr>
-      <tr><td><span class="entry-name">Helmet</span> <span class="detail">(+1 Armor)</span></td><td class="cost">150x</td></tr>
-      <tr><td><span class="entry-name">Chainmail or Brigandine</span> <span class="detail">(+1 Armor, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">400x</td></tr>
-      <tr><td><span class="entry-name">Set of Plate</span> <span class="detail">(+1 Armor, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Shield</span> <span class="detail">(+1 Armor, <span class="qterm" data-q="shield-slot">Shield</span>)</span></td><td class="cost">150x</td></tr>
+      <tr><td><span class="entry-name">Helmet</span> <span class="detail">(+1 Armor, <span class="qterm" data-q="helmet-slot">Helmet</span>)</span></td><td class="cost">150x</td></tr>
+      <tr><td><span class="entry-name">Chainmail or Brigandine</span> <span class="detail">(+1 Armor, <span class="qterm" data-q="underlayer">Underlayer</span>, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">400x</td></tr>
+      <tr><td><span class="entry-name">Set of Plate</span> <span class="detail">(+1 Armor, <span class="qterm" data-q="outerlayer">Outerlayer</span>, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">800x</td></tr>
     </table>
 
     <h3 class="item-subhead">Common Weapons</h3>
@@ -265,8 +292,8 @@
       <tr><td><span class="entry-name">Spear, Sword, Mace, Axe, Flail, etc.</span> <span class="detail">(d8 damage, <span class="qterm" data-q="hefty">Hefty</span>)</span></td><td class="cost">150x</td></tr>
       <tr><td><span class="entry-name">Halberd, War Hammer, Long Sword, etc.</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">300x</td></tr>
       <tr><td><span class="entry-name">Slinger-Wand</span> <span class="detail">(d6 damage, <span class="qterm" data-q="short-range">Short-Range</span>) — can throw Bombs</span></td><td class="cost">50x</td></tr>
-      <tr><td><span class="entry-name">Bow</span> <span class="detail">(d6 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">200x</td></tr>
-      <tr><td><span class="entry-name">Crossbow</span> <span class="detail">(d8 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>) — can fire syringes</span></td><td class="cost">300x</td></tr>
+      <tr><td><span class="entry-name">Bow</span> <span class="detail">(d8 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">200x</td></tr>
+      <tr><td><span class="entry-name">Crossbow</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>) — can fire syringes</span></td><td class="cost">300x</td></tr>
     </table>
 
     <h3 class="item-subhead">Common Consumables</h3>
@@ -276,7 +303,7 @@
           <ul class="item-list">
             <li><span class="entry-name">VOW-Surplus Firebombs</span> — 1d6 fire per round</li>
             <li><span class="entry-name">Slam-Bombs</span> — slams all windows and doors</li>
-            <li><span class="entry-name">Spike-Bombs</span> — 1d8 <span class="qterm" data-q="blast">Blast</span> at feet</li>
+            <li><span class="entry-name">Spike-Bombs</span> — 1d8 <span class="qterm" data-q="blast">Blast</span> at your own feet; you're always in the blast, which is why they're the cheapest</li>
           </ul>
         </td>
         <td class="cost">50x</td>
@@ -295,12 +322,19 @@
       <tr>
         <td>
           <ul class="item-list">
-            <li><span class="entry-name">Illithyck-Poison Capsule</span> — lose 1d12 Vigor if consumed or injected</li>
             <li><span class="entry-name">Sleepmist</span> — inhaled; Vigor save or unconscious</li>
             <li><span class="entry-name">Antitox-Syringe</span> — neutralizes toxins, with violent expulsions</li>
           </ul>
         </td>
         <td class="cost">50x</td>
+      </tr>
+      <tr>
+        <td>
+          <ul class="item-list">
+            <li><span class="entry-name">Illithyck-Poison Capsule</span> — lose 1d12 Vigor if consumed or injected</li>
+          </ul>
+        </td>
+        <td class="cost">150x</td>
       </tr>
     </table>
   </section>
@@ -310,18 +344,18 @@
 
     <h3 class="item-subhead">Uncommon Armor</h3>
     <table class="items">
-      <tr><td><span class="entry-name">Shield</span> <span class="detail">(+1 Armor, 1d6 Attack)</span></td><td class="cost">350x</td></tr>
-      <tr><td><span class="entry-name">Weavemail or Ceramic Brigandine</span> <span class="detail">(+1 Armor)</span></td><td class="cost">800x</td></tr>
-      <tr><td><span class="entry-name">Set of Ceramic Plate</span> <span class="detail">(+1 Armor)</span></td><td class="cost">1500x</td></tr>
+      <tr><td><span class="entry-name">Shield</span> <span class="detail">(+1 Armor, <span class="qterm" data-q="shield-slot">Shield</span>, 1d6 Attack)</span></td><td class="cost">350x</td></tr>
+      <tr><td><span class="entry-name">Weavemail or Ceramic Brigandine</span> <span class="detail">(+1 Armor, <span class="qterm" data-q="underlayer">Underlayer</span>, plus an additional property based on its construction)</span></td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Set of Ceramic Plate</span> <span class="detail">(+1 Armor, <span class="qterm" data-q="outerlayer">Outerlayer</span>, plus an additional property based on its construction)</span></td><td class="cost">1500x</td></tr>
     </table>
 
     <h3 class="item-subhead">Uncommon Weapons</h3>
     <table class="items">
-      <tr><td><span class="entry-name">Noble Weapons: Spear, Side Sword, Mace, Axe, Flail, etc.</span> <span class="detail">(d8 damage)</span></td><td class="cost">500x</td></tr>
+      <tr><td><span class="entry-name">Noble Weapons: Spear, Side Sword, Mace, Axe, Flail, etc.</span> <span class="detail">(d8 damage, not Hefty, so they can be dual-wielded) — typically forged from special alloys, each with an interesting side effect</span></td><td class="cost">500x</td></tr>
       <tr><td><span class="entry-name">Masterwork Weapons: Longsword, etc.</span> <span class="detail">(2d8 damage, <span class="qterm" data-q="hefty">Hefty</span>)</span></td><td class="cost">800x</td></tr>
       <tr><td><span class="entry-name">Old War Weapons: Greatsword, Waraxe</span> <span class="detail">(2d10 damage, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">1200x</td></tr>
       <tr><td><span class="entry-name">Longbow</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long">Long</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">600x</td></tr>
-      <tr><td><span class="entry-name">Scatterwand</span> <span class="detail">(1d8 <span class="qterm" data-q="blast">Blast</span>, <span class="qterm" data-q="hefty">Hefty</span>, <span class="qterm" data-q="short-range">Short-Range</span>)</span></td><td class="cost">600x</td></tr>
+      <tr><td><span class="entry-name">Scatterwand</span> <span class="detail">(1d8 <span class="qterm" data-q="blast">Blast</span>, <span class="qterm" data-q="hefty">Hefty</span>, <span class="qterm" data-q="short-range">Short-Range</span>)</span></td><td class="cost">800x</td></tr>
       <tr><td><span class="entry-name">Long-Wand</span> <span class="detail">(1d12, <span class="qterm" data-q="long">Long</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">800x</td></tr>
       <tr><td><span class="entry-name">Launch-Wand</span> <span class="detail">(2d6 damage, <span class="qterm" data-q="bulky">Bulky</span>) — can fire syringes and Bombs</span></td><td class="cost">800x</td></tr>
     </table>
@@ -333,11 +367,19 @@
           <span style="display:block; margin-bottom:8px; color:var(--gold-bright); font-style:normal; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.115em; text-transform:uppercase;">VOW-Surplus Branded</span>
           <ul class="item-list">
             <li><span class="entry-name">Tinybomb</span> — 1d8 <span class="qterm" data-q="blast">Blast</span>; fits under the tongue</li>
+          </ul>
+        </td>
+        <td class="cost">75x</td>
+      </tr>
+      <tr>
+        <td>
+          <span style="display:block; margin-bottom:8px; color:var(--gold-bright); font-style:normal; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.115em; text-transform:uppercase;">VOW-Surplus Branded — Heavy Ordnance</span>
+          <ul class="item-list">
             <li><span class="entry-name">Toxic Smokebombs</span> — Impairs all attacks made within the smoke; 1d6 ongoing damage</li>
             <li><span class="entry-name">Vault-Bombs</span> — 1d12, Large <span class="qterm" data-q="blast">Blast</span></li>
           </ul>
         </td>
-        <td class="cost">75x</td>
+        <td class="cost">150x</td>
       </tr>
       <tr>
         <td>
@@ -345,7 +387,7 @@
           <ul class="item-list">
             <li><span class="entry-name">Timebombs</span> — slows time in a 10 ft sphere for 60 seconds</li>
             <li><span class="entry-name">Anti-Magic Bombs</span> — does no harm, but disables anything magical in the blast for 1 minute</li>
-            <li><span class="entry-name">Crank-Bombs</span> — roll a d6 every turn to add to its damage before throwing; if damage exceeds 12, it explodes in your hand</li>
+            <li><span class="entry-name">Crank-Bombs</span> — roll a d6 every turn to add to its damage before throwing; if damage exceeds 12, it explodes in your hand, dealing 12 damage to everyone in the blast radius</li>
           </ul>
         </td>
         <td class="cost">150x</td>
@@ -354,15 +396,59 @@
         <td>
           <span style="display:block; margin-bottom:8px; color:var(--gold-bright); font-style:normal; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.115em; text-transform:uppercase;">Magimend Branded</span>
           <ul class="item-list">
-            <li><span class="entry-name">Sedative Assortment</span> — enough for the whole party; lulls the mind for an hour, but regains 6 Spirit</li>
-            <li><span class="entry-name">Stitcher-Drone</span> — enough for the whole party; stitches wounds for an hour, but regains 6 Vigor</li>
-            <li><span class="entry-name">Stimulant Rig</span> — enough for the whole party; mixing the concoction takes an hour, but regains 6 Grace</li>
+            <li><span class="entry-name">Sedative Assortment</span> — enough for up to four Fatekin; lulls the mind for an hour, but regains 6 Spirit</li>
+            <li><span class="entry-name">Stitcher-Drone</span> — enough for up to four Fatekin; stitches wounds for an hour, but regains 6 Vigor</li>
+            <li><span class="entry-name">Stimulant Rig</span> — enough for up to four Fatekin; mixing the concoction takes an hour, but regains 6 Grace</li>
           </ul>
         </td>
         <td class="cost">500x</td>
       </tr>
     </table>
     <p style="font-family:'Jost',sans-serif; font-style:italic; color:var(--parchment-dim); font-size:0.88rem; margin-top:-24px;">Magimend's line is the source of the Remedies described in Chapter I — see Rest &amp; Recovery.</p>
+  </section>
+
+  <!-- ============================= SPECIAL ============================= -->
+  <section class="item-section hidden" data-cat="special">
+
+    <h3 class="item-subhead">Special Weapons</h3>
+    <table class="items">
+      <tr><td><span class="entry-name">Blunderwand</span> <span class="detail">(2d10, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="blast">Blast</span>, <span class="qterm" data-q="short-range">Short-Range</span>) — repels enemies on wound</span></td><td class="cost">2000x</td></tr>
+      <tr><td><span class="entry-name">Cinder-Spout</span> <span class="detail">(2d12, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="blast">Blast</span>, <span class="qterm" data-q="close-range">Close-Range</span>) — on wound, the target is ignited and takes 1d10 damage per turn</span></td><td class="cost">2000x</td></tr>
+      <tr><td><span class="entry-name">Flare-Wand</span> <span class="detail">(1d10, <span class="qterm" data-q="close-range">Close-Range</span>) — high-intensity flare, visible from 25km away</span></td><td class="cost">200x</td></tr>
+      <tr><td><span class="entry-name">Resin Sprayer</span> <span class="detail">(no damage, <span class="qterm" data-q="bulky">Bulky</span>, Touch) — quick-hardening foam: Vigor save to avoid or become stuck. Fire retardant</span></td><td class="cost">500x</td></tr>
+      <tr><td><span class="entry-name">Spike-Driver</span> <span class="detail">(1d10, Melee, <span class="qterm" data-q="hefty">Hefty</span>) — deals double damage to Vigor</span></td><td class="cost">1000x</td></tr>
+      <tr><td><span class="entry-name">Repeater-Wand</span> <span class="detail">(3d8, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>) — bomb launcher: holds 6 Bombs</span></td><td class="cost">4000x</td></tr>
+      <tr><td><span class="entry-name">Wheelwand</span> <span class="detail">(2d8, <span class="qterm" data-q="short-range">Short-Range</span>)</span></td><td class="cost">750x</td></tr>
+      <tr><td><span class="entry-name">Stutter-Wand</span> <span class="detail">(2d10, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>) — fully automatic</span></td><td class="cost">3000x</td></tr>
+      <tr><td><span class="entry-name">Shock-Baton</span> <span class="detail">(1d10, Melee) — on wound, the target is stunned</span></td><td class="cost">400x</td></tr>
+      <tr><td><span class="entry-name">Sleepwand</span> <span class="detail">(1d4, <span class="qterm" data-q="short-range">Short-Range</span>) — tranq darts. On wound, the target falls unconscious for 1d10 rounds</span></td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Vibrosabre</span> <span class="detail">(2d8, Melee) — can hack through limbs or dense forestry, but not metal doors, airlocks, etc.</span></td><td class="cost">1500x</td></tr>
+    </table>
+
+    <h3 class="item-subhead">Specialist Manufacturer Properties</h3>
+    <p style="font-family:'Jost',sans-serif; font-style:italic; color:var(--parchment-dim); font-size:0.88rem; margin-top:-8px;">Uncommon armor and Noble Weapons come from specialist manufacturers. Roll a die, or let the GM choose, to see what the maker built into the piece.</p>
+
+    <h3 class="item-subhead">Armor Properties (d6)</h3>
+    <table class="items">
+      <tr><td><span class="entry-name">Curse-Woven</span> <span class="detail">(Magimend)</span> — protects against 1 Curse per day: the first Curse cast on you each day has no effect</td><td class="cost">1</td></tr>
+      <tr><td><span class="entry-name">Spellguard Ceramic</span> <span class="detail">(Trove)</span> — Advantage on Saves against spells</td><td class="cost">2</td></tr>
+      <tr><td><span class="entry-name">Hushwoven</span> <span class="detail">(Cerakote)</span> — makes no sound; Advantage on stealth Checks</td><td class="cost">3</td></tr>
+      <tr><td><span class="entry-name">Grounded Mesh</span> <span class="detail">(Strongwands)</span> — half damage from lightning</td><td class="cost">4</td></tr>
+      <tr><td><span class="entry-name">Cinder-Glazed</span> <span class="detail">(SVAROG)</span> — half damage from fire and heat</td><td class="cost">5</td></tr>
+      <tr><td><span class="entry-name">Stabilizer</span> <span class="detail">(VOW)</span> — when an attack would Slay you, you are instead left at 0 Vigor, unconscious but stable. One use only; the property is spent afterward</td><td class="cost">6</td></tr>
+    </table>
+
+    <h3 class="item-subhead">Noble Weapon Alloys (d8)</h3>
+    <table class="items">
+      <tr><td><span class="entry-name">Aetherglass</span> <span class="detail">(Trove)</span> — deals magical force damage, and harms ethereal and ghostly creatures</td><td class="cost">1</td></tr>
+      <tr><td><span class="entry-name">Sparksteel</span> <span class="detail">(Strongwands)</span> — a target it wounds is Impaired on their next turn</td><td class="cost">2</td></tr>
+      <tr><td><span class="entry-name">Frostiron</span> <span class="detail">(VOW)</span> — a target it wounds cannot move on their next turn</td><td class="cost">3</td></tr>
+      <tr><td><span class="entry-name">Needlesilver</span> <span class="detail">(SVAROG)</span> — ignores 1 Armor</td><td class="cost">4</td></tr>
+      <tr><td><span class="entry-name">Bonesinger Alloy</span> <span class="detail">(Magimend)</span> — 1d12 damage against spiritual creatures</td><td class="cost">5</td></tr>
+      <tr><td><span class="entry-name">Whispersteel</span> <span class="detail">(Cerakote)</span> — silent and <span class="qterm" data-q="hidden">Hidden</span></td><td class="cost">6</td></tr>
+      <tr><td><span class="entry-name">Wardsteel</span> <span class="detail">(Magimend)</span> — protects the wielder against 1 Curse per day</td><td class="cost">7</td></tr>
+      <tr><td><span class="entry-name">Lodestone-Bound</span> <span class="detail">(Trove)</span> — cannot be disarmed, and returns to your hand after being thrown</td><td class="cost">8</td></tr>
+    </table>
   </section>
 
 </main>
@@ -385,7 +471,12 @@
 	"extreme-range": "Extreme-Range — effective range of up to 500 meters.",
 	"close-range":"Close-Range — effective range of touch, within a meter.",
 	"slow":"Slow — cannot move and attack with this weapon in the same turn.",
-	"fixed":"Fixed — Requires at least one turn to set up before use."
+	"fixed":"Fixed — Requires at least one turn to set up before use.",
+	"hidden":"Hidden — Can be easily hidden on your person, avoiding detection without a Check.",
+	"underlayer":"Underlayer — worn beneath other armor. You can wear one Underlayer and one Outerlayer at once.",
+	"outerlayer":"Outerlayer — worn over other armor. You can wear one Underlayer and one Outerlayer at once.",
+	"shield-slot":"Shield — its own armor category, neither Underlayer nor Outerlayer. Stacks with both.",
+	"helmet-slot":"Helmet — its own armor category, neither Underlayer nor Outerlayer. Stacks with both."
   };
 
   const tabs = document.querySelectorAll('.cat-tab');

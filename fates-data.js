@@ -25,7 +25,7 @@
 
      gear: [
        { name: "Lucky Coin", desc: "Advantage on the next Check made while holding it." },
-       { name: "Patched Cloak", desc: "Armor 1, smells faintly of woodsmoke." }
+       { name: "Patched Cloak", desc: "Armor 1, Outerlayer, smells faintly of woodsmoke." }
      ]
 
    RULES REMINDER (see Chapter V, character creation)
@@ -44,8 +44,8 @@ const FATE_FLAVOR = {
   "The Emperor": { jobTitle: null, spell: "Regalia of Fate (4): You conjure a mystical set of armor (Helm and Layers) that forms around your body. It grants Guard 12, restores up to 12 Guard, Armor 3, and makes you invulnerable to non-rare armaments.", gift: "Denier of Doom: You can Deny attacks made against allies without making a fatigue save. You also learn Deny if you don't know it already — if you already know Deny, you instead learn any Feat of your choice.", gear: [] },
   "The Hierophant": { jobTitle: null, spell: "Divine Gate (4): You carve a window into the realm beyond, entreat with the beings there, and seek answers, aid, or succor. Ask and you shall receive.", gift: "Fateful Strike: You learn the Divine Smite feat. When attacking an enemy of your faith, you can use it freely, without a fatigue save.", gear: [] },
   "The Lovers": { jobTitle: null, spell: "Desire (4, Curse, Short-Range): You cause a single target to desire affection, an outcome, or any object of your choosing until dispelled. While affected by this curse, any damage you take, the Cursed creature also takes.", gift: "Guided Hearts: You can focus on your goals, and receive visions, gentle nudges, and premonitions of how to best acquire them — usually resulting in a message received in poetic verse.", gear: [] },
-  "The Chariot": { jobTitle: null, spell: "Blade Like Wind (4, Long-Range, Blast): You make a melee attack against any creatures of your choice within the Blast area. Add an additional 1d12 to each attack made.", gift: "Swift Feet: You can move twice a turn. You can always move away from an enemy, even if you lack Guard.", gear: [] },
-  "Strength": { jobTitle: null, spell: "Lion's Roar (4, Short-Range, Blast): 2d12 thunder damage attack to each creature in the Blast. Then, for the next minute, your Vigor becomes 20, returning to its previous value after the minute passes.", gift: "Mighty Grip: You can wield two separate Hefty weapons.", gear: [] },
+  "The Chariot": { jobTitle: null, spell: "Blade Like Wind (4, Long-Range, Blast): You make a melee attack against any creatures of your choice within the Blast area. Add an additional 1d12 to each attack made.", gift: "Swift Feet: You can move twice a turn if you don't attack. You can always move away from an enemy, even if you lack Guard.", gear: [] },
+  "Strength": { jobTitle: null, spell: "Lion's Roar (4, Short-Range, Blast, Attack): 2d12 thunder damage attack to each creature in the Blast. Then, for the next minute, your Vigor becomes 20, returning to its previous value after the minute passes.", gift: "Mighty Grip: You can wield two separate Hefty weapons.", gear: [] },
   "The Hermit": { jobTitle: null, spell: "Sanctuary (4): You are shielded from becoming the target of spells or attacks, for as long as you do not attack.", gift: "Guarded Spirit: When you would lose Spirit from effects other than casting spells, you lose half that Spirit and round down instead.", gear: [] },
   "Wheel of Fortune": { jobTitle: null, spell: "Evolved Mind (8): You cause your mind to grow through time rapidly, gaining enhanced Virtue scores for the next hour. Your current Grace and Spirit Virtues temporarily increase by 6, and can go no higher than 19.", gift: "Vizar’s Guard - Once before the start of your next turn, When you deny a melee attack made against you, the enemy attacking takes the Denied dice as an attack after dealing damage. You learn the Deny feat if you do not already know it, if you already know the Deny feat, you learn a feat of your choice. ", gear: [] },
   "Justice": { jobTitle: null, spell: "Avenging Blade (8): For the rest of the day, you can conjure a magical Greatsword (2d10) that can be held with one hand (Hefty).", gift: "Karmic Aura: Allies next to you gain 1 Armor if you attack on your turn. Enemies next to you cannot cast spells.", gear: [] },
@@ -53,9 +53,9 @@ const FATE_FLAVOR = {
   "Death": { jobTitle: null, spell: "Word of Ending (8, Single-Target, Short-Range): With a word, you kill one living being with 12 current Vigor or less. Upon uttering this word, they simply fall dead.", gift: "Soul Ward: You cannot die. When you would die, instead you become a disembodied spirit. You can re-enter your body if it is repaired, but otherwise your body regenerates after an age.", gear: [] },
   "Temperance": { jobTitle: null, spell: "Tempering Chains (4, Single-Target, Short-Range): You chain yourself to another creature. Any Virtue damage they take is halved — you take the other half. This damage cannot be reduced in any way and does not count as an attack. You can also use this to curse an enemy, causing them to take half of the Virtue damage you receive.", gift: "Tempered Vessels: You gain a set of magical chalices. From one stems Suffering, and the other Succor.", gear: [] },
   "The Devil": { jobTitle: null, spell: "Infernal Visage (4): For the next minute you take on a devilish appearance. You gain wings and can fly, as well as natural claw attacks (1d8 each), and take no damage from Fire or Heat sources.", gift: "Dark Inspiration: When you fail a Virtue check, you can choose to attempt it again. Once you have used this feature 3 times, you gain a permanent mark of darkness.", gear: [] },
-  "The Tower": { jobTitle: null, spell: "Bolt of Destruction (4, Long-Range): You conjure a devastating bolt of lightning on a single target, dealing 3d10 lightning damage to a creature and 3d12 to an object. Any creature directly adjacent to a target creature also takes this attack.", gift: "Ruin: Your attacks deal double damage to objects, unless they already do so. You can easily break through wooden doors and structures with sheer might.", gear: [] },
+  "The Tower": { jobTitle: null, spell: "Bolt of Destruction (4, Long-Range, Attack): You conjure a devastating bolt of lightning on a single target, making an Attack dealing 3d10 lightning damage to a creature or 3d12 to an object. Any creature directly adjacent to a target creature also takes this attack.", gift: "Ruin: Your attacks deal double damage to objects, unless they already do so. You can easily break through wooden doors and structures with sheer might.", gear: [] },
   "The Star": { jobTitle: null, spell: "The Living Star (4, Self): For the next hour, you become ethereal, composed of Starlight. At the end of your turns, you can choose to phase out of existence into another realm, returning at the beginning of your next turn. While made of starlight this way, you are immune to non-magical damage.", gift: "Starblessed Mind: You are immune to Psychic damage, cannot be charmed in any way, and always see through illusions.", gear: [] },
-  "The Moon": { jobTitle: null, spell: "Azure Radiance (8, Long-Range, Blast): You conjure a glimpse of a mighty Blue Moon. Every creature of your choice in a large-radius Blast takes a 3d12 radiant damage attack. This spell adds an extra 1d12 when attacking Fey or Shapechangers.", gift: "Moonblade: From your arm, at will, you can extend a blade made of Moonlight. It can attack at range, is Hefty, and deals 2d8 radiant damage.", gear: [] },
+  "The Moon": { jobTitle: null, spell: "Azure Radiance (8, Long-Range, Blast, Attack): You conjure a glimpse of a mighty Blue Moon. Every creature of your choice in a large-radius Blast takes a 3d12 radiant damage attack. This spell adds an extra 1d12 when attacking Fey or Shapechangers.", gift: "Moonblade: From your arm, at will, you can extend a blade made of Moonlight. It can attack at range, is Hefty, and deals 2d8 radiant damage.", gear: [] },
   "The Sun": { jobTitle: null, spell: "The Aurum-Star (8, Short-Range): You begin to glow with bright sunlight for the next minute. Allies next to you restore 1 Vigor at the start of their turn, and enemies make a Vigor save or become permanently blinded at the start of their turns.", gift: "Fist of Gold: Your fists now deal 1d8 damage each. If you wound an enemy with your fist, you can attempt to Impair them as a free gambit.", gear: [] },
   "Judgement": { jobTitle: null, spell: "Soul's Mirror (4, Self): For the next hour, any magical effect that targets you is reflected back at the source.", gift: "Song of Ending: You can mark a target for death at the beginning of your turn. If they die before the start of your next turn, you become Impassioned.", gear: [] },
   "The World": { jobTitle: null, spell: "Beseech the Outer World (8, Short-Range): You speak a sentence of truth into existence. Your wish then comes true, yet is subject to interpretation from the powers of the outer world.", gift: "The Inner World: You can choose to end any one magical effect on yourself at the start of your turn.", gear: [] },
@@ -75,7 +75,7 @@ const FATE_FLAVOR = {
     gift: "Pilot's License: You are proficient and capable of piloting flying vehicles, both extra- and inter-planar.",
     gear: [
       { name: "Traveler's Guidebook", desc: "You know of three distinct locations where you can receive quality rest, healing, and gear without trouble, at a discounted rate (20%)." },
-      { name: "Exotic Gear", desc: "Exotic clothing offering protection (Armor 1) and an interesting foreign item usable as a weapon (1d8)." }
+      { name: "Exotic Gear", desc: "Exotic clothing offering protection (Armor 1, Underlayer) and an interesting foreign item usable as a weapon (1d8)." }
     ]
   },
   "Three of Wands": {
@@ -90,7 +90,7 @@ const FATE_FLAVOR = {
   "Four of Wands": {
     jobTitle: "Grand Illusion Event Planner",
     spell: "Figment (Short-Range, Targeted): You produce a realistic visual, auditory, and sensory illusion within a small Blast. Until the end of your next turn, creatures within it are entranced until harmed or shaken from their stupor.",
-    gift: "You are expertly proficient in some sort of performance — choose one: Insult Comedy, Acting, a Musical Instrument, Singing, Acrobatics, or Mock Combat.",
+    gift: "You are expertly proficient in some sort of performance — choose one: Insult Comedy, Acting, a Musical Instrument, Singing, Acrobatics, or Mock Combat. You have Advantage on Checks that use it, and once per Season a performance that truly moves an audience earns you Impassioned.",
     gear: [
       { name: "Spellkeeper", desc: "An illusion cast with this portable metal box is amplified, lasting up to an hour." },
       { name: "Mindblade", desc: "An illusory dagger (1d6) dealing Grace damage to creatures who believe they're being stabbed by it." }
@@ -99,9 +99,9 @@ const FATE_FLAVOR = {
   "Five of Wands": {
     jobTitle: "Groupwork Start-Up Founder",
     spell: "Spellfuel: A creature of your choice that you can see can take two actions on their next turn. They cannot move or take any actions on the turn after.",
-    gift: "Business License: Spoke-authority to run and conduct a business in Lund. You can access cut-rate business loans, business resources, and most bureaucratic buildings.",
+    gift: "Business License: Spoke-authority to run and conduct a business in Lund. You can access cut-rate business loans, business resources, and most bureaucratic buildings. Your business earns you 100x per week while you keep up with its affairs.",
     gear: [
-      { name: "G4RD-D0G", desc: "Personal protection armor (Armor 1) — if you take a Mortal Wound it's destroyed and you're left with 1 Vigor if you would have gone lower." },
+      { name: "G4RD-D0G", desc: "Personal protection armor (Armor 1, Outerlayer) — if you take a Mortal Wound it's destroyed and you're left with 1 Vigor if you would have gone lower." },
       { name: "Pen-Wand", desc: "(Hidden, Petty, Short-Range) Delivers a devastating blow with its magically sharpened tip, 1d6 (+1d8 against Outnumbered or Vulnerable foes)." }
     ]
   },
@@ -121,7 +121,7 @@ const FATE_FLAVOR = {
     gift: "Intimidation Training: You can win most arguments through sheer intimidation. When you make social checks, you can use Vigor to do so.",
     gear: [
       { name: "Whip-Cane", desc: "2d6, Long, but one-handed." },
-      { name: "Debater's Thick Flowing Robes", desc: "(Armor 1) Becomes extremely heavy when wet, making it hard to move." }
+      { name: "Debater's Thick Flowing Robes", desc: "(Armor 1, Outerlayer) Becomes extremely heavy when wet, making it hard to move." }
     ]
   },
   "Eight of Wands": {
@@ -146,10 +146,10 @@ const FATE_FLAVOR = {
   "Ten of Wands": {
     jobTitle: "Rugrunner Transporter",
     spell: "Rugslave: You conjure a magical rug for an hour. It floats up to 10 feet above the ground and can carry up to 500 lb before collapsing, moving at walking speed.",
-    gift: "Master-Transporter: You ignore the Bulky property of Armaments (weapons).",
+    gift: "Master-Transporter: You ignore the extra inventory slot taken by Bulky Armaments (weapons).",
     gear: [
-      { name: "Rugrunner Transpo-Suit", desc: "Built-in exoskeleton and hoist straps (Armor 1) — lets you hold a full inventory without losing Guard." },
-      { name: "Rugrunner Tinted Bug-Visor", desc: "Protects the face from vermin at high speed (Armor 1) — you take half radiant damage and can't be blinded by light sources." }
+      { name: "Rugrunner Transpo-Suit", desc: "Built-in exoskeleton and hoist straps (Armor 1, Underlayer) — lets you hold a full inventory without losing Guard." },
+      { name: "Rugrunner Tinted Bug-Visor", desc: "Protects the face from vermin at high speed (Armor 1, Helmet) — you take half radiant damage and can't be blinded by light sources." }
     ]
   },
   "Page of Wands": {
@@ -158,7 +158,7 @@ const FATE_FLAVOR = {
     gift: "Star-Blessed Mind: You can move light, unattended objects (up to 5 lb) within Short-Range purely with your mind.",
     gear: [
       { name: "Starfinder's Scopus", desc: "A brass tube of magical glass lenses that let a viewer peer into another reality layered atop the current one." },
-      { name: "Robe of Worms", desc: "A robe whose threads are long, silky worms that move constantly, shifting its appearance (Armor 1); destroyed by fire, nourished by magical auras." }
+      { name: "Robe of Worms", desc: "A robe whose threads are long, silky worms that move constantly, shifting its appearance (Armor 1, Outerlayer); destroyed by fire, nourished by magical auras." }
     ]
   },
   "Knight of Wands": {
@@ -167,7 +167,7 @@ const FATE_FLAVOR = {
     gift: "Quick-Study: You can easily discern the nature of magical traps, devices, and auras if you spend time investigating them.",
     gear: [
       { name: "Unfinished Thesis", desc: "Takes 3 weeks to finish; when complete, becomes an Arcana or Oddity of your choice from a list provided by the GM." },
-      { name: "Ringshield", desc: "A spectral shield stored within a class ring (Armor 1)." },
+      { name: "Ringshield", desc: "A spectral shield stored within a class ring (Armor 1, Shield)." },
       { name: "Staff-Stave", desc: "A wizard staff given to College staff — 1d8, Bulky, usable as a ranged weapon that returns to your hand after striking its target." }
     ]
   },
@@ -186,7 +186,7 @@ const FATE_FLAVOR = {
     gift: "Perfect Recall: Your memory is impeccable — you can recall even the most minute details of events within the past month.",
     gear: [
       { name: "Random Arcana & Oddity", desc: "A random Arcana and a random Oddity from a past sale." },
-      { name: "Ultralight SVAROG-brand Mailvest", desc: "(Armor 1)" }
+      { name: "Ultralight SVAROG-brand Mailvest", desc: "(Armor 1, Underlayer)" }
     ]
   },
 
@@ -196,7 +196,7 @@ const FATE_FLAVOR = {
     gift: "Frogman: You have a swim speed and can hold your breath for up to 5 minutes.",
     gear: [
       { name: "Janitor's Scoop", desc: "(1d8, Long) Sends liquids it scoops into a demiplane somewhere." },
-      { name: "Union Coveralls", desc: "(Armor 1) No liquid can penetrate your wetwork suit." }
+      { name: "Union Coveralls", desc: "(Armor 1, Underlayer) No liquid can penetrate your wetwork suit." }
     ]
   },
   "Two of Cups": {
@@ -222,11 +222,11 @@ const FATE_FLAVOR = {
   },
   "Four of Cups": {
     jobTitle: "Material Mystic",
-    spell: "Break (Long-Range, Blast): A sudden, loud ringing noise painfully erupts — 1d10 force damage (2d10 to inorganic targets like stone or metal).",
+    spell: "Break (Long-Range, Blast, Attack): A sudden, loud ringing noise painfully erupts — make an Attack dealing 1d10 force damage (2d10 to inorganic targets like stone or metal).",
     gift: "Bludgeoner: When you deal damage with a blunt weapon or the force damage type, you physically hurl the target backward a short distance.",
     gear: [
       { name: "Ceramic Longstaff", desc: "1d10, Bulky." },
-      { name: "Cerakote Bandolier", desc: "(Armor 1) Holds up to 10 bombs or flasks, safe from damage or accidental triggering while stored." },
+      { name: "Cerakote Bandolier", desc: "(Armor 1, Outerlayer) Holds up to 10 bombs or flasks, safe from damage or accidental triggering while stored." },
       { name: "Metalminded", desc: "You can telekinetically manipulate unheld magnetic items." }
     ]
   },
@@ -252,18 +252,18 @@ const FATE_FLAVOR = {
   "Seven of Cups": {
     jobTitle: "Wizard Milk Gum Chef",
     spell: "Gumbuster (Short-Range, Target): You conjure a thick gummy blob at a point you can see; it can stick people and objects in place until the end of your next turn. Quite delicious to chew. You choose the color and flavor on cast.",
-    gift: "Hearty Feast: Three times per day you can spend an hour cooking a hearty meal that restores 1d6 Spirit to up to 6 companions.",
+    gift: "Hearty Feast: Once per day you can spend an hour cooking a hearty meal that restores 1d6 Spirit to up to 6 companions.",
     gear: [
-      { name: "Chef Hands", desc: "Enchanted with fire resistance — can't be harmed by normal cooking temperatures." },
-      { name: "Sauce Pan", desc: "(Armor 1) 1d4 as a shield or 1d6 as a weapon." },
-      { name: "Wizardglass Stock Pot", desc: "(Armor 1) Used as a helm." },
+      { name: "Chef Hands", desc: "Enchanted against fire — you take half Vigor damage from fire, and can't be harmed by normal cooking temperatures." },
+      { name: "Sauce Pan", desc: "(Armor 1, Shield) 1d4 as a shield or 1d6 as a weapon." },
+      { name: "Wizardglass Stock Pot", desc: "(Armor 1, Helmet) Used as a helm." },
       { name: "Chef-Knife", desc: "Razor sharp, 1d8." }
     ]
   },
   "Eight of Cups": {
     jobTitle: "Pudding Pit Deepcleaner",
     spell: "Gills (Self): You can breathe and swim underwater as if it were natural to you.",
-    gift: "Tough Hide: You gain resistance to an elemental damage type of your choice. ",
+    gift: "Tough Hide: Choose one elemental damage type — you take half Vigor damage from it.",
     gear: [
       { name: "Pudding Glove", desc: "1d6 acidic slime, ignores Armor — but destroys it." },
       { name: "Pudding Pouch", desc: "A bag that opens to a demiplane full of caustic puddings that eat anything tossed in; the opening can stretch to about 3 ft in diameter with effort." }
@@ -276,7 +276,7 @@ const FATE_FLAVOR = {
     gear: [
       { name: "Out-of-Service LAMP Badge", desc: "Still convincing, though technically illegal to use while suspended; gets you into places you shouldn't be." },
       { name: "LAMP Baton", desc: "1d8, can light up a bit or emit a high-pitched whistle." },
-      { name: "LAMP Uniform", desc: "(Armor 1) You look like police." }
+      { name: "LAMP Uniform", desc: "(Armor 1, Underlayer) You look like police." }
     ]
   },
   "Ten of Cups": {
@@ -331,7 +331,7 @@ const FATE_FLAVOR = {
     gift: "Battle-Pose: You can use a gambit to strike a Battle Pose until the end of your next turn — while posed you can't use your Move, but all your attacks increase by one die size, to a maximum of 1d12.",
     gear: [
       { name: "Avant Guard Edge", desc: "2d6, Hefty, crafted from ceramics and shaped to match exquisite new fashion." },
-      { name: "Avant Guard Wargown", desc: "(Armor 1) A fanciful ball gown or similar style outfit; not magnetic." }
+      { name: "Avant Guard Wargown", desc: "(Armor 1, Outerlayer) A fanciful ball gown or similar style outfit; not magnetic." }
     ]
   },
   "Two of Swords": {
@@ -348,14 +348,14 @@ const FATE_FLAVOR = {
     spell: "Spellflare (Long-Range, Target): A bright ball of energy fires a trail of light into the sky, revealing your location to friend or foe. If fired at an enemy, it counts as a 1d6 radiant attack.",
     gift: "Skirmisher: If you move and attack in the same turn, your Armor becomes 3 (if not already higher) until the start of your next turn.",
     gear: [
-      { name: "Fancy Hat", desc: "(Armor 1) Can be used as a weapon (losing its Armor if you do), has metal plates sewn in, 1d6 Hidden." },
+      { name: "Fancy Hat", desc: "(Armor 1, Helmet) Can be used as a weapon (losing its Armor if you do), has metal plates sewn in, 1d6 Hidden." },
       { name: "Bottle of Orphan-Ruin", desc: "6 oz of a sweet, milky drink — 1 oz pacifies any unease, 2 oz causes deep sleep, 3 oz causes eternal sleep." }
     ]
   },
   "Four of Swords": {
     jobTitle: "Thrallmart Corpsekeeper",
     spell: "Extract Essence (Touch): Drains a corpse of blood, creating a pill that grants a single use of one randomly determined special property the being had in life.",
-    gift: "Death-Ward: When you would die outright, you instead receive a Mortal Wound. If you'd receive a Mortal Wound from an attack, you ignore it until the end of combat.",
+    gift: "Death-Ward: When you would die outright, you instead receive a Mortal Wound. The first Mortal Wound you would receive each combat is ignored.",
     gear: [
       { name: "Auto-Auger", desc: "Digs holes quickly, maims quickly as well — 2d6, Bulky." },
       { name: "Sixth Sense", desc: "You can sense a corpse or other dead/undead thing up to a room away." }
@@ -377,7 +377,7 @@ const FATE_FLAVOR = {
     gear: [
       { name: "Navigator's Instinct", desc: "You are a skilled navigator and cannot get lost through non-magical means." },
       { name: "Squidhook", desc: "1d8, Hefty, 1d12 against cephalopods." },
-      { name: "Salvage Kit", desc: "50 ft of steel cable worn around the body (Armor 1), tie-downs, and SVAROG-brand salvage hooks." }
+      { name: "Salvage Kit", desc: "50 ft of steel cable worn around the body (Armor 1, Outerlayer), tie-downs, and SVAROG-brand salvage hooks." }
     ]
   },
   "Seven of Swords": {
@@ -386,7 +386,7 @@ const FATE_FLAVOR = {
     gift: "Silver-Tongue: An adept salesman — your eloquent lies are nearly always believed, no matter how ludicrous they might seem.",
     gear: [
       { name: "Strongwands WandBlaster", desc: "(PPW) 1d6, +1d6 at point-blank, silent." },
-      { name: "Sevenswords Uniform", desc: "(Armor 1) Armor sewn in, can hide up to 3 non-Bulky weapons. People don't like you." }
+      { name: "Sevenswords Uniform", desc: "(Armor 1, Underlayer) Armor sewn in, can hide up to 3 non-Bulky weapons. People don't like you." }
     ]
   },
   "Eight of Swords": {
@@ -402,7 +402,7 @@ const FATE_FLAVOR = {
   "Nine of Swords": {
     jobTitle: "Haunted Lundish Prison Guard",
     spell: "Erupted Limb (Self, Touch): You gain an extra arm for the next minute, usable against other limbed creatures to cause a limb to erupt somewhere unpleasant, leaving them Exposed until the end of your next turn, when the limb withers and falls off.",
-    gift: "Haunted Touch: You've touched some great, monstrous thing, granting you strange power. If you touch a limb, you can break the bone beneath — you can break necks the same way.",
+    gift: "Haunted Touch: You've touched some great, monstrous thing, granting you strange power. Use a Gambit to grapple a creature. While you hold a limb, you can break the bone beneath — you can break necks the same way.",
     gear: [
       { name: "Velvet Gloves", desc: "(Petty)" },
       { name: "Tactile Phrenology", desc: "An enhanced sense of touch, letting you sense moral and mental qualities by feeling a person's head." },
@@ -412,11 +412,11 @@ const FATE_FLAVOR = {
   "Ten of Swords": {
     jobTitle: "Gorescrubber",
     spell: "Devilbreath (Short-Range, Blast): You breathe a cloud of acrid smoke that melts away organic matter before quickly dissipating — 1d10 necrotic Blast.",
-    gift: "Gorespiration: When your attack results in a critical wound, you can immediately make another attack against any creature in range. (Feats that say 'attacks this round' still apply.)",
+    gift: "Gorespiration: When your attack results in a Mortal Wound, you can immediately make another attack against any creature in range. (Feats that say 'attacks this round' still apply.)",
     gear: [
       { name: "Long-Handled Wirebrush Gorescrubber", desc: "1d10, Bulky." },
       { name: "Safebreather", desc: "Protects from airborne toxins." },
-      { name: "Egodeath Protective Suit", desc: "(Armor 1) Immune to attacks from Simulacra." }
+      { name: "Egodeath Protective Suit", desc: "(Armor 1, Outerlayer) Immune to attacks from Simulacra." }
     ]
   },
   "Page of Swords": {
@@ -433,7 +433,7 @@ const FATE_FLAVOR = {
     spell: "Babbler: A creature must loudly and clearly repeat everything they think until you sever the connection.",
     gift: "Treasure-Sense: You can smell the presence of objects you'd find valuable, up to a room away.",
     gear: [
-      { name: "Repo-Man's Friend", desc: "(Armor 1) A suit of plate armor with anti-debt-dodger properties — can't be harmed by citizens of Lund delinquent on debt payments." },
+      { name: "Repo-Man's Friend", desc: "(Armor 1, Outerlayer) A suit of plate armor with anti-debt-dodger properties — can't be harmed by citizens of Lund delinquent on debt payments." },
       { name: "Debt-Dodger's Foe", desc: "An ornate club with anti-debt-dodger properties, 1d8, strikes fear into debt-dodgers — wounding one leaves them helpless and immobilized." }
     ]
   },
@@ -452,7 +452,7 @@ const FATE_FLAVOR = {
     spell: "Soulmelter (Short-Range, Blast): 1d8 Blast — creatures killed by this spell have their souls destroyed as their entire being melts into an oily, mucilaginous goo.",
     gift: "Warblooded: Your immune system and physical body are hardened — completely immune to mundane diseases and paralyzing toxins, and your Guard increases by 3.",
     gear: [
-      { name: "Old War Gear", desc: "Lead Vest (Armor 1), Cerakote Helmet (Armor 1), Trenchwand (1d8, Bulky, Blast, Short-Range)." },
+      { name: "Old War Gear", desc: "Lead Vest (Armor 1, Underlayer), Cerakote Helmet (Armor 1, Helmet), Trenchwand (1d8, Bulky, Blast, Short-Range)." },
       { name: "Old War Bond", desc: "Access to Veterans' Benefits from VOW, SVAROG, and Strongwands." },
       { name: "Old War Pocket-Rocket", desc: "2d10, single target, ranged, one-shot." }
     ]
@@ -469,7 +469,7 @@ const FATE_FLAVOR = {
   },
   "Two of Pentacles": {
     jobTitle: "Trove Pawnbroker",
-    spell: "Sling (Short-Range, Target): Telekinetically throw any melon-sized or smaller object with enough force to injure — 2d6 single-target attack.",
+    spell: "Sling (Short-Range, Target, Attack): Telekinetically throw any melon-sized or smaller object with enough force to injure — make a 2d6 single-target Attack.",
     gift: "Haggler : You always pay at least 10% less than listed prices. Sometimes even less.",
     gear: [
       { name: "X-Ray Monocle", desc: "Sees through walls if pressed against one." },
@@ -482,7 +482,7 @@ const FATE_FLAVOR = {
     spell: "Golden Prayer (Self, Blast): Until the end of your next turn, you and allies within a Blast add an extra 1d8 to all attacks.",
     gift: "Golden-Aura: Allies adjacent to you add an extra 1d4 to all attacks. When you receive a Mortal Wound, all adjacent allies gain 6 Guard, and your aura's bonus die changes to 1d12 for the rest of the combat.",
     gear: [
-      { name: "Gildguarders", desc: "Gilded Helm (Armor 1), Gilded Shield (Armor 1), and a Golden Rose-Head Mace (1d8, Hefty). Your items attract attention from strangers." }
+      { name: "Gildguarders", desc: "Gilded Helm (Armor 1, Helmet), Gilded Shield (Armor 1, Shield), and a Golden Rose-Head Mace (1d8, Hefty). Your items attract attention from strangers." }
     ]
   },
   "Four of Pentacles": {
@@ -490,7 +490,7 @@ const FATE_FLAVOR = {
     spell: "Alarm Snare (Touch): Place an invisible magical snare over a doorway or entrance that mentally alerts you when it catches a creature — unavoidable unless seen, and Impairs and immobilizes anyone caught for a turn.",
     gift: "Perceptive: It's very difficult for common people to hide or steal from you — you generally notice traps and hidden creatures before anyone else.",
     gear: [
-      { name: "Self-Defender", desc: "A magic shield (Armor 1) that emits paralytic bolts of static (1d6) — if it wounds an enemy, they lose 1d8 Grace." },
+      { name: "Self-Defender", desc: "A magic shield (Armor 1, Shield) that emits paralytic bolts of static (1d6) — if it wounds an enemy, they lose 1d8 Grace." },
       { name: "Menacing Aura", desc: "You can intimidate most people capable of being intimidated." }
     ]
   },
@@ -499,7 +499,7 @@ const FATE_FLAVOR = {
     spell: "Beastsense (Self): You gain extraordinarily keen senses until dismissed — smell, sight, and hearing enhanced, but you take on animalistic features that persist for as long as the spell is active.",
     gift: "Streetwise: You can't be caught by surprise or ambushed. Your movement speed is unmatched — you can automatically outrun any foe in a footrace unless cornered.",
     gear: [
-      { name: "Coldcloak", desc: "(Armor 1) Thick, rubbery cloak made from Salamandrake hide, making you appear cold-blooded to the heat-seeking automatons of Lund." },
+      { name: "Coldcloak", desc: "(Armor 1, Outerlayer) Thick, rubbery cloak made from Salamandrake hide, making you appear cold-blooded to the heat-seeking automatons of Lund." },
       { name: "Magshiv", desc: "1d6, Hidden, +1d12 extra against a helpless target — wounding a construct disables it for the next minute so long as the Magshiv stays lodged in it." }
     ]
   },
@@ -508,7 +508,7 @@ const FATE_FLAVOR = {
     spell: "Pocket (Self): You open a tiny demiplane capable of holding 3 inventory slots' worth of items, freely moved in or out while it's open.",
     gift: "Dungeon-Veteran: You have darkvision, and become Impassioned when surviving a dungeon or dungeon-like expedition.",
     gear: [
-      { name: "EotM Gold Shield Gauntlet", desc: "(Armor 1, 1d6) Engraved with your name and signed by your ex-coworkers." },
+      { name: "EotM Gold Shield Gauntlet", desc: "(Armor 1, Shield, 1d6) Engraved with your name and signed by your ex-coworkers." },
       { name: "Dark Dice", desc: "Two skull-marked dice of bone that produce a random Arcana effect when rolled — excellent entertainment." },
       { name: "Spare Cash", desc: "An extra 200x." }
     ]
@@ -519,7 +519,7 @@ const FATE_FLAVOR = {
     gift: "Green-Seer: You innately understand plants' needs and desires.",
     gear: [
       { name: "Master-Rake", desc: "(1d10, Long, Bulky) Adds 1d12 against plants or plantlike creatures." },
-      { name: "GardenGear Coveralls, Gloves, and Boots", desc: "(Armor 1) Protects from thorns, nettles, poisons, and other plant hazards." }
+      { name: "GardenGear Coveralls, Gloves, and Boots", desc: "(Armor 1, Underlayer) Protects from thorns, nettles, poisons, and other plant hazards." }
     ]
   },
   "Eight of Pentacles": {
@@ -562,7 +562,7 @@ const FATE_FLAVOR = {
     spell: "Animation Wax (Touch): You rub a magically conjured oil into objects, bringing them to life for the next hour — they serve you, unless there's more than one alive at once.",
     gift: "Mockery: You're not entirely human — you don't require air, food, water, or sleep, but can still put on a convincing imitation of such things.",
     gear: [
-      { name: "Salvaged Wump Gear", desc: "Rough-Shod Mail (Armor 1), Recycled Plate (Armor 1), Bent Helm (Armor 1), and a Maul (2d10, Slow) — all pulled from the Wump." }
+      { name: "Salvaged Wump Gear", desc: "Rough-Shod Mail (Armor 1, Underlayer), Recycled Plate (Armor 1, Outerlayer), Bent Helm (Armor 1, Helmet), and a Maul (2d10, Slow) — all pulled from the Wump." }
     ]
   },
   "Queen of Pentacles": {
@@ -570,7 +570,7 @@ const FATE_FLAVOR = {
     spell: "Slowfall (Self, Targets): For up to an hour, you and up to 3 other creatures you can see descend at a safe rate while this spell is active.",
     gift: "Natural Climber: A climb speed equal to your walking speed, and can climb near-sheer surfaces with effort.",
     gear: [
-      { name: "LTO Climber's Gear", desc: "Shell-Helm (Armor 1), Rock-Spike Gloves (Armor 1, 1d6), and a Vinehook — usable as a whip (1d6) or a sturdy climbing rope that secures itself or others and can move on its own." }
+      { name: "LTO Climber's Gear", desc: "Shell-Helm (Armor 1, Helmet), Rock-Spike Gloves (Armor 1, Underlayer, 1d6), and a Vinehook — usable as a whip (1d6) or a sturdy climbing rope that secures itself or others and can move on its own." }
     ]
   },
   "King of Pentacles": {
@@ -579,7 +579,7 @@ const FATE_FLAVOR = {
     gift: "Legal Acumen: Trained in the Laws of Lund's many Spokes — you know what is and isn't legally acceptable, and can often find a loophole to get out of a precarious legal jumble.",
     gear: [
       { name: "Magnificent Sceptre of Real-Estate Licensure", desc: "2d8, Hefty; can deal Spirit damage to the unhoused." },
-      { name: "Magnificent Commissions", desc: "Fine robes with inlaid plates (Armor 1) — everyone wants to touch your robe." }
+      { name: "Magnificent Commissions", desc: "Fine robes with inlaid plates (Armor 1, Outerlayer) — everyone wants to touch your robe." }
     ]
   }
 };
