@@ -1,5 +1,5 @@
 /* =====================================================================
-   THE LUND CODEX — FATE DATA
+   WELCOME TO LUND — FATE DATA
    =====================================================================
    Edit this file directly to add or change what a drawn Fate card grants.
    character-generation.html reads this file for both the Fate Draw tool

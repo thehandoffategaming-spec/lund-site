@@ -1,5 +1,5 @@
 /* =====================================================================
-   THE LUND CODEX — LOCATIONS DATA
+   WELCOME TO LUND — LOCATIONS DATA
    =====================================================================
    Edit this file directly to add, remove, or change businesses and
    locations. world-information.html reads this file and builds the

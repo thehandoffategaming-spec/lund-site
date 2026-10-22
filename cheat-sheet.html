@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rules Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Almendra+SC&family=Jost:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lund-theme.css">
+<style>
+  .print-bar{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin:0 0 28px; }
+  .print-btn{
+    font-family:'Jost',sans-serif; font-size:0.78rem; letter-spacing:0.115em; text-transform:uppercase;
+    background:transparent; color:var(--gold-bright); border:1px solid var(--gold); padding:10px 18px; cursor:pointer;
+  }
+  .print-btn:hover{ background:var(--gold); color:var(--ink); }
+  .print-help{ font-family:'Jost',sans-serif; font-style:italic; color:var(--parchment-dim); font-size:0.9rem; margin:0; max-width:640px; }
+  .sheet-label{ font-family:'Almendra SC',serif; letter-spacing:0.03em; font-size:1.3rem; color:var(--gold-bright); margin:30px 0 12px; }
+  .sheet{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:start; }
+  .panel{
+    background:var(--panel); border:1px solid var(--line); padding:18px 20px;
+    font-family:'Jost',sans-serif; font-size:0.9rem; line-height:1.45; color:var(--parchment);
+  }
+  .panel h3{
+    font-family:'Almendra SC',serif; letter-spacing:0.05em; font-size:1rem; color:var(--gold-bright);
+    margin:16px 0 8px; padding-bottom:4px; border-bottom:1px solid var(--line); text-transform:uppercase;
+  }
+  .panel h3:first-child{ margin-top:0; }
+  .panel h4{ font-size:0.86rem; margin:12px 0 4px; color:var(--parchment); }
+  .panel p{ margin:0 0 8px; }
+  .panel ul, .panel ol{ margin:0 0 8px; padding-left:20px; }
+  .panel li{ margin-bottom:4px; }
+  .panel table{ width:100%; border-collapse:collapse; margin:4px 0 8px; font-size:0.82rem; }
+  .panel th, .panel td{ border:1px solid var(--line); padding:3px 6px; text-align:left; vertical-align:top; }
+  .panel th{ color:var(--gold-bright); background:rgba(184,147,63,0.12); }
+  .example{ border:1px solid var(--line); padding:8px 10px; margin:8px 0; font-size:0.84rem; }
+  .cs-title{ text-align:center; border-bottom:1px solid var(--line); padding-bottom:10px; margin-bottom:12px; }
+  .cs-title .big{ font-family:'Almendra SC',serif; font-size:2.4rem; letter-spacing:0.08em; color:var(--gold-bright); line-height:1.1; }
+  .cs-title .sub{ font-style:italic; color:var(--parchment-dim); font-size:0.85rem; }
+  @media (max-width:900px){ .sheet{ grid-template-columns:1fr; } }
+
+  /* ---------- Print: two landscape Letter pages (inside, outside), black on white ---------- */
+  @page{ size:11in 8.5in; margin:0; }
+  @media print{
+    html, body{ background:#fff !important; color:#000 !important; }
+    .mast, .page-hero, .print-bar, .sheet-label, .site-footer{ display:none !important; }
+    .content{ padding:0 !important; margin:0 !important; max-width:none !important; }
+    .sheet{ display:grid; grid-template-columns:repeat(3,3.6667in); gap:0; width:11in; height:8.5in; page-break-after:always; break-after:page; align-items:stretch; }
+    .sheet:last-of-type{ page-break-after:auto; break-after:auto; }
+    .panel{
+      background:#fff !important; color:#000 !important; border:1.5px solid #000; outline:0.5px solid #000; outline-offset:-5px;
+      padding:0.3in 0.28in; font-family:'DejaVu Serif Condensed','Times New Roman',serif; font-size:8.6pt; line-height:1.28; overflow:hidden;
+    }
+    .panel h3{ background:#000; color:#fff !important; border:0; padding:3px 6px; margin:12px 0 6px; font-family:Arial,sans-serif; font-size:8.8pt; letter-spacing:0.06em; }
+    .panel h3:first-child{ margin-top:0; }
+    .panel h4{ color:#000; }
+    .panel th, .panel td{ border:1px solid #000; }
+    .panel th{ background:#e6e6e6; color:#000; }
+    .example{ border:1px solid #000; }
+    .cs-title{ border-bottom:1px solid #000; }
+    .cs-title .big{ color:#000; font-size:30pt; }
+    .cs-title .sub{ color:#000; }
+  }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <a class="mark" href="index.html">Welcome to Lund</a>
+  <nav>
+    <a href="general-rules.html">I · Rules</a>
+    <a href="item-tables.html">II · Items</a>
+    <a href="arcana-tables.html">III · Arcana</a>
+    <a href="world-information.html">IV · World</a>
+    <a href="character-generation.html">V · Characters</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="eyebrow">Handout</div>
+  <h1>Rules Cheat Sheet</h1>
+  <p class="lede">A tri-fold quick reference for new players. Everything needed to take a first turn.</p>
+</div>
+
+<main class="content">
+  <div class="print-bar">
+    <button class="print-btn" onclick="window.print()">Print this sheet</button>
+    <p class="print-help">Print double-sided on Letter paper, landscape, flipping on the short edge, with margins set to None and background graphics on. Then fold into thirds: the Cover panel faces out.</p>
+  </div>
+
+  <h2 class="sheet-label">Page 1 &mdash; Inside</h2>
+  <div class="sheet">
+      <section class="panel" aria-label="Turns and attacks">
+        <h3>Your Turn</h3>
+        <ul>
+        <li>A turn is a <b>Move</b> (about 10 m) and an <b>Action</b>, in either order.</li>
+        <li>Actions: <b>Attack</b>, <b>cast a Spell</b>, or <b>Aid</b> an ally.</li>
+        <li>No initiative. All players act first, then the enemies.</li>
+        <li>In touch range of a foe? You can only move away if you still have Guard, or an ally helps cover you.</li>
+        </ul>
+        <h3>Making an Attack</h3>
+        <p>Take the dice listed on your weapons, shield, and bonuses. Then, in order:</p>
+        <ol>
+        <li>Everyone attacking the same target <b>rolls at the same time</b>.</li>
+        <li>The target (or a nearby ally) may <b>Deny</b>.</li>
+        <li>Attackers may spend dice on <b>Gambits</b>.</li>
+        <li>Take the <b>highest</b> die left.</li>
+        <li>Add <b>Bolster</b> damage from allies.</li>
+        <li>Subtract the target's <b>Armor</b>.</li>
+        <li>The result is the <b>Damage</b>.</li>
+        </ol>
+        <h4>Attack Modifiers</h4>
+        <ul>
+        <li><b>Impaired:</b> roll a single d4 only; no bonus dice, no Feats.</li>
+        <li><b>Enhanced:</b> gain a bonus die (a d8 unless stated).</li>
+        <li><b>Blast:</b> hits everyone in the area; roll against each separately.</li>
+        </ul>
+        <div class="example"><b>Example.</b> A mace (d8), a shield (d4), and an ally with two daggers (d6 each) roll 7, 3, 1, 5. Highest is 7. The 5 is spent to Bolster: Damage 8. Target Armor 2 leaves <b>6 Damage</b>.</div>
+      </section>
+      <section class="panel" aria-label="Gambits and damage">
+        <h3>Gambits</h3>
+        <p>Discard any Attack dice showing <b>4 or higher</b>. Each die buys one effect. The foe must be a target of your Attack. Except Bolster and Move, the target gets a <b>Vigor Save</b> to ignore it.</p>
+        <ul>
+        <li><b>Bolster:</b> +1 total Damage.</li>
+        <li><b>Move</b> after the Attack, even if you already moved.</li>
+        <li><b>Repel</b> a foe away from you.</li>
+        <li><b>Stop</b> a foe from moving next turn.</li>
+        <li><b>Impair</b> a foe's weapon or spellcasting next turn.</li>
+        <li><b>Trap</b> a shield, or <b>silence</b> a caster, until your next turn.</li>
+        <li><b>Dismount</b> a foe or disable a vehicle until your next turn.</li>
+        <li>Another effect of similar impact.</li>
+        </ul>
+        <h4>Strong Gambit</h4>
+        <p>If a die of <b>8 or higher</b> is used in <i>any</i> Attack (melee, ranged, or spell), choose one: <b>no Save</b> for the target, or a <b>greater effect</b> (disarm, break a wooden shield or weapon, remove a helm). A greater effect does not raise Bolster.</p>
+        <h3>Damage</h3>
+        <ol>
+        <li>Damage comes off <b>Guard</b>. At least 1 Guard left: you <b>Evade</b>.</li>
+        <li>Exactly <b>0 Guard</b> left: you gain a <b>Scar</b>.</li>
+        <li>Excess past Guard comes off <b>Vigor</b>: you are <b>Wounded</b>.</li>
+        <li>Lose <b>half or more</b> of your remaining Vigor: <b>Mortal Wound</b>. Down and dying; dead in an hour unless tended, but can be patched up in moments.</li>
+        <li>Vigor reaches 0: <b>Slain</b>.</li>
+        </ol>
+      </section>
+      <section class="panel" aria-label="Feats">
+        <h3>Feats</h3>
+        <p>Special actions. Each Feat can be used once per Attack by each combatant. After use, make the Save or become <b>Fatigued</b> (no Feats until a Short Rest).</p>
+        <table><tr><th>Feat</th><th>What it does</th><th>Save</th></tr><tr><td><b>Deny</b><br/>Universal</td><td>After an Attack roll vs. you or an ally within reach, discard one of its dice.</td><td>Grace</td></tr><tr><td><b>Focus</b><br/>Universal</td><td>After rolling an Attack, perform a Gambit without spending a die.</td><td>Spirit</td></tr><tr><td><b>Divine Smite</b><br/>Pentacles</td><td>Before a melee Attack without Blast: it gains +1d12.</td><td>Vigor</td></tr><tr><td><b>Cleave</b><br/>Swords</td><td>Before a melee Attack: it gains Blast.</td><td>Vigor</td></tr><tr><td><b>Masterstrike</b><br/>Swords</td><td>Before an Attack without Blast: it ignores Armor.</td><td>Vigor</td></tr><tr><td><b>Morph</b><br/>Wands</td><td>When you see a spell cast, modify it: ignore allies in Blast, add or remove Blast, change cost, change damage type, add or remove a target, or cast without sound or gesture.</td><td>Spirit</td></tr><tr><td><b>Humiliate</b><br/>Cups</td><td>When dealing Damage, choose which Virtue is damaged.</td><td>Spirit</td></tr><tr><td><b>Ruse</b><br/>Cups</td><td>Before an Attack, make two Attacks and pick one to use.</td><td>Grace</td></tr></table>
+      </section>
+  </div>
+
+  <h2 class="sheet-label">Page 2 &mdash; Outside</h2>
+  <div class="sheet">
+      <section class="panel" aria-label="Conditions, scars, inventory">
+        <h3>Conditions</h3>
+        <table><tr><td>Fatigued</td><td>No Feats until you rest</td></tr><tr><td>Exhausted</td><td>Cannot Attack if you moved</td></tr><tr><td>Exposed</td><td>Guard set to 0</td></tr><tr><td>Impaired</td><td>Attacks roll a single d4</td></tr><tr><td>Vulnerable</td><td>Attacks against you are Enhanced</td></tr><tr><td>Deprived</td><td>Cannot benefit from resting</td></tr><tr><td>Dazed</td><td>Cannot perform Gambits</td></tr><tr><td>Bound</td><td>Cannot move</td></tr><tr><td>Shaken</td><td>Disadvantage on Spirit Checks and Saves</td></tr></table>
+        <h3>Scars</h3>
+        <ul>
+        <li>Gained when an Attack leaves you at <b>exactly 0 Guard</b> in real, deadly combat.</li>
+        <li>Re-roll the die that caused it, <b>add your current Scar count</b>, and read the Scar table in the Rules.</li>
+        <li>Effects clear at season's end or from a specialist. The <b>tally never resets</b>. Every 3 Scars grants 1 Experience.</li>
+        <li><b>Magical Scars</b> come from spell Attacks that leave you at 0 Guard, or from spells that say so. They use their own table.</li>
+        </ul>
+        <h3>Inventory</h3>
+        <ul>
+        <li><b>10 Item slots</b>. Fill the tenth and you are <b>Encumbered</b>: Guard set to 0.</li>
+        <li>Worn gear takes no slot, except <b>Bulky</b> items, which take one.</li>
+        <li>Wear up to four armor pieces: <b>Shield</b>, <b>Helm</b>, <b>Underlayer</b> (such as a Gambeson), <b>Outer Layer</b> (such as Plate).</li>
+        <li><b>Petty</b> items take no slot. Bombs, Flasks, Vials, and Syringes store three per slot. Remedies take a full slot each.</li>
+        </ul>
+      </section>
+      <section class="panel" aria-label="Spellcasting and rest">
+        <h3>Spellcasting</h3>
+        <ul>
+        <li>Casting is an <b>Action</b>. Morph (yours first, then others) is applied before the spell resolves.</li>
+        <li>Then pay the <b>cost</b> from <b>Spirit</b> unless the spell says otherwise. Costs are 0, 2, 4, or 8.</li>
+        <li><b>Overflow:</b> cost beyond your Spirit comes out of <b>Vigor</b>. If Vigor was already the casting Virtue, you suffer a <b>Mortal Wound</b>.</li>
+        <li>Spells take effect at once and rarely allow a Save, only when the target would be disabled, helpless, or wholly ineffective.</li>
+        <li>You can hold <b>10 spells</b> in memory.</li>
+        </ul>
+        <h4>Ranges</h4>
+        <p><b>Self</b> · <b>Touch</b> (1 m) · <b>Short</b> (10 m) · <b>Long</b> (100 m) · <b>Extreme</b> (500 m)</p>
+        <h4>Spell Qualities</h4>
+        <ul>
+        <li><b>Attack:</b> uses the Attacking rules with the spell's dice.</li>
+        <li><b>Direct damage:</b> lowers a Virtue as stated, ignoring Guard and Armor. Not an Attack.</li>
+        <li><b>Blast:</b> the die size is the baseline number of normal-sized creatures it can hold. A 2d8 Blast hits up to 8.</li>
+        <li><b>Curse:</b> lasts until the caster is killed or a specialist removes it. One instance per caster at a time.</li>
+        </ul>
+        <h3>Fatigue & Rest</h3>
+        <ul>
+        <li><b>Short Rest</b> (minutes): restores Guard, removes Fatigue.</li>
+        <li><b>Night's Rest</b> (safe place, food, lodging): restores Vigor to full.</li>
+        <li><b>Full Rest</b> (a week, safe): restores all Virtues.</li>
+        <li><b>Remedy:</b> an hour, serves up to four Fatekin, restores 6 points of its Virtue.</li>
+        </ul>
+      </section>
+      <section class="panel" aria-label="Cover">
+        <div class="cs-title"><div class="big">LUND</div><div class="sub">Quick Rules for New Fatekin</div></div>
+        <h3>The One Rule</h3>
+        <p>Roll a <b>d20</b>. If it is <b>equal to or under</b> the Virtue being tested, you pass. Rolling low is good.</p>
+        <h3>Virtues</h3>
+        <table><tr><th>Virtue</th><th>Stands for</th><th>At 0</th></tr><tr><td>Vigor</td><td>Strong body, sturdy bones, mighty heart</td><td><b>Exhausted</b>: cannot Attack if you moved</td></tr><tr><td>Grace</td><td>Keen thought, swift reflex, flawless motion</td><td><b>Impaired</b>: Attacks roll a single d4</td></tr><tr><td>Spirit</td><td>Composed mind, striking presence, guarded soul</td><td><b>Exposed</b>: Guard set to 0</td></tr></table>
+        <p>Virtues range 0 to 19. Each is rolled 1d6 + 1d12.</p>
+        <h4>Virtue Loss</h4>
+        <p>Loss that is not Damage (spell costs, Scars, Fatigue effects). It can <b>never</b> Mortally Wound or Slay.</p>
+        <h3>Guard & Armor</h3>
+        <ul>
+        <li><b>Guard</b> is a pool (rolled 1d6). Damage comes off Guard before any Virtue. While you have at least 1 Guard, you <b>Evade</b> the hit.</li>
+        <li><b>Armor</b> reduces Damage <i>before</i> it reaches Guard.</li>
+        <li>Without Guard, you cannot walk away from a foe in touch range unless an ally assists your retreat.</li>
+        </ul>
+        <h3>Saves & Checks</h3>
+        <ul>
+        <li><b>Save</b> (resist something) or <b>Check</b> (attempt something): roll d20, equal to or under the Virtue passes. Failure means a consequence, not always a failed action.</li>
+        <li><b>Opposed Check:</b> the lower roll wins, but only if it is at or under the Virtue. Whoever has the most to lose wins ties.</li>
+        <li><b>Advantage:</b> roll 2d20, keep the <b>lower</b>. <b>Disadvantage:</b> roll 2d20, keep the <b>higher</b>.</li>
+        </ul>
+      </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <span>Rules Cheat Sheet</span>
+  <span><a href="cheat-sheet.html">Rules Cheat Sheet</a> · <a href="Lund_Sheet_v6.pdf" target="_blank" rel="noopener">Character Sheet</a></span>
+  <span><a href="index.html">↑ Back to Index</a></span>
+</footer>
+
+</body>
+</html>

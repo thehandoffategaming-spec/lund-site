@@ -1,5 +1,5 @@
 /* =====================================================================
-   THE LUND CODEX — SPELL DATA
+   WELCOME TO LUND — SPELL DATA
    =====================================================================
    Edit this file directly to add, remove, or change spells. arcana-tables.html
    reads this file and builds its tables from it automatically — you never
