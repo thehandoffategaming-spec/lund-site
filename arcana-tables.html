@@ -301,12 +301,14 @@
     "self": "Self — the spell affects only its caster.",
     "target": "Target — the spell targets a creature or object, rather than the caster or an area.",
     "attack": "Attack — the spell deals damage through an Attack, resolved like a normal Attack: Guard and Armor reduce the damage before it lands.",
-    "virtue damage": "Virtue Damage — the spell deals damage directly to a Virtue, ignoring both Guard and Armor entirely.",
-    "touch": "Touch — the spell requires physical contact with its target, within a meter.",
-    "medium-range": "Medium-Range — effective within 10 meters.",
-    "long-range": "Long-Range — effective within 100 meters.",
-	"extreme-range": "Extreme-Range - effective within 500 meters.",
-    "blast": "Blast — the spell can affect more than one creature at once; the die size used sets the maximum number of normal-sized creatures it can contain.",
+    "virtue loss": "Virtue Loss — the spell reduces a Virtue directly, ignoring both Guard and Armor entirely. It is not Damage and cannot Mortally Wound or Slay.",
+    "touch": "Touch — the spell requires its target to be Engaged with you, within reach.",
+    "short-range": "Short-Range — effective on a target Engaged with you, no contact needed. Can be used against enemies in melee.",
+    "medium-range": "Medium-Range — effective anywhere in your zone.",
+    "long-range": "Long-Range — effective in your zone or an adjacent zone you can see.",
+	"extreme-range": "Extreme-Range — effective anywhere you have line of sight.",
+    "blast (small)": "Blast (Small) — pick a target. The spell hits that target and every creature Engaged with it.",
+    "blast (large)": "Blast (Large) — the spell hits every creature in a single zone.",
     "curse": "Curse — tends to be long-lasting unless stated otherwise. Removing one usually requires killing the caster or a specialist's help."
   };
 
@@ -354,7 +356,7 @@
   function parseFateSpell(cardName, raw){
     if(!raw) return null;
     let name, paren, effect;
-    let m = raw.match(/^(.+?)\s*\(([^)]*)\):\s*([\s\S]*)$/);
+    let m = raw.match(/^(.+?)\s*\(((?:[^()]|\([^()]*\))*)\):\s*([\s\S]*)$/);
     if(m){
       name = m[1].trim();
       paren = m[2].trim();

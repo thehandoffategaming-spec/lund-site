@@ -25,6 +25,20 @@
     font-size:0.95rem;
     margin: 0 0 20px;
   }
+  .qdetails summary{
+    font-family:'Almendra SC', serif;
+    letter-spacing:0.03em;
+    font-size:1.55rem;
+    color: var(--gold-bright);
+    cursor:pointer;
+    list-style:none;
+    margin: 0 0 14px;
+  }
+  .qdetails summary::-webkit-details-marker{ display:none; }
+  .qdetails summary::before{ content:"\25B8"; display:inline-block; width:1.1em; font-size:0.9em; transition:transform 0.15s ease; }
+  .qdetails[open] summary::before{ transform:rotate(90deg); }
+  .qdetails summary:hover{ color: var(--parchment); }
+  .qualities-block.hide-q{ display:none; }
   .quality-grid{
     display:grid;
     grid-template-columns: repeat(2, 1fr);
@@ -198,7 +212,8 @@
 <main class="content">
 
   <div class="qualities-block">
-    <h2>Weapon Qualities</h2>
+    <details class="qdetails">
+      <summary>Weapon Qualities</summary>
     <div class="quality-grid">
       <div class="quality-card">
         <h3>Hefty</h3>
@@ -213,24 +228,28 @@
         <p>The weapon is Impaired when used in tight spaces, and it requires two hands to use.</p>
       </div>
       <div class="quality-card">
-        <h3>Blast</h3>
-        <p>The weapon can be used to make Blast attacks naturally.</p>
+        <h3>Blast (Small)</h3>
+        <p>Pick a target. The attack hits that target and every creature Engaged with it.</p>
+      </div>
+      <div class="quality-card">
+        <h3>Blast (Large)</h3>
+        <p>The attack hits every creature in a single zone.</p>
       </div>
 	  <div class="quality-card">
         <h3>Short-Range</h3>
-        <p>A quality of some ranged weapons, denoting an effective range of touch, within a meter.</p>
+        <p>A quality of some ranged weapons, denoting an effective range of Engaged: the target must be within your reach. Only weapons or spells with this quality can make ranged Attacks against an enemy Engaged with you.</p>
       </div>
       <div class="quality-card">
         <h3>Medium-Range</h3>
-        <p>A quality of ranged weapons, denoting an effective range of up to 10 meters.</p>
+        <p>A quality of ranged weapons, denoting an effective range of anywhere in your zone.</p>
       </div>
       <div class="quality-card">
         <h3>Long-Range</h3>
-        <p>A quality of ranged weapons, denoting an effective range of up to 100 meters.</p>
+        <p>A quality of ranged weapons, denoting an effective range of your zone and any adjacent zone you can see.</p>
       </div>
 	  <div class="quality-card">
         <h3>Extreme-Range</h3>
-        <p>A quality of ranged weapons, denoting an effective range of up to 500 meters.</p>
+        <p>A quality of ranged weapons, denoting an effective range of anywhere you have line of sight.</p>
       </div>
 	  <div class="quality-card">
         <h3>Slow</h3>
@@ -245,10 +264,12 @@
         <p>Can be easily hidden on your person, avoiding detection without a Check.</p>
       </div>
     </div>
+    </details>
   </div>
 
   <div class="qualities-block">
-    <h2>Armor Qualities</h2>
+    <details class="qdetails">
+      <summary>Armor Qualities</summary>
     <div class="quality-grid">
       <div class="quality-card">
         <h3>Underlayer</h3>
@@ -267,6 +288,7 @@
         <p>Armor carried in the hand. It is its own armor category, neither Underlayer nor Outerlayer, so it stacks with both.</p>
       </div>
     </div>
+    </details>
   </div>
 
   <div class="cat-tabs" role="tablist" aria-label="Item rarity">
@@ -294,19 +316,20 @@
       <tr><td><span class="entry-name">Dagger, Cudgel, Sickle, Staff, etc.</span> <span class="detail">(d6 damage)</span></td><td class="cost">50x</td></tr>
       <tr><td><span class="entry-name">Spear, Sword, Mace, Axe, Flail, etc.</span> <span class="detail">(d8 damage, <span class="qterm" data-q="hefty">Hefty</span>)</span></td><td class="cost">150x</td></tr>
       <tr><td><span class="entry-name">Halberd, War Hammer, Long Sword, etc.</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">300x</td></tr>
-      <tr><td><span class="entry-name">Slinger-Wand</span> <span class="detail">(d6 damage, <span class="qterm" data-q="medium-range">Medium-Range</span>) — can throw Bombs</span></td><td class="cost">50x</td></tr>
+      <tr><td><span class="entry-name">Slinger-Wand</span> <span class="detail">(d6 damage, <span class="qterm" data-q="long-range">Long-Range</span>) — can throw Bombs</span></td><td class="cost">50x</td></tr>
       <tr><td><span class="entry-name">Bow</span> <span class="detail">(d8 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">200x</td></tr>
       <tr><td><span class="entry-name">Crossbow</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>) — can fire syringes</span></td><td class="cost">300x</td></tr>
     </table>
 
     <h3 class="item-subhead">Common Consumables</h3>
+    <p style="font-family:'Jost',sans-serif; font-style:italic; color:var(--parchment-dim); font-size:0.88rem; margin-top:-8px;">Bombs are thrown at Long-Range: at a target in your zone, or in an adjacent zone you can see. Unless a bomb says otherwise, it is Blast (Small), catching the target and every creature Engaged with it.</p>
     <table class="items">
       <tr>
         <td>
           <ul class="item-list">
             <li><span class="entry-name">VOW-Surplus Firebombs</span> — 1d6 fire per round</li>
             <li><span class="entry-name">Slam-Bombs</span> — slams all windows and doors</li>
-            <li><span class="entry-name">Spike-Bombs</span> <span class="detail">(Recalled)</span> — 1d8 <span class="qterm" data-q="blast">Blast</span> at your own feet; you're always in the blast, which is why they're the cheapest. There is a 50% chance they blow up in your hand if you try to throw or launch them</li>
+            <li><span class="entry-name">Spike-Bombs</span> <span class="detail">(Recalled)</span> — 1d8 <span class="qterm" data-q="blast-small">Blast (Small)</span> at your own feet; you're always in the blast, which is why they're the cheapest. There is a 50% chance they blow up in your hand if you try to throw or launch them</li>
           </ul>
         </td>
         <td class="cost">50x</td>
@@ -317,7 +340,7 @@
             <li><span class="entry-name">VOW-Surplus Flashbombs</span> — Grace save or Blinded for 1 round</li>
             <li><span class="entry-name">Smokebombs</span> — Impairs all attacks made within the smoke</li>
             <li><span class="entry-name">Safety-Fire-Bombs</span> — doesn't harm living tissue</li>
-            <li><span class="entry-name">Trench-Bombs</span> — 1d10 <span class="qterm" data-q="blast">Blast</span></li>
+            <li><span class="entry-name">Trench-Bombs</span> — 1d10 <span class="qterm" data-q="blast-small">Blast (Small)</span></li>
           </ul>
         </td>
         <td class="cost">100x</td>
@@ -358,9 +381,9 @@
       <tr><td><span class="entry-name">Masterwork Weapons: Longsword, etc.</span> <span class="detail">(2d8 damage, <span class="qterm" data-q="hefty">Hefty</span>)</span></td><td class="cost">800x</td></tr>
       <tr><td><span class="entry-name">Old War Weapons: Greatsword, Waraxe</span> <span class="detail">(2d10 damage, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">1200x</td></tr>
       <tr><td><span class="entry-name">Longbow</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long">Long</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">600x</td></tr>
-      <tr><td><span class="entry-name">Scatterwand</span> <span class="detail">(1d8 <span class="qterm" data-q="blast">Blast</span>, <span class="qterm" data-q="hefty">Hefty</span>, <span class="qterm" data-q="medium-range">Medium-Range</span>)</span></td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Scatterwand</span> <span class="detail">(1d8 <span class="qterm" data-q="blast-small">Blast (Small)</span>, <span class="qterm" data-q="hefty">Hefty</span>, <span class="qterm" data-q="medium-range">Medium-Range</span>)</span></td><td class="cost">800x</td></tr>
       <tr><td><span class="entry-name">Long-Wand</span> <span class="detail">(1d12, <span class="qterm" data-q="long">Long</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">800x</td></tr>
-      <tr><td><span class="entry-name">Launch-Wand</span> <span class="detail">(2d6 damage, <span class="qterm" data-q="bulky">Bulky</span>) — can fire syringes and Bombs</span></td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Launch-Wand</span> <span class="detail">(2d6 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="extreme-range">Extreme-Range</span>) — can fire syringes and Bombs</span></td><td class="cost">800x</td></tr>
       <tr><td><span class="entry-name">Hand-Wand</span> <span class="detail">(1d8, <span class="qterm" data-q="medium-range">Medium-Range</span>)</span></td><td class="cost">600x</td></tr>
     </table>
 
@@ -370,7 +393,7 @@
         <td>
           <span style="display:block; margin-bottom:8px; color:var(--gold-bright); font-style:normal; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.115em; text-transform:uppercase;">VOW-Surplus Branded</span>
           <ul class="item-list">
-            <li><span class="entry-name">Tinybomb</span> — 1d8 <span class="qterm" data-q="blast">Blast</span>; fits under the tongue</li>
+            <li><span class="entry-name">Tinybomb</span> — 1d8 <span class="qterm" data-q="blast-small">Blast (Small)</span>; fits under the tongue</li>
           </ul>
         </td>
         <td class="cost">75x</td>
@@ -380,7 +403,7 @@
           <span style="display:block; margin-bottom:8px; color:var(--gold-bright); font-style:normal; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.115em; text-transform:uppercase;">VOW-Surplus Branded — Heavy Ordnance</span>
           <ul class="item-list">
             <li><span class="entry-name">Toxic Smokebombs</span> — Impairs all attacks made within the smoke; 1d6 ongoing damage</li>
-            <li><span class="entry-name">Vault-Bombs</span> — 1d12, Large <span class="qterm" data-q="blast">Blast</span></li>
+            <li><span class="entry-name">Vault-Bombs</span> — 1d12, <span class="qterm" data-q="blast-large">Blast (Large)</span></li>
           </ul>
         </td>
         <td class="cost">150x</td>
@@ -389,9 +412,9 @@
         <td>
           <span style="display:block; margin-bottom:8px; color:var(--gold-bright); font-style:normal; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.115em; text-transform:uppercase;">Trove Branded</span>
           <ul class="item-list">
-            <li><span class="entry-name">Timebombs</span> — slows time in a 10 ft sphere for 60 seconds</li>
-            <li><span class="entry-name">Anti-Magic Bombs</span> — does no harm, but disables anything magical in the blast for 1 minute</li>
-            <li><span class="entry-name">Crank-Bombs</span> — roll a d6 every turn to add to its damage before throwing; if damage exceeds 12, it explodes in your hand, dealing 12 damage to everyone in the blast radius</li>
+            <li><span class="entry-name">Timebombs</span> — slows time in a single zone for 60 seconds</li>
+            <li><span class="entry-name">Anti-Magic Bombs</span> — does no harm, but disables anything magical in a <span class="qterm" data-q="blast-large">Blast (Large)</span> for 1 minute</li>
+            <li><span class="entry-name">Crank-Bombs</span> — roll a d6 every turn to add to its damage before throwing; if damage exceeds 12, it explodes in your hand, dealing 12 damage to everyone in the <span class="qterm" data-q="blast-small">Blast (Small)</span></li>
           </ul>
         </td>
         <td class="cost">150x</td>
@@ -416,8 +439,8 @@
 
     <h3 class="item-subhead">Special Weapons</h3>
     <table class="items">
-      <tr><td><span class="entry-name">Blunderwand</span> <span class="detail">(2d10, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="blast">Blast</span>, <span class="qterm" data-q="medium-range">Medium-Range</span>) — repels humanoid-sized enemies on wound</span></td><td class="cost">2000x</td></tr>
-      <tr><td><span class="entry-name">Cinder-Spout</span> <span class="detail">(2d12, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="blast">Blast</span>, <span class="qterm" data-q="short-range">Short-Range</span>) — on wound, the target is ignited and takes 1d10 damage per turn</span></td><td class="cost">2000x</td></tr>
+      <tr><td><span class="entry-name">Blunderwand</span> <span class="detail">(2d10, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="blast-small">Blast (Small)</span>, <span class="qterm" data-q="medium-range">Medium-Range</span>) — repels humanoid-sized enemies on wound</span></td><td class="cost">2000x</td></tr>
+      <tr><td><span class="entry-name">Cinder-Spout</span> <span class="detail">(2d12, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="blast-small">Blast (Small)</span>, <span class="qterm" data-q="short-range">Short-Range</span>) — on wound, the target is ignited and takes 1d10 damage per turn</span></td><td class="cost">2000x</td></tr>
       <tr><td><span class="entry-name">Flare-Wand</span> <span class="detail">(1d10, <span class="qterm" data-q="short-range">Short-Range</span>) — high-intensity flare, visible from 25km away</span></td><td class="cost">200x</td></tr>
       <tr><td><span class="entry-name">Resin Sprayer</span> <span class="detail">(no damage, <span class="qterm" data-q="bulky">Bulky</span>, Touch) — quick-hardening foam: Vigor save to avoid or become stuck. Fire retardant</span></td><td class="cost">500x</td></tr>
       <tr><td><span class="entry-name">Spike-Driver</span> <span class="detail">(1d10, Melee, <span class="qterm" data-q="hefty">Hefty</span>) — deals double damage to Vigor</span></td><td class="cost">1000x</td></tr>
@@ -459,20 +482,20 @@
   <section class="item-section hidden" data-cat="vehicles">
 
     <h3 class="item-subhead">Vehicles</h3>
-    <p style="font-family:'Jost',sans-serif; font-style:italic; color:var(--parchment-dim); font-size:0.88rem; margin-top:-8px;">Vehicles use Guard instead of Virtues. See Structures &amp; Vehicles in Chapter I for collisions, Wrecked vehicles, and Pilots.</p>
+    <p style="font-family:'Jost',sans-serif; font-style:italic; color:var(--parchment-dim); font-size:0.88rem; margin-top:-8px;">Vehicles use Guard instead of Virtues, and a Speed measured in zones. See Structures &amp; Vehicles in Chapter I for collisions, Wrecked vehicles, and Pilots.</p>
     <table class="items">
-      <tr><td><span class="entry-name">Pedalcycle</span> <span class="detail">(Guard 3, Armor 1)</span></td><td class="cost">TBD</td></tr>
-      <tr><td><span class="entry-name">Magecycle</span> <span class="detail">(Guard 6, Armor 1)</span></td><td class="cost">TBD</td></tr>
-      <tr><td><span class="entry-name">Mage Carriage</span> <span class="detail">(Guard 8, Armor 2)</span></td><td class="cost">TBD</td></tr>
-      <tr><td><span class="entry-name">Luxury Mage Carriage</span> <span class="detail">(Guard 10, Armor 2)</span></td><td class="cost">TBD</td></tr>
+      <tr><td><span class="entry-name">Pedalcycle</span> <span class="detail">(Speed TBD, Guard 3, Armor 1)</span></td><td class="cost">TBD</td></tr>
+      <tr><td><span class="entry-name">Magecycle</span> <span class="detail">(Speed TBD, Guard 6, Armor 1)</span></td><td class="cost">TBD</td></tr>
+      <tr><td><span class="entry-name">Mage Carriage</span> <span class="detail">(Speed TBD, Guard 8, Armor 2)</span></td><td class="cost">TBD</td></tr>
+      <tr><td><span class="entry-name">Luxury Mage Carriage</span> <span class="detail">(Speed TBD, Guard 10, Armor 2)</span></td><td class="cost">TBD</td></tr>
     </table>
 
     <h3 class="item-subhead">Battle-Vehicles</h3>
     <p style="font-family:'Jost',sans-serif; font-style:italic; color:var(--parchment-dim); font-size:0.88rem; margin-top:-8px;">When a Battle-Vehicle attacks smaller, organic targets (like average humanoids), multiply all of its Damage dice by 5. A d6 becomes 5d6.</p>
     <table class="items">
-      <tr><td><span class="entry-name">GA-Charger</span> <span class="detail">(Guard 8, Armor 3. Flamecannon (d8 <span class="qterm" data-q="blast">Blast</span>), Power saw (d10). Crew: one Pilot-Gunner)</span></td><td class="cost">TBD</td></tr>
-      <tr><td><span class="entry-name">GA-Crawler</span> <span class="detail">(Guard 10, Armor 3. Two machine guns (d8 <span class="qterm" data-q="blast">Blast</span> each). Crew: one Pilot, one Gunner)</span></td><td class="cost">TBD</td></tr>
-      <tr><td><span class="entry-name">GA-Cruiser</span> <span class="detail">(Guard 18, Armor 4. Amphibious. Two long-cannons (d12 each), Grenade launcher (d8 <span class="qterm" data-q="blast">Blast</span>). Crew: one Pilot, two Gunners)</span></td><td class="cost">TBD</td></tr>
+      <tr><td><span class="entry-name">GA-Charger</span> <span class="detail">(Speed TBD, Guard 8, Armor 3. Flamecannon (d8 <span class="qterm" data-q="blast-small">Blast (Small)</span>), Power saw (d10). Crew: one Pilot-Gunner)</span></td><td class="cost">TBD</td></tr>
+      <tr><td><span class="entry-name">GA-Crawler</span> <span class="detail">(Speed TBD, Guard 10, Armor 3. Two machine guns (d8 <span class="qterm" data-q="blast-small">Blast (Small)</span> each). Crew: one Pilot, one Gunner)</span></td><td class="cost">TBD</td></tr>
+      <tr><td><span class="entry-name">GA-Cruiser</span> <span class="detail">(Speed TBD, Guard 18, Armor 4. Amphibious. Two long-cannons (d12 each), Grenade launcher (d8 <span class="qterm" data-q="blast-large">Blast (Large)</span>). Crew: one Pilot, two Gunners)</span></td><td class="cost">TBD</td></tr>
     </table>
   </section>
 
@@ -485,16 +508,16 @@
 
     <h3 class="item-subhead">Oddities (d10)</h3>
     <table class="items">
-      <tr><td><span class="entry-name">Borrowed-Luck Vial</span> <span class="detail">(Trove)</span> — Once per day, reroll a failed Save or Check. <em>Quirk:</em> someone nearby, chosen by the GM, suffers a small misfortune.</td><td class="cost">1</td></tr>
-      <tr><td><span class="entry-name">Smoke-Lantern</span> <span class="detail">(Cerakote)</span> — its light reveals invisible and ethereal things within 10 meters. <em>Quirk:</em> anything it reveals can see you, too.</td><td class="cost">2</td></tr>
-      <tr><td><span class="entry-name">Remembering Key</span> <span class="detail">(Magimend)</span> — opens any mundane lock. <em>Quirk:</em> it remembers every door it opens, and sometimes tells the owner.</td><td class="cost">3</td></tr>
-      <tr><td><span class="entry-name">Glass Heart</span> <span class="detail">(Trove)</span> — once per day, when you would take a Mortal Wound, you do not. <em>Quirk:</em> it cracks with each use; on the third use it shatters and you lose d6 Spirit.</td><td class="cost">4</td></tr>
-      <tr><td><span class="entry-name">Gossip-Gloves</span> <span class="detail">(Strongwands)</span> — touching an object reveals the last thing said within earshot of it. <em>Quirk:</em> anything you whisper near an object can be recovered the same way by others.</td><td class="cost">5</td></tr>
-      <tr><td><span class="entry-name">Self-Inking Contract</span> <span class="detail">(VOW)</span> — binds anyone who signs it to one clear promise. <em>Quirk:</em> it binds you to the same promise.</td><td class="cost">6</td></tr>
-      <tr><td><span class="entry-name">Tin Moon</span> <span class="detail">(SVAROG)</span> — a tin disc that sheds soft moonlight for an hour; you see in the dark as if in dim light. <em>Quirk:</em> it draws moths, and worse things that like moths.</td><td class="cost">7</td></tr>
-      <tr><td><span class="entry-name">Reversible Coat</span> <span class="detail">(Magimend)</span> — an Outerlayer (+1 Armor) that changes its appearance at will. <em>Quirk:</em> it occasionally changes on its own, usually at the worst moment.</td><td class="cost">8</td></tr>
-      <tr><td><span class="entry-name">Trouble-Bell</span> <span class="detail">(Strongwands)</span> — rings whenever a lie is spoken within 10 meters. <em>Quirk:</em> it cannot be silenced, and it rings for your lies too.</td><td class="cost">9</td></tr>
-      <tr><td><span class="entry-name">Wanderer's Bottle</span> <span class="detail">(Cerakote)</span> — never runs out of drinkable water. <em>Quirk:</em> it pours a different drink each time, and never the one you wanted.</td><td class="cost">10</td></tr>
+      <tr><td><span class="entry-name">Borrowed-Luck Vial</span> — Once per day, reroll a failed Save or Check. <em>Quirk:</em> someone nearby, chosen by the GM, suffers a small misfortune.</td><td class="cost">1</td></tr>
+      <tr><td><span class="entry-name">Smoke-Lantern</span> — its light reveals invisible and ethereal things within your zone. <em>Quirk:</em> anything it reveals can see you, too.</td><td class="cost">2</td></tr>
+      <tr><td><span class="entry-name">Remembering Key</span> — opens any mundane lock. <em>Quirk:</em> it remembers every door it opens, and sometimes tells the owner.</td><td class="cost">3</td></tr>
+      <tr><td><span class="entry-name">Glass Heart</span> — once per day, when you would take a Mortal Wound, you do not. <em>Quirk:</em> it cracks with each use; on the third use it shatters and you lose d6 Spirit.</td><td class="cost">4</td></tr>
+      <tr><td><span class="entry-name">Gossip-Gloves</span> — touching an object reveals the last thing said within earshot of it. <em>Quirk:</em> anything you whisper near an object can be recovered the same way by others.</td><td class="cost">5</td></tr>
+      <tr><td><span class="entry-name">Self-Inking Contract</span> — binds anyone who signs it to one clear promise. <em>Quirk:</em> it binds you to the same promise.</td><td class="cost">6</td></tr>
+      <tr><td><span class="entry-name">Tin Moon</span> — a tin disc that sheds soft moonlight for an hour; you see in the dark as if in dim light. <em>Quirk:</em> it draws moths, and worse things that like moths.</td><td class="cost">7</td></tr>
+      <tr><td><span class="entry-name">Reversible Coat</span> — an Outerlayer (+1 Armor) that changes its appearance at will. <em>Quirk:</em> it occasionally changes on its own, usually at the worst moment.</td><td class="cost">8</td></tr>
+      <tr><td><span class="entry-name">Trouble-Bell</span> — rings whenever a lie is spoken within your zone. <em>Quirk:</em> it cannot be silenced, and it rings for your lies too.</td><td class="cost">9</td></tr>
+      <tr><td><span class="entry-name">Wanderer's Bottle</span> — never runs out of drinkable water. <em>Quirk:</em> it pours a different drink each time, and never the one you wanted.</td><td class="cost">10</td></tr>
     </table>
 
     <h3 class="item-subhead">Spell-Bearing Oddities (d6)</h3>
@@ -522,22 +545,18 @@
 
     <h3 class="item-subhead">Body Augments</h3>
     <table class="items">
-      <tr><td><span class="entry-name">Reinforced Ribs</span> <span class="detail">(Strongwands)</span> — your maximum Guard increases by 2. <em>Cost:</em> permanent loss of 1d4 Grace.</td><td class="cost">800x</td></tr>
-      <tr><td><span class="entry-name">Pneumatic Legs</span> <span class="detail">(Strongwands)</span> — your Move covers about 20 meters instead of 10. <em>Cost:</em> permanent loss of 1d4 Spirit.</td><td class="cost">1000x</td></tr>
-      <tr><td><span class="entry-name">Bladed Knuckles</span> <span class="detail">(Cerakote)</span> — your fists deal 1d6 damage, and the blades are Hidden. <em>Cost:</em> permanent loss of 1d4 Spirit.</td><td class="cost">500x</td></tr>
-      <tr><td><span class="entry-name">Filter Lungs</span> <span class="detail">(Magimend)</span> — immune to inhaled poisons, gases, and smoke. <em>Cost:</em> permanent loss of 1d4 Vigor.</td><td class="cost">800x</td></tr>
-      <tr><td><span class="entry-name">Graft-Hide</span> <span class="detail">(VOW)</span> — gain +1 Armor, which stacks with worn armor and takes no inventory slot. <em>Cost:</em> permanent loss of 1d4 Grace.</td><td class="cost">1500x</td></tr>
-      <tr><td><span class="entry-name">Cat's Eyes</span> <span class="detail">(Trove)</span> — you see in the dark as if in dim light. <em>Cost:</em> permanent loss of 1d4 Spirit.</td><td class="cost">400x</td></tr>
+      <tr><td><span class="entry-name">Alloyed Ribcage</span> — your maximum Guard increases by 3. <em>Cost:</em> permanent loss of 1d4 Grace.</td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Mechanical Appendage (Legs)</span> — you can safely jump or fall as far as an adjacent zone, up, across, or even down. <em>Cost:</em> permanent loss of 1d4 Grace.</td><td class="cost">1000x</td></tr>
+      <tr><td><span class="entry-name">Mechanical Appendage (Hands)</span> — your fists deal 1d6 damage, and the blades are Hidden. <em>Cost:</em> permanent loss of 1d4 Vigor.</td><td class="cost">500x</td></tr>
+      <tr><td><span class="entry-name">Filter Lungs</span> — immune to inhaled poisons, gases, and smoke, and you gain 10 minutes of stored breathable air. <em>Cost:</em> permanent loss of 1d4 Vigor.</td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Cat's Eyes</span> — you see in the dark as if it were normal light. <em>Cost:</em> permanent loss of 1d4 Spirit.</td><td class="cost">400x</td></tr>
     </table>
 
     <h3 class="item-subhead">Mind Augments</h3>
     <table class="items">
-      <tr><td><span class="entry-name">Memory Spindle</span> <span class="detail">(Trove)</span> — Advantage on Checks to recall information or notice small details. <em>Cost:</em> permanent loss of 1d4 Grace.</td><td class="cost">600x</td></tr>
-      <tr><td><span class="entry-name">Calm Circuit</span> <span class="detail">(VOW)</span> — Advantage on Saves against fear and against becoming Shaken. <em>Cost:</em> permanent loss of 1d4 Vigor.</td><td class="cost">800x</td></tr>
-      <tr><td><span class="entry-name">Tongue-Loom</span> <span class="detail">(Magimend)</span> — you understand and speak any language you hear for an hour. <em>Cost:</em> permanent loss of 1d4 Grace.</td><td class="cost">500x</td></tr>
-      <tr><td><span class="entry-name">Spell-Cache</span> <span class="detail">(Trove)</span> — you can hold one extra spell in memory (eleven instead of ten). <em>Cost:</em> permanent loss of 1d4 Spirit.</td><td class="cost">1500x</td></tr>
-      <tr><td><span class="entry-name">Overclocked Cortex</span> <span class="detail">(Strongwands)</span> — once per day, reroll a failed Grace Check or Save. <em>Cost:</em> permanent loss of 1d4 Vigor.</td><td class="cost">1200x</td></tr>
-      <tr><td><span class="entry-name">Lie-Sense</span> <span class="detail">(Cerakote)</span> — Advantage on Spirit Checks against deception. <em>Cost:</em> permanent loss of 1d4 Spirit.</td><td class="cost">700x</td></tr>
+      <tr><td><span class="entry-name">Memory Spindle</span> — once per day, you can cast one spell with a cost of 4 or less without losing Spirit. <em>Cost:</em> permanent loss of 1d4 Grace.</td><td class="cost">600x</td></tr>
+      <tr><td><span class="entry-name">Neural Reset</span> — once per day, at the start of your turn, you immediately end one mental condition: Shaken, Dazed, or Charmed, or any spell that has successfully influenced your mind. <em>Cost:</em> permanent loss of 1d4 Vigor.</td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Tongue-Loom</span> — activate it to understand and speak any language you hear for an hour. <em>Cost:</em> permanent loss of 1d4 Grace.</td><td class="cost">500x</td></tr>
     </table>
   </section>
 
@@ -556,11 +575,12 @@
     "hefty": "Hefty — the weapon can be wielded with one hand, but you cannot hold two in either hand.",
     "bulky": "Bulky — takes up an additional inventory slot. If it's a weapon, it also requires two hands to use.",
     "long": "Long — the weapon is Impaired when used in tight spaces, and it requires two hands to use.",
-    "blast": "Blast — the weapon can be used to make Blast attacks naturally.",
-    "medium-range": "Medium-Range — effective range of up to 10 meters.",
-    "long-range": "Long-Range — effective range of up to 100 meters.",
-	"extreme-range": "Extreme-Range — effective range of up to 500 meters.",
-	"short-range":"Short-Range — effective range of touch, within a meter.",
+    "blast-small": "Blast (Small) — pick a target. The attack hits that target and every creature Engaged with it.",
+    "blast-large": "Blast (Large) — the attack hits every creature in a single zone.",
+    "medium-range": "Medium-Range — effective range of anywhere in your zone.",
+    "long-range": "Long-Range — effective range of your zone and any adjacent zone you can see.",
+	"extreme-range": "Extreme-Range — effective range of anywhere you have line of sight.",
+	"short-range":"Short-Range — effective range of Engaged: the target must be within your reach. Only Short-Range ranged weapons and spells can Attack an enemy Engaged with you.",
 	"slow":"Slow — cannot move and attack with this weapon in the same turn.",
 	"fixed":"Fixed — Requires at least one turn to set up before use.",
 	"hidden":"Hidden — Can be easily hidden on your person, avoiding detection without a Check.",
@@ -578,6 +598,7 @@
       tab.classList.add('active');
       const cat = tab.dataset.cat;
       sections.forEach(s => s.classList.toggle('hidden', s.dataset.cat !== cat));
+      document.querySelectorAll('.qualities-block').forEach(b => b.classList.toggle('hide-q', cat === 'vehicles' || cat === 'augments'));
     });
   });
 

@@ -44,19 +44,19 @@ const FATE_FLAVOR = {
   "The Emperor": { jobTitle: null, spell: "Regalia of Fate (4): You conjure a mystical set of armor (Helm and Layers) that forms around your body. It grants Guard 12, restores up to 12 Guard, Armor 3, and makes you invulnerable to non-rare armaments.", gift: "Denier of Doom: You can Deny attacks made against allies without making a fatigue save. You also learn Deny if you don't know it already — if you already know Deny, you instead learn any Feat of your choice.", gear: [] },
   "The Hierophant": { jobTitle: null, spell: "Divine Gate (4): You carve a window into the realm beyond, entreat with the beings there, and seek answers, aid, or succor. Ask and you shall receive.", gift: "Fateful Strike: You learn the Divine Smite feat. When attacking an enemy of your faith, you can use it freely, without a fatigue save.", gear: [] },
   "The Lovers": { jobTitle: null, spell: "Desire (4, Curse, Medium-Range): You cause a single target to desire affection, an outcome, or any object of your choosing until dispelled. While affected by this curse, any damage you take, the Cursed creature also takes.", gift: "Guided Hearts: You can focus on your goals, and receive visions, gentle nudges, and premonitions of how to best acquire them — usually resulting in a message received in poetic verse.", gear: [] },
-  "The Chariot": { jobTitle: null, spell: "Blade Like Wind (4, Long-Range, Blast): You make a melee attack against any creatures of your choice within the Blast area. Add an additional 1d12 to each attack made.", gift: "Swift Feet: You can move twice a turn if you don't attack. You can always move away from an enemy, even if you lack Guard.", gear: [] },
-  "Strength": { jobTitle: null, spell: "Lion's Roar (4, Medium-Range, Blast, Attack): 2d12 thunder damage attack to each creature in the Blast. Then, for the next minute, your Vigor becomes 20, returning to its previous value after the minute passes.", gift: "Mighty Grip: You can wield two separate Hefty weapons.", gear: [] },
+  "The Chariot": { jobTitle: null, spell: "Blade Like Wind (4, Long-Range, Blast (Large)): You make a melee attack against any creatures of your choice within the Blast area. Add an additional 1d12 to each attack made.", gift: "Swift Feet: You can move twice a turn if you don't attack. You can always move away from an enemy, even if you lack Guard.", gear: [] },
+  "Strength": { jobTitle: null, spell: "Lion's Roar (4, Short-Range, Blast (Small), Attack): 2d12 thunder damage attack to each creature in the Blast. Then, for the next minute, your Vigor becomes 20, returning to its previous value after the minute passes.", gift: "Mighty Grip: You can wield two separate Hefty weapons.", gear: [] },
   "The Hermit": { jobTitle: null, spell: "Sanctuary (4): You are shielded from becoming the target of spells or attacks, for as long as you do not attack.", gift: "Guarded Spirit: When you would lose Spirit from effects other than casting spells, you lose half that Spirit and round down instead.", gear: [] },
   "Wheel of Fortune": { jobTitle: null, spell: "Evolved Mind (8): You cause your mind to grow through time rapidly, gaining enhanced Virtue scores for the next hour. Your current Grace and Spirit Virtues temporarily increase by 6, and can go no higher than 19.", gift: "Vizar’s Guard - Once before the start of your next turn, When you deny a melee attack made against you, the enemy attacking takes the Denied dice as an attack after dealing damage. You learn the Deny feat if you do not already know it, if you already know the Deny feat, you learn a feat of your choice. ", gear: [] },
-  "Justice": { jobTitle: null, spell: "Avenging Blade (8): For the rest of the day, you can conjure a magical Greatsword (2d10) that can be held with one hand (Hefty).", gift: "Karmic Aura: Allies next to you gain 1 Armor if you attack on your turn. Enemies next to you cannot cast spells.", gear: [] },
-  "The Hanged Man": { jobTitle: null, spell: "Time Stop (8, Long-Range, Blast): You stop time for creatures of your choice within the Blast. Time resumes normally after one minute has passed, or if you take an action that would directly harm a creature affected by the Time Stop.", gift: "Shift: You can change the direction of gravity for yourself at a whim. This allows you to fly in an imprecise manner, walk on walls and ceilings, and other such things.", gear: [] },
+  "Justice": { jobTitle: null, spell: "Avenging Blade (8): For the rest of the day, you can conjure a magical Greatsword (2d10) that can be held with one hand (Hefty).", gift: "Karmic Aura: Allies Engaged with you gain 1 Armor if you attack on your turn. Enemies Engaged with you cannot cast spells.", gear: [] },
+  "The Hanged Man": { jobTitle: null, spell: "Time Stop (8, Long-Range, Blast (Large)): You stop time for creatures of your choice within the Blast. Time resumes normally after one minute has passed, or if you take an action that would directly harm a creature affected by the Time Stop.", gift: "Shift: You can change the direction of gravity for yourself at a whim. This allows you to fly in an imprecise manner, walk on walls and ceilings, and other such things.", gear: [] },
   "Death": { jobTitle: null, spell: "Word of Ending (8, Single-Target, Medium-Range): With a word, you kill one living being with 12 current Vigor or less. Upon uttering this word, they simply fall dead.", gift: "Soul Ward: You cannot die. When you would die, instead you become a disembodied spirit. You can re-enter your body if it is repaired, but otherwise your body regenerates after an age.", gear: [] },
   "Temperance": { jobTitle: null, spell: "Tempering Chains (4, Single-Target, Medium-Range): You chain yourself to another creature. Any Virtue damage they take is halved — you take the other half. This damage cannot be reduced in any way and does not count as an attack. You can also use this to curse an enemy, causing them to take half of the Virtue damage you receive.", gift: "Tempered Vessels: You gain a set of magical chalices. From one stems Suffering, and the other Succor.", gear: [] },
   "The Devil": { jobTitle: null, spell: "Infernal Visage (4): For the next minute you take on a devilish appearance. You gain wings and can fly, as well as natural claw attacks (1d8 each), and take no damage from Fire or Heat sources.", gift: "Dark Inspiration: When you fail a Virtue check, you can choose to attempt it again. Once you have used this feature 3 times, you gain a permanent mark of darkness.", gear: [] },
-  "The Tower": { jobTitle: null, spell: "Bolt of Destruction (4, Long-Range, Attack): You conjure a devastating bolt of lightning on a single target, making an Attack dealing 3d10 lightning damage to a creature or 3d12 to an object. Any creature directly adjacent to a target creature also takes this attack.", gift: "Ruin: Your attacks deal double damage to objects, unless they already do so. You can easily break through wooden doors and structures with sheer might.", gear: [] },
+  "The Tower": { jobTitle: null, spell: "Bolt of Destruction (4, Long-Range, Attack): You conjure a devastating bolt of lightning on a single target, making an Attack dealing 3d10 lightning damage to a creature or 3d12 to an object. Any creature Engaged with a target creature also takes this attack.", gift: "Ruin: Your attacks deal double damage to objects, unless they already do so. You can easily break through wooden doors and structures with sheer might.", gear: [] },
   "The Star": { jobTitle: null, spell: "The Living Star (4, Self): For the next hour, you become ethereal, composed of Starlight. At the end of your turns, you can choose to phase out of existence into another realm, returning at the beginning of your next turn. While made of starlight this way, you are immune to non-magical damage.", gift: "Starblessed Mind: You are immune to Psychic damage, cannot be charmed in any way, and always see through illusions.", gear: [] },
-  "The Moon": { jobTitle: null, spell: "Azure Radiance (8, Long-Range, Blast, Attack): You conjure a glimpse of a mighty Blue Moon. Every creature of your choice in a large-radius Blast takes a 3d12 radiant damage attack. This spell adds an extra 1d12 when attacking Fey or Shapechangers.", gift: "Moonblade: From your arm, at will, you can extend a blade made of Moonlight. It can attack at range, is Hefty, and deals 2d8 radiant damage.", gear: [] },
-  "The Sun": { jobTitle: null, spell: "The Aurum-Star (8, Medium-Range): You begin to glow with bright sunlight for the next minute. Allies next to you restore 1 Vigor at the start of their turn, and enemies make a Vigor save or become permanently blinded at the start of their turns.", gift: "Fist of Gold: Your fists now deal 1d8 damage each. If you wound an enemy with your fist, you can attempt to Impair them as a free gambit.", gear: [] },
+  "The Moon": { jobTitle: null, spell: "Azure Radiance (8, Long-Range, Blast (Large), Attack): You conjure a glimpse of a mighty Blue Moon. Every creature of your choice in a large-radius Blast takes a 3d12 radiant damage attack. This spell adds an extra 1d12 when attacking Fey or Shapechangers.", gift: "Moonblade: From your arm, at will, you can extend a blade made of Moonlight. It can attack at range, is Hefty, and deals 2d8 radiant damage.", gear: [] },
+  "The Sun": { jobTitle: null, spell: "The Aurum-Star (8, Medium-Range): You begin to glow with bright sunlight for the next minute. Allies Engaged with you restore 1 Vigor at the start of their turn, and enemies make a Vigor save or become permanently blinded at the start of their turns.", gift: "Fist of Gold: Your fists now deal 1d8 damage each. If you wound an enemy with your fist, you can attempt to Impair them as a free gambit.", gear: [] },
   "Judgement": { jobTitle: null, spell: "Soul's Mirror (4, Self): For the next hour, any magical effect that targets you is reflected back at the source.", gift: "Song of Ending: You can mark a target for death at the beginning of your turn. If they die before the start of your next turn, you become Impassioned.", gear: [] },
   "The World": { jobTitle: null, spell: "Beseech the Outer World (8, Medium-Range): You speak a sentence of truth into existence. Your wish then comes true, yet is subject to interpretation from the powers of the outer world.", gift: "The Inner World: You can choose to end any one magical effect on yourself at the start of your turn.", gear: [] },
 
@@ -65,7 +65,7 @@ const FATE_FLAVOR = {
     spell: "Spirit-Arrow (Long-Range, Target, Attack): You conjure a magical dart of force from your mind, causing it to strike a target and ignore its armor, making a 1d6 force damage attack.",
     gift: "Wand-Mastery: You can re-roll damage rolls of 1 on your Wand attacks, but must use the new roll.",
     gear: [
-      { name: "Custom Wand", desc: "Wielding it in one hand automatically Bolsters your damaging spell attacks by 1. It's also a ranged weapon — pick one: 1d10 Force damage at Long-Range, or 1d8 Force damage in a Medium-Range Blast." },
+      { name: "Custom Wand", desc: "Wielding it in one hand automatically Bolsters your damaging spell attacks by 1. It's also a ranged weapon — pick one: 1d10 Force damage at Long-Range, or 1d8 Force damage in a Medium-Range Blast (Small)." },
       { name: "Full-Focus Spectacles", desc: "Let you see the flow of magic upon inspection from very medium range." }
     ]
   },
@@ -89,7 +89,7 @@ const FATE_FLAVOR = {
   },
   "Four of Wands": {
     jobTitle: "Grand Illusion Event Planner",
-    spell: "Figment (Medium-Range, Targeted): You produce a realistic visual, auditory, and sensory illusion within a small Blast. Until the end of your next turn, creatures within it are entranced until harmed or shaken from their stupor.",
+    spell: "Figment (Medium-Range, Targeted): You produce a realistic visual, auditory, and sensory illusion within a Blast (Small). Until the end of your next turn, creatures within it are entranced until harmed or shaken from their stupor.",
     gift: "You are expertly proficient in some sort of performance — choose one: Insult Comedy, Acting, a Musical Instrument, Singing, Acrobatics, or Mock Combat. You have Advantage on Checks that use it, and once per Season a performance that truly moves an audience earns you Impassioned.",
     gear: [
       { name: "Spellkeeper", desc: "An illusion cast with this portable metal box is amplified, lasting up to an hour." },
@@ -117,7 +117,7 @@ const FATE_FLAVOR = {
   },
   "Seven of Wands": {
     jobTitle: "Marvo's College of the Conscious Coin Academy Debater",
-    spell: "Thundermaw: Your voice becomes deep and booming. As an attack, you can scream, dealing 1d6 damage to all creatures within a Blast centered on you.",
+    spell: "Thundermaw: Your voice becomes deep and booming. As an attack, you can scream, dealing 1d6 damage to all creatures within a Blast (Small) centered on you.",
     gift: "Intimidation Training: You can win most arguments through sheer intimidation. When you make social checks, you can use Vigor to do so.",
     gear: [
       { name: "Whip-Cane", desc: "2d6, Long, but one-handed." },
@@ -205,12 +205,12 @@ const FATE_FLAVOR = {
     gift: "Alchemical Savant: You can produce any Common Consumable item for half the cost — the process takes one day.",
     gear: [
       { name: "Test Tube of Magic Adhesive", desc: "Sovereign glue, 1 use." },
-      { name: "Steam-Wand", desc: "1d6, Medium-Range Blast of hot steam." }
+      { name: "Steam-Wand", desc: "1d6, Medium-Range Blast (Small) of hot steam." }
     ]
   },
   "Three of Cups": {
     jobTitle: "High-Class Mixologist",
-    spell: "Befuddling Cruor: Transmuted from aniseed liquor, wild strawberry moonshine, and a bit of blood. Imbibed, it causes long-lasting Confusion; ignited, it creates a Blast of fire (1d6) that temporarily blinds — and Impairs — anyone it wounds.",
+    spell: "Befuddling Cruor: Transmuted from aniseed liquor, wild strawberry moonshine, and a bit of blood. Imbibed, it causes long-lasting Confusion; ignited, it creates a Blast (Small) of fire (1d6) that temporarily blinds — and Impairs — anyone it wounds.",
     gift: "Slinger: Adept in the art of the toss. When you attack with a thrown weapon, such as a bomb, you re-roll 1s and 2s on damage rolls, but must use the new rolls.",
     gear: [
       { name: "Muddler's Club", desc: "1d4 — if it causes a wound, the target is Impaired on their next turn." },
@@ -222,7 +222,7 @@ const FATE_FLAVOR = {
   },
   "Four of Cups": {
     jobTitle: "Material Mystic",
-    spell: "Break (Long-Range, Blast, Attack): A sudden, loud ringing noise painfully erupts — make an Attack dealing 1d10 force damage (2d10 to inorganic targets like stone or metal).",
+    spell: "Break (Long-Range, Blast (Small), Attack): A sudden, loud ringing noise painfully erupts — make an Attack dealing 1d10 force damage (2d10 to inorganic targets like stone or metal).",
     gift: "Bludgeoner: When you deal damage with a blunt weapon or the force damage type, you physically hurl the target backward a short distance.",
     gear: [
       { name: "Ceramic Longstaff", desc: "1d10, Bulky." },
@@ -272,7 +272,7 @@ const FATE_FLAVOR = {
   "Nine of Cups": {
     jobTitle: "(LAMP) Lake Arcane Magic Police",
     spell: "Heartwrench (Touch): Make an unarmed attack (1d4) — if it wounds the enemy, you rip one of their hearts out, if they have one.",
-    gift: "Mage-Defense: When a creature casts a spell within touch range, you can strike them reactively (once a turn). If you deal Virtue damage, their spell's cost is doubled.",
+    gift: "Mage-Defense: When a creature Engaged with you casts a spell, you can strike them reactively (once a turn). If you deal Virtue damage, their spell's cost is doubled.",
     gear: [
       { name: "Out-of-Service LAMP Badge", desc: "Still convincing, though technically illegal to use while suspended; gets you into places you shouldn't be." },
       { name: "LAMP Baton", desc: "1d8, can light up a bit or emit a high-pitched whistle." },
@@ -299,7 +299,7 @@ const FATE_FLAVOR = {
   },
   "Knight of Cups": {
     jobTitle: "Museum of Oddities Docent",
-    spell: "Chalice of Oil (Medium-Range, Blast): Pour forth a blood-like oil covering a Blast. Anyone moving or standing on it makes a Grace save or falls and can't move next turn.",
+    spell: "Chalice of Oil (Medium-Range, Blast (Large)): Pour forth a blood-like oil covering a Blast. Anyone moving or standing on it makes a Grace save or falls and can't move next turn.",
     gift: "Odd-Minded: You can discern the effects of most any Oddity with ample time to investigate — but there's always a chance it gets set off.",
     gear: [
       { name: "Ruby Rod of the Forge", desc: "Sends a medium-range ruby laser at a metal object, making it instantly hot to the touch — 1d8 damage, ignoring Armor, if it can't be dropped. The Ruby Rod also heats up the same way." },
@@ -308,7 +308,7 @@ const FATE_FLAVOR = {
   },
   "Queen of Cups": {
     jobTitle: "Grand Illusion Model",
-    spell: "Glowmist (Long-Range, Blast): You conjure a Blast of glowing spores. Creatures and objects affected glow in the dark and cannot be invisible.",
+    spell: "Glowmist (Long-Range, Blast (Large)): You conjure a Blast of glowing spores. Creatures and objects affected glow in the dark and cannot be invisible.",
     gift: "True Beauty: You're attractive without illusions or magic, with an easier time getting what you want from people who are interested in you. All Charms have Advantage/Disadvantage where applicable.",
     gear: [
       { name: "Blademate", desc: "A fabulous outfit with a twin set of hidden retractable blades (1d8 each, used in tandem)." },
@@ -317,7 +317,7 @@ const FATE_FLAVOR = {
   },
   "King of Cups": {
     jobTitle: "Cleric of Salt",
-    spell: "Agitation (Long-Range, Blast): Compel enemies within sight to attack you until the end of your next turn. They lose 1d6 Spirit if they choose to attack someone else instead.",
+    spell: "Agitation (Long-Range, Blast (Large)): Compel enemies within sight to attack you until the end of your next turn. They lose 1d6 Spirit if they choose to attack someone else instead.",
     gift: "Captain: You command, or have commanded, a sailing vessel in your past or present — you sail adeptly, and your attacks are Enhanced (+1d8) on sailing vessels.",
     gear: [
       { name: "Sceptre of Saltstone", desc: "1d8, Hefty, 1d12 against freshwater creatures." },
@@ -336,7 +336,7 @@ const FATE_FLAVOR = {
   },
   "Two of Swords": {
     jobTitle: "Unnatural Enhancements Walking Advertisement",
-    spell: "Black Nimbus (Blast): Conjure a roiling cloud of dark fog that envelops all creatures in a Blast centered on you, rendering them Blind and Deafened.",
+    spell: "Black Nimbus (Blast (Small)): Conjure a roiling cloud of dark fog that envelops all creatures in a Blast (Small) centered on you, rendering them Blind and Deafened.",
     gift: "Truesight-Upgrade: Your enhancement has been enhanced. You now see through illusions, can see magic auras, and can briefly see into other planes if you focus.",
     gear: [
       { name: "Augmental Blindeyes", desc: "Grants Blindsight when you couldn't normally see, plus limited zoom capability." },
@@ -394,7 +394,7 @@ const FATE_FLAVOR = {
     spell: "Filch (Medium-Range): A visible item that isn't held or worn teleports to your hands, with a loud popping noise.",
     gift: "Pickpocket: Especially gifted at picking pockets, nearly always going unnoticed by common people.",
     gear: [
-      { name: "Hooch Recipe", desc: "Make 1 flask of strong, disgusting hooch per day — restores 1d4 lost Spirit, also functions as a firebomb, 1d6 Blast." },
+      { name: "Hooch Recipe", desc: "Make 1 flask of strong, disgusting hooch per day — restores 1d4 lost Spirit, also functions as a firebomb, 1d6 Blast (Small)." },
       { name: "Shiv", desc: "(Petty) 1d6, Hidden." },
       { name: "Stolen Parts", desc: "You've crafted your own prototype Oddity — it doesn't always work properly." }
     ]
@@ -411,7 +411,7 @@ const FATE_FLAVOR = {
   },
   "Ten of Swords": {
     jobTitle: "Gorescrubber",
-    spell: "Devilbreath (Medium-Range, Blast): You breathe a cloud of acrid smoke that melts away organic matter before quickly dissipating — 1d10 necrotic Blast.",
+    spell: "Devilbreath (Medium-Range, Blast (Small)): You breathe a cloud of acrid smoke that melts away organic matter before quickly dissipating — 1d10 necrotic Blast (Small).",
     gift: "Gorespiration: When your attack results in a Mortal Wound, you can immediately make another attack against any creature in range. (Feats that say 'attacks this round' still apply.)",
     gear: [
       { name: "Long-Handled Wirebrush Gorescrubber", desc: "1d10, Bulky." },
@@ -449,10 +449,10 @@ const FATE_FLAVOR = {
   },
   "King of Swords": {
     jobTitle: "Veterans of Old Wars Advocate",
-    spell: "Soulmelter (Medium-Range, Blast): 1d8 Blast — creatures killed by this spell have their souls destroyed as their entire being melts into an oily, mucilaginous goo.",
+    spell: "Soulmelter (Medium-Range, Blast (Small)): 1d8 Blast (Small) — creatures killed by this spell have their souls destroyed as their entire being melts into an oily, mucilaginous goo.",
     gift: "Warblooded: Your immune system and physical body are hardened — completely immune to mundane diseases and paralyzing toxins, and your Guard increases by 3.",
     gear: [
-      { name: "Old War Gear", desc: "Lead Vest (Armor 1, Underlayer), Cerakote Helmet (Armor 1, Helmet), Trenchwand (1d8, Bulky, Blast, Medium-Range)." },
+      { name: "Old War Gear", desc: "Lead Vest (Armor 1, Underlayer), Cerakote Helmet (Armor 1, Helmet), Trenchwand (1d8, Bulky, Blast (Small), Medium-Range)." },
       { name: "Old War Bond", desc: "Access to Veterans' Benefits from VOW, SVAROG, and Strongwands." },
       { name: "Old War Pocket-Rocket", desc: "2d10, single target, ranged, one-shot." }
     ]
@@ -479,8 +479,8 @@ const FATE_FLAVOR = {
   },
   "Three of Pentacles": {
     jobTitle: "Cleric of the Gilded Rose",
-    spell: "Golden Prayer (Self, Blast): Until the end of your next turn, you and allies within a Blast add an extra 1d8 to all attacks.",
-    gift: "Golden-Aura: Allies adjacent to you add an extra 1d4 to all attacks. When you receive a Mortal Wound, all adjacent allies gain 6 Guard, and your aura's bonus die changes to 1d12 for the rest of the combat.",
+    spell: "Golden Prayer (Self, Blast (Small)): Until the end of your next turn, you and allies within a Blast add an extra 1d8 to all attacks.",
+    gift: "Golden-Aura: Allies Engaged with you add an extra 1d4 to all attacks. When you receive a Mortal Wound, all allies Engaged with you gain 6 Guard, and your aura's bonus die changes to 1d12 for the rest of the combat.",
     gear: [
       { name: "Gildguarders", desc: "Gilded Helm (Armor 1, Helmet), Gilded Shield (Armor 1, Shield), and a Golden Rose-Head Mace (1d8, Hefty). Your items attract attention from strangers." }
     ]

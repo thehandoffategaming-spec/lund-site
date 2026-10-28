@@ -94,10 +94,10 @@
       <section class="panel" aria-label="Turns and attacks">
         <h3>Your Turn</h3>
         <ul>
-        <li>A turn is a <b>Move</b> (about 10 m) and an <b>Action</b>, in either order.</li>
+        <li>A turn is a <b>Move</b> and an <b>Action</b>, in either order. A Move goes to an adjacent <b>zone</b>, or repositions you inside your zone.</li>
         <li>Actions: <b>Attack</b>, <b>cast a Spell</b>, or <b>Aid</b> an ally.</li>
         <li>No initiative. All players act first, then the enemies.</li>
-        <li>In touch range of a foe? You can only move away if you still have Guard, or an ally helps cover you.</li>
+        <li><b>Engaged</b> means within touch distance in the same zone, with an ally or a foe. While Engaged with a foe, you can only leave if you still have Guard, or an ally Engaged with that foe helps cover you.</li>
         </ul>
         <h3>Making an Attack</h3>
         <p>Take the dice listed on your weapons, shield, and bonuses. Then, in order:</p>
@@ -114,7 +114,9 @@
         <ul>
         <li><b>Impaired:</b> roll a single d4 only; no bonus dice, no Feats.</li>
         <li><b>Enhanced:</b> gain a bonus die (a d8 unless stated).</li>
-        <li><b>Blast:</b> hits everyone in the area; roll against each separately.</li>
+        <li><b>Blast (Small):</b> pick a target; hits it and everyone Engaged with it. <b>Blast (Large):</b> hits everyone in a zone. Roll each separately.</li>
+        <li><b>Bombs:</b> thrown at Long-Range; Blast (Small) unless stated.</li>
+        <li><b>Range:</b> you can only target within the weapon's range. A ranged weapon or spell cannot Attack a foe Engaged with you unless it is Short-Range, Touch, or a Blast (Small) centered on you.</li>
         </ul>
         <div class="example"><b>Example.</b> A mace (d8), a shield (d4), and an ally with two daggers (d6 each) roll 7, 3, 1, 5. Highest is 7. The 5 is spent to Bolster: Damage 8. Target Armor 2 leaves <b>6 Damage</b>.</div>
       </section>
@@ -145,7 +147,7 @@
       <section class="panel" aria-label="Feats">
         <h3>Feats</h3>
         <p>Special actions. Each Feat can be used once per Attack by each combatant. After use, make the Save or become <b>Fatigued</b> (no Feats until a Short Rest).</p>
-        <table><tr><th>Feat</th><th>What it does</th><th>Save</th></tr><tr><td><b>Deny</b><br/>Universal</td><td>After an Attack roll vs. you or an ally within reach, discard one of its dice.</td><td>Grace</td></tr><tr><td><b>Focus</b><br/>Universal</td><td>After rolling an Attack, perform a Gambit without spending a die.</td><td>Spirit</td></tr><tr><td><b>Divine Smite</b><br/>Pentacles</td><td>Before a melee Attack without Blast: it gains +1d12.</td><td>Vigor</td></tr><tr><td><b>Cleave</b><br/>Swords</td><td>Before a melee Attack: it gains Blast.</td><td>Vigor</td></tr><tr><td><b>Masterstrike</b><br/>Swords</td><td>Before an Attack without Blast: it ignores Armor.</td><td>Vigor</td></tr><tr><td><b>Morph</b><br/>Wands</td><td>When you see a spell cast, modify it: ignore allies in Blast, add or remove Blast, change cost, change damage type, add or remove a target, or cast without sound or gesture.</td><td>Spirit</td></tr><tr><td><b>Humiliate</b><br/>Cups</td><td>When dealing Damage, choose which Virtue is damaged.</td><td>Spirit</td></tr><tr><td><b>Ruse</b><br/>Cups</td><td>Before an Attack, make two Attacks and pick one to use.</td><td>Grace</td></tr></table>
+        <table><tr><th>Feat</th><th>What it does</th><th>Save</th></tr><tr><td><b>Deny</b><br/>Universal</td><td>After an Attack roll vs. you or an ally Engaged with you, discard one of its dice.</td><td>Grace</td></tr><tr><td><b>Focus</b><br/>Universal</td><td>After rolling an Attack, perform a Gambit without spending a die.</td><td>Spirit</td></tr><tr><td><b>Divine Smite</b><br/>Pentacles</td><td>Before a melee Attack without Blast: it gains +1d12.</td><td>Vigor</td></tr><tr><td><b>Cleave</b><br/>Swords</td><td>Before a melee Attack: it gains Blast (Small) centered on you, hitting every creature Engaged with you or in reach of your weapon.</td><td>Vigor</td></tr><tr><td><b>Masterstrike</b><br/>Swords</td><td>Before an Attack without Blast: it ignores Armor.</td><td>Vigor</td></tr><tr><td><b>Morph</b><br/>Wands</td><td>When you see a spell cast, modify it: ignore allies in Blast, add or remove Blast, change cost, change damage type, add or remove a target, or cast without sound or gesture.</td><td>Spirit</td></tr><tr><td><b>Humiliate</b><br/>Cups</td><td>When dealing Damage, choose which Virtue is damaged.</td><td>Spirit</td></tr><tr><td><b>Ruse</b><br/>Cups</td><td>Before an Attack, make two Attacks and pick one to use.</td><td>Grace</td></tr></table>
       </section>
   </div>
 
@@ -179,12 +181,12 @@
         <li>You can hold <b>10 spells</b> in memory.</li>
         </ul>
         <h4>Ranges</h4>
-        <p><b>Self</b> · <b>Touch</b> (1 m) · <b>Short</b> (10 m) · <b>Long</b> (100 m) · <b>Extreme</b> (500 m)</p>
+        <p><b>Self</b> · <b>Touch</b> (Engaged) · <b>Medium</b> (your zone) · <b>Long</b> (adjacent zones too) · <b>Extreme</b> (line of sight)</p>
         <h4>Spell Qualities</h4>
         <ul>
         <li><b>Attack:</b> uses the Attacking rules with the spell's dice.</li>
-        <li><b>Direct damage:</b> lowers a Virtue as stated, ignoring Guard and Armor. Not an Attack.</li>
-        <li><b>Blast:</b> the die size is the baseline number of normal-sized creatures it can hold. A 2d8 Blast hits up to 8.</li>
+        <li><b>Virtue Loss:</b> lowers a Virtue as stated, ignoring Guard and Armor. Not an Attack, and never Damage.</li>
+        <li><b>Blast:</b> Small or Large, as under Attack Modifiers. Morph adds Blast (Small).</li>
         <li><b>Curse:</b> lasts until the caster is killed or a specialist removes it. One instance per caster at a time.</li>
         </ul>
         <h3>Fatigue & Rest</h3>
@@ -208,7 +210,7 @@
         <ul>
         <li><b>Guard</b> is a pool (rolled 1d6). Damage comes off Guard before any Virtue. While you have at least 1 Guard, you <b>Evade</b> the hit.</li>
         <li><b>Armor</b> reduces Damage <i>before</i> it reaches Guard.</li>
-        <li>Without Guard, you cannot walk away from a foe in touch range unless an ally assists your retreat.</li>
+        <li>Without Guard, you cannot leave a foe you are Engaged with unless an ally assists your retreat.</li>
         </ul>
         <h3>Saves & Checks</h3>
         <ul>
