@@ -53,9 +53,9 @@ const FATE_FLAVOR = {
   "Death": { jobTitle: null, spell: "Word of Ending (8, Single-Target, Medium-Range): With a word, you kill one living being with 12 current Vigor or less. Upon uttering this word, they simply fall dead.", gift: "Soul Ward: You cannot die. When you would die, instead you become a disembodied spirit. You can re-enter your body if it is repaired, but otherwise your body regenerates after an age.", gear: [] },
   "Temperance": { jobTitle: null, spell: "Tempering Chains (4, Single-Target, Medium-Range): You chain yourself to another creature. Any Virtue damage they take is halved — you take the other half. This damage cannot be reduced in any way and does not count as an attack. You can also use this to curse an enemy, causing them to take half of the Virtue damage you receive.", gift: "Tempered Vessels: You gain a set of magical chalices. From one stems Suffering, and the other Succor.", gear: [] },
   "The Devil": { jobTitle: null, spell: "Infernal Visage (4): For the next minute you take on a devilish appearance. You gain wings and can fly, as well as natural claw attacks (1d8 each), and take no damage from Fire or Heat sources.", gift: "Dark Inspiration: When you fail a Virtue check, you can choose to attempt it again. Once you have used this feature 3 times, you gain a permanent mark of darkness.", gear: [] },
-  "The Tower": { jobTitle: null, spell: "Bolt of Destruction (4, Long-Range, Attack): You conjure a devastating bolt of lightning on a single target, making an Attack dealing 3d10 lightning damage to a creature or 3d12 to an object. Any creature Engaged with a target creature also takes this attack.", gift: "Ruin: Your attacks deal double damage to objects, unless they already do so. You can easily break through wooden doors and structures with sheer might.", gear: [] },
+  "The Tower": { jobTitle: null, spell: "Bolt of Destruction (4, Long-Range, Blast (Small), Attack): You conjure a devastating bolt of lightning on a single target, making an Attack dealing 3d10 lightning damage to a creature or 3d12 to an object. Any creature Engaged with a target creature also takes this attack.", gift: "Ruin: Your attacks deal double damage to objects, unless they already do so. You can easily break through wooden doors and structures with sheer might.", gear: [] },
   "The Star": { jobTitle: null, spell: "The Living Star (4, Self): For the next hour, you become ethereal, composed of Starlight. At the end of your turns, you can choose to phase out of existence into another realm, returning at the beginning of your next turn. While made of starlight this way, you are immune to non-magical damage.", gift: "Starblessed Mind: You are immune to Psychic damage, cannot be charmed in any way, and always see through illusions.", gear: [] },
-  "The Moon": { jobTitle: null, spell: "Azure Radiance (8, Long-Range, Blast (Large), Attack): You conjure a glimpse of a mighty Blue Moon. Every creature of your choice in a large-radius Blast takes a 3d12 radiant damage attack. This spell adds an extra 1d12 when attacking Fey or Shapechangers.", gift: "Moonblade: From your arm, at will, you can extend a blade made of Moonlight. It can attack at range, is Hefty, and deals 2d8 radiant damage.", gear: [] },
+  "The Moon": { jobTitle: null, spell: "Azure Radiance (8, Extreme-Range, Blast (Large), Attack): You conjure a glimpse of a mighty Blue Moon. Every creature of your choice in a large-radius Blast takes a 3d12 radiant damage attack. This spell adds an extra 1d12 when attacking Fey or Shapechangers.", gift: "Moonblade: From your arm, at will, you can extend a blade made of Moonlight. It can attack at range, is Hefty, and deals 2d8 radiant damage.", gear: [] },
   "The Sun": { jobTitle: null, spell: "The Aurum-Star (8, Medium-Range): You begin to glow with bright sunlight for the next minute. Allies Engaged with you restore 1 Vigor at the start of their turn, and enemies make a Vigor save or become permanently blinded at the start of their turns.", gift: "Fist of Gold: Your fists now deal 1d8 damage each. If you wound an enemy with your fist, you can attempt to Impair them as a free gambit.", gear: [] },
   "Judgement": { jobTitle: null, spell: "Soul's Mirror (4, Self): For the next hour, any magical effect that targets you is reflected back at the source.", gift: "Song of Ending: You can mark a target for death at the beginning of your turn. If they die before the start of your next turn, you become Impassioned.", gear: [] },
   "The World": { jobTitle: null, spell: "Beseech the Outer World (8, Medium-Range): You speak a sentence of truth into existence. Your wish then comes true, yet is subject to interpretation from the powers of the outer world.", gift: "The Inner World: You can choose to end any one magical effect on yourself at the start of your turn.", gear: [] },
@@ -98,7 +98,7 @@ const FATE_FLAVOR = {
   },
   "Five of Wands": {
     jobTitle: "Groupwork Start-Up Founder",
-    spell: "Spellfuel: A creature of your choice that you can see can take two actions on their next turn. They cannot move or take any actions on the turn after.",
+    spell: "Spellfuel (Medium-Range): A creature of your choice that you can see can take two actions on their next turn. They cannot move or take any actions on the turn after.",
     gift: "Business License: Spoke-authority to run and conduct a business in Lund. You can access cut-rate business loans, business resources, and most bureaucratic buildings. Your business earns you 100x per week while you keep up with its affairs.",
     gear: [
       { name: "G4RD-D0G", desc: "Personal protection armor (Armor 1, Outerlayer) — if you take a Mortal Wound it's destroyed and you're left with 1 Vigor if you would have gone lower." },
@@ -163,7 +163,7 @@ const FATE_FLAVOR = {
   },
   "Knight of Wands": {
     jobTitle: "College of Enlightenment Teaching Assistant",
-    spell: "Spellmark: Your finger can shoot a stream of colored paint, visible only to you, seen at any distance — even through solid objects — until you dismiss it.",
+    spell: "Spellmark (Long-Range): Your finger can shoot a stream of colored paint, visible only to you, seen at any distance — even through solid objects — until you dismiss it.",
     gift: "Quick-Study: You can easily discern the nature of magical traps, devices, and auras if you spend time investigating them.",
     gear: [
       { name: "Unfinished Thesis", desc: "Takes 3 weeks to finish; when complete, becomes an Arcana or Oddity of your choice from a list provided by the GM." },
@@ -192,7 +192,7 @@ const FATE_FLAVOR = {
 
   "Ace of Cups": {
     jobTitle: "Wetwork Janitor",
-    spell: "Scentser: Conjures a cloud of thick, opaque smoke that removes grime and noxious fumes, leaving creatures and objects clean and scented. You choose the scent on cast.",
+    spell: "Scentser (Medium-Range, Blast (Large)): Conjures a cloud of thick, opaque smoke that removes grime and noxious fumes, leaving creatures and objects clean and scented. You choose the scent on cast.",
     gift: "Frogman: You have a swim speed and can hold your breath for up to 5 minutes.",
     gear: [
       { name: "Janitor's Scoop", desc: "(1d8, Long) Sends liquids it scoops into a demiplane somewhere." },
@@ -281,7 +281,7 @@ const FATE_FLAVOR = {
   },
   "Ten of Cups": {
     jobTitle: "Violet Crown Performer",
-    spell: "Glammer: You can produce a convincing visible and auditory illusion big enough to fill a stage, lasting up to a minute.",
+    spell: "Glammer (Medium-Range, Blast (Large)): You can produce a convincing visible and auditory illusion big enough to fill a stage, lasting up to a minute.",
     gift: "Inspiring Presence: Once per encounter, you can force an ally to re-roll any one die.",
     gear: [
       { name: "Starsong", desc: "An excellent singing voice, and can adeptly play an instrument of your choice — your voice is enchanting to people and animals." },
@@ -299,7 +299,7 @@ const FATE_FLAVOR = {
   },
   "Knight of Cups": {
     jobTitle: "Museum of Oddities Docent",
-    spell: "Chalice of Oil (Medium-Range, Blast (Large)): Pour forth a blood-like oil covering a Blast. Anyone moving or standing on it makes a Grace save or falls and can't move next turn.",
+    spell: "Chalice of Oil (Medium-Range, Blast (Large)): Pour forth a blood-like oil covering a Blast. Anyone of your choice moving or standing on it makes a Grace save or falls and can't move next turn.",
     gift: "Odd-Minded: You can discern the effects of most any Oddity with ample time to investigate — but there's always a chance it gets set off.",
     gear: [
       { name: "Ruby Rod of the Forge", desc: "Sends a medium-range ruby laser at a metal object, making it instantly hot to the touch — 1d8 damage, ignoring Armor, if it can't be dropped. The Ruby Rod also heats up the same way." },
@@ -336,7 +336,7 @@ const FATE_FLAVOR = {
   },
   "Two of Swords": {
     jobTitle: "Unnatural Enhancements Walking Advertisement",
-    spell: "Black Nimbus (Blast (Small)): Conjure a roiling cloud of dark fog that envelops all creatures in a Blast (Small) centered on you, rendering them Blind and Deafened.",
+    spell: "Black Nimbus (Blast (Small)): Conjure a roiling cloud of dark fog that envelops all creatures in a Blast (Small) centered on you, rendering them Blinded and Deafened until the end of your next turn.",
     gift: "Truesight-Upgrade: Your enhancement has been enhanced. You now see through illusions, can see magic auras, and can briefly see into other planes if you focus.",
     gear: [
       { name: "Augmental Blindeyes", desc: "Grants Blindsight when you couldn't normally see, plus limited zoom capability." },
@@ -469,7 +469,7 @@ const FATE_FLAVOR = {
   },
   "Two of Pentacles": {
     jobTitle: "Trove Pawnbroker",
-    spell: "Sling (Medium-Range, Target, Attack): Telekinetically throw any melon-sized or smaller object with enough force to injure — make a 2d6 single-target Attack.",
+    spell: "Sling (Long-Range, Target, Attack): Telekinetically throw any melon-sized or smaller object with enough force to injure — make a 2d6 single-target Attack.",
     gift: "Haggler : You always pay at least 10% less than listed prices. Sometimes even less.",
     gear: [
       { name: "X-Ray Monocle", desc: "Sees through walls if pressed against one." },
