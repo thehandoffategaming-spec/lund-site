@@ -236,20 +236,24 @@
         <p>The attack hits every creature in a single zone.</p>
       </div>
 	  <div class="quality-card">
-        <h3>Short-Range</h3>
-        <p>A quality of some ranged weapons, denoting an effective range of Engaged: the target must be within your reach. Only weapons or spells with this quality can make ranged Attacks against an enemy Engaged with you.</p>
+        <h3>Touch</h3>
+        <p>A quality of some ranged weapons, denoting an effective range of Engaged: the target must be within your reach. Only weapons or spells with this range can make ranged Attacks against an enemy Engaged with you.</p>
       </div>
       <div class="quality-card">
-        <h3>Medium-Range</h3>
+        <h3>Close-Range</h3>
         <p>A quality of ranged weapons, denoting an effective range of anywhere in your zone.</p>
       </div>
       <div class="quality-card">
-        <h3>Long-Range</h3>
+        <h3>Medium-Range</h3>
         <p>A quality of ranged weapons, denoting an effective range of your zone and any adjacent zone you can see.</p>
       </div>
 	  <div class="quality-card">
-        <h3>Extreme-Range</h3>
+        <h3>Long-Range</h3>
         <p>A quality of ranged weapons, denoting an effective range of anywhere you have line of sight.</p>
+      </div>
+      <div class="quality-card">
+        <h3>Stretching a Shot</h3>
+        <p>Remove one die from a ranged Attack before rolling to increase the weapon's base range by 1 zone. Each additional die removed adds another zone. Long-Range already reaches anywhere in line of sight and gains nothing.</p>
       </div>
 	  <div class="quality-card">
         <h3>Slow</h3>
@@ -316,13 +320,13 @@
       <tr><td><span class="entry-name">Dagger, Cudgel, Sickle, Staff, etc.</span> <span class="detail">(d6 damage)</span></td><td class="cost">50x</td></tr>
       <tr><td><span class="entry-name">Spear, Sword, Mace, Axe, Flail, etc.</span> <span class="detail">(d8 damage, <span class="qterm" data-q="hefty">Hefty</span>)</span></td><td class="cost">150x</td></tr>
       <tr><td><span class="entry-name">Halberd, War Hammer, Long Sword, etc.</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">300x</td></tr>
-      <tr><td><span class="entry-name">Slinger-Wand</span> <span class="detail">(d6 damage, <span class="qterm" data-q="long-range">Long-Range</span>) — can throw Bombs</span></td><td class="cost">50x</td></tr>
-      <tr><td><span class="entry-name">Bow</span> <span class="detail">(d8 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">200x</td></tr>
-      <tr><td><span class="entry-name">Crossbow</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>) — can fire syringes</span></td><td class="cost">300x</td></tr>
+      <tr><td><span class="entry-name">Slinger-Wand</span> <span class="detail">(d6 damage, <span class="qterm" data-q="medium-range">Medium-Range</span>) — can throw Bombs</span></td><td class="cost">50x</td></tr>
+      <tr><td><span class="entry-name">Bow</span> <span class="detail">(1d8 + 1d4 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="medium-range">Medium-Range</span>)</span></td><td class="cost">200x</td></tr>
+      <tr><td><span class="entry-name">Crossbow</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="medium-range">Medium-Range</span>) — can fire syringes</span></td><td class="cost">300x</td></tr>
     </table>
 
     <h3 class="item-subhead">Common Consumables</h3>
-    <p style="font-family:'Jost',sans-serif; font-style:italic; color:var(--parchment-dim); font-size:0.88rem; margin-top:-8px;">Bombs are thrown at Long-Range: at a target in your zone, or in an adjacent zone you can see. Unless a bomb says otherwise, it is Blast (Small), catching the target and every creature Engaged with it.</p>
+    <p style="font-family:'Jost',sans-serif; font-style:italic; color:var(--parchment-dim); font-size:0.88rem; margin-top:-8px;">Bombs are thrown at Medium-Range: at a target in your zone, or in an adjacent zone you can see. Unless a bomb says otherwise, it is Blast (Small), catching the target and every creature Engaged with it.</p>
     <table class="items">
       <tr>
         <td>
@@ -380,11 +384,11 @@
       <tr><td><span class="entry-name">Noble Weapons: Spear, Side Sword, Mace, Axe, Flail, etc.</span> <span class="detail">(d8 damage, not Hefty, so they can be dual-wielded) — typically forged from special alloys, each with an interesting side effect</span></td><td class="cost">500x</td></tr>
       <tr><td><span class="entry-name">Masterwork Weapons: Longsword, etc.</span> <span class="detail">(2d8 damage, <span class="qterm" data-q="hefty">Hefty</span>)</span></td><td class="cost">800x</td></tr>
       <tr><td><span class="entry-name">Old War Weapons: Greatsword, Waraxe</span> <span class="detail">(2d10 damage, <span class="qterm" data-q="bulky">Bulky</span>)</span></td><td class="cost">1200x</td></tr>
-      <tr><td><span class="entry-name">Longbow</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long">Long</span>, <span class="qterm" data-q="extreme-range">Extreme-Range</span>)</span></td><td class="cost">600x</td></tr>
-      <tr><td><span class="entry-name">Scatterwand</span> <span class="detail">(1d8 <span class="qterm" data-q="blast-small">Blast (Small)</span>, <span class="qterm" data-q="hefty">Hefty</span>, <span class="qterm" data-q="medium-range">Medium-Range</span>)</span></td><td class="cost">800x</td></tr>
-      <tr><td><span class="entry-name">Long-Wand</span> <span class="detail">(1d12, <span class="qterm" data-q="long">Long</span>, <span class="qterm" data-q="extreme-range">Extreme-Range</span>)</span></td><td class="cost">800x</td></tr>
-      <tr><td><span class="entry-name">Launch-Wand</span> <span class="detail">(2d6 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="extreme-range">Extreme-Range</span>) — can fire syringes and Bombs</span></td><td class="cost">800x</td></tr>
-      <tr><td><span class="entry-name">Hand-Wand</span> <span class="detail">(1d8, <span class="qterm" data-q="medium-range">Medium-Range</span>)</span></td><td class="cost">600x</td></tr>
+      <tr><td><span class="entry-name">Longbow</span> <span class="detail">(d10 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long">Long</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">600x</td></tr>
+      <tr><td><span class="entry-name">Scatterwand</span> <span class="detail">(1d8 <span class="qterm" data-q="blast-small">Blast (Small)</span>, <span class="qterm" data-q="hefty">Hefty</span>, <span class="qterm" data-q="close-range">Close-Range</span>)</span></td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Long-Wand</span> <span class="detail">(1d12, <span class="qterm" data-q="long">Long</span>, <span class="qterm" data-q="long-range">Long-Range</span>)</span></td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Launch-Wand</span> <span class="detail">(2d6 damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>) — can fire syringes and Bombs</span></td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Hand-Wand</span> <span class="detail">(1d8, <span class="qterm" data-q="close-range">Close-Range</span>)</span></td><td class="cost">600x</td></tr>
     </table>
 
     <h3 class="item-subhead">Uncommon Consumables</h3>
@@ -439,16 +443,16 @@
 
     <h3 class="item-subhead">Special Weapons</h3>
     <table class="items">
-      <tr><td><span class="entry-name">Blunderwand</span> <span class="detail">(2d10, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="blast-small">Blast (Small)</span>, <span class="qterm" data-q="medium-range">Medium-Range</span>) — repels humanoid-sized enemies on wound</span></td><td class="cost">2000x</td></tr>
-      <tr><td><span class="entry-name">Cinder-Spout</span> <span class="detail">(2d12, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="blast-small">Blast (Small)</span>, <span class="qterm" data-q="short-range">Short-Range</span>) — on wound, the target is ignited and takes 1d10 damage per turn</span></td><td class="cost">2000x</td></tr>
-      <tr><td><span class="entry-name">Flare-Wand</span> <span class="detail">(1d10, <span class="qterm" data-q="short-range">Short-Range</span>) — high-intensity flare, visible from 25km away</span></td><td class="cost">200x</td></tr>
-      <tr><td><span class="entry-name">Resin Sprayer</span> <span class="detail">(no damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="short-range">Short-Range</span>) — quick-hardening foam: Vigor save to avoid or become stuck. Fire retardant</span></td><td class="cost">500x</td></tr>
+      <tr><td><span class="entry-name">Blunderwand</span> <span class="detail">(2d10, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="blast-small">Blast (Small)</span>, <span class="qterm" data-q="close-range">Close-Range</span>) — repels humanoid-sized enemies on wound</span></td><td class="cost">2000x</td></tr>
+      <tr><td><span class="entry-name">Cinder-Spout</span> <span class="detail">(2d12, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="blast-small">Blast (Small)</span>, <span class="qterm" data-q="touch">Touch</span>) — on wound, the target is ignited and takes 1d10 damage per turn</span></td><td class="cost">2000x</td></tr>
+      <tr><td><span class="entry-name">Flare-Wand</span> <span class="detail">(1d10, <span class="qterm" data-q="touch">Touch</span>) — high-intensity flare, visible from 25km away</span></td><td class="cost">200x</td></tr>
+      <tr><td><span class="entry-name">Resin Sprayer</span> <span class="detail">(no damage, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="touch">Touch</span>) — quick-hardening foam: Vigor save to avoid or become stuck. Fire retardant</span></td><td class="cost">500x</td></tr>
       <tr><td><span class="entry-name">Spike-Driver</span> <span class="detail">(1d10, Melee, <span class="qterm" data-q="hefty">Hefty</span>) — deals double damage to Vigor</span></td><td class="cost">1000x</td></tr>
-      <tr><td><span class="entry-name">Repeater-Wand</span> <span class="detail">(3d8, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>) — bomb launcher: holds 6 Bombs</span></td><td class="cost">4000x</td></tr>
-      <tr><td><span class="entry-name">Wheelwand</span> <span class="detail">(2d8, <span class="qterm" data-q="medium-range">Medium-Range</span>)</span></td><td class="cost">750x</td></tr>
-      <tr><td><span class="entry-name">Stutter-Wand</span> <span class="detail">(2d10, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="long-range">Long-Range</span>) — fully automatic: when used on full-auto, deals 2d6 <span class="qterm" data-q="blast-small">Blast (Small)</span></span></td><td class="cost">3000x</td></tr>
+      <tr><td><span class="entry-name">Repeater-Wand</span> <span class="detail">(3d8, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="medium-range">Medium-Range</span>) — bomb launcher: holds 6 Bombs</span></td><td class="cost">4000x</td></tr>
+      <tr><td><span class="entry-name">Wheelwand</span> <span class="detail">(2d8, <span class="qterm" data-q="close-range">Close-Range</span>)</span></td><td class="cost">750x</td></tr>
+      <tr><td><span class="entry-name">Stutter-Wand</span> <span class="detail">(2d10, <span class="qterm" data-q="bulky">Bulky</span>, <span class="qterm" data-q="medium-range">Medium-Range</span>) — fully automatic: when used on full-auto, deals 2d6 <span class="qterm" data-q="blast-small">Blast (Small)</span></span></td><td class="cost">3000x</td></tr>
       <tr><td><span class="entry-name">Shock-Baton</span> <span class="detail">(1d10, Melee) — on wound, the target is stunned until the start of your next turn</span></td><td class="cost">400x</td></tr>
-      <tr><td><span class="entry-name">Sleepwand</span> <span class="detail">(1d4, <span class="qterm" data-q="medium-range">Medium-Range</span>) — tranq darts. On wound, the target falls unconscious for 1d10 rounds</span></td><td class="cost">800x</td></tr>
+      <tr><td><span class="entry-name">Sleepwand</span> <span class="detail">(1d4, <span class="qterm" data-q="close-range">Close-Range</span>) — tranq darts. On wound, the target falls unconscious for 1d10 rounds</span></td><td class="cost">800x</td></tr>
       <tr><td><span class="entry-name">Vibrosabre</span> <span class="detail">(2d8, Melee) — can hack through limbs or dense forestry, but not metal doors</span></td><td class="cost">1500x</td></tr>
     </table>
 
@@ -577,10 +581,10 @@
     "long": "Long — the weapon is Impaired when used in tight spaces, and it requires two hands to use.",
     "blast-small": "Blast (Small) — pick a target. The attack hits that target and every creature Engaged with it.",
     "blast-large": "Blast (Large) — the attack hits every creature in a single zone.",
-    "medium-range": "Medium-Range — effective range of anywhere in your zone.",
-    "long-range": "Long-Range — effective range of your zone and any adjacent zone you can see.",
-	"extreme-range": "Extreme-Range — effective range of anywhere you have line of sight.",
-	"short-range":"Short-Range — effective range of Engaged: the target must be within your reach. Only Short-Range ranged weapons and spells can Attack an enemy Engaged with you.",
+    "close-range": "Close-Range — effective range of anywhere in your zone.",
+    "medium-range": "Medium-Range — effective range of your zone and any adjacent zone you can see.",
+	"long-range": "Long-Range — effective range of anywhere you have line of sight.",
+	"touch":"Touch — effective range of Engaged: the target must be within your reach. Only ranged weapons and spells with Touch range can Attack an enemy Engaged with you.",
 	"slow":"Slow — cannot move and attack with this weapon in the same turn.",
 	"fixed":"Fixed — Requires at least one turn to set up before use.",
 	"hidden":"Hidden — Can be easily hidden on your person, avoiding detection without a Check.",

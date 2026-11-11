@@ -99,6 +99,13 @@
         <li>No initiative. All players act first, then the enemies.</li>
         <li><b>Engaged</b> means within touch distance in the same zone, with an ally or a foe. While Engaged with a foe, you can only leave if you still have Guard, or an ally Engaged with that foe helps cover you. Even then the GM may say no (nowhere to go, or you're overwhelmed). A Move Gambit always gets you out.</li>
         </ul>
+        <h3>Zones</h3>
+        <ul>
+        <li>A <b>zone</b> is a loose area (a room, a courtyard, a rooftop) drawn by the GM. Zones are <b>adjacent</b> when the fiction connects them: a door, window, stair, or ledge.</li>
+        <li><b>Touch</b>: a foe Engaged with you. <b>Close</b>: anywhere in your zone. <b>Medium</b>: your zone, or an adjacent zone you can see. <b>Long</b>: anywhere in line of sight.</li>
+        <li>Most zones have a <b>feature</b>: a river, a trapped hall, a sniper hill. Features can add hazards, cover, obstacles, or movement costs.</li>
+        <li><b>Difficult terrain</b> costs <b>2 Moves</b> to leave, and the Moves can be spread over turns. A Move Gambit counts as one. Being Repelled or pulled out is free.</li>
+        </ul>
         <h3>Making an Attack</h3>
         <p>Take the dice listed on your weapons, shield, and bonuses. Then, in order:</p>
         <ol>
@@ -110,23 +117,24 @@
         <li>Subtract the target's <b>Armor</b>.</li>
         <li>The result is the <b>Damage</b>.</li>
         </ol>
-        <h4>Attack Modifiers</h4>
+        <div class="example"><b>Example.</b> A mace (d8), a shield (d4), and an ally with two daggers (d6 each) roll 7, 3, 1, 5. Highest is 7. The 5 is spent to Bolster: Damage 8. Target Armor 2 leaves <b>6 Damage</b>.</div>
+      </section>
+      <section class="panel" aria-label="Gambits and damage">
+        <h3>Attack Modifiers</h3>
         <ul>
         <li><b>Impaired:</b> roll a single d4 only; no bonus dice, no Feats.</li>
         <li><b>Enhanced:</b> gain a bonus die (a d8 unless stated).</li>
         <li><b>Blast (Small):</b> pick a target; hits it and everyone Engaged with it. <b>Blast (Large):</b> hits everyone in a zone. Roll each separately.</li>
-        <li><b>Bombs:</b> thrown at Long-Range; Blast (Small) unless stated.</li>
-        <li><b>Range:</b> you can only target within the weapon's range. A ranged weapon or spell cannot Attack a foe Engaged with you unless it is Short-Range, Touch, or a Blast (Small) centered on you.</li>
+        <li><b>Bombs:</b> thrown at Medium-Range; Blast (Small) unless stated.</li>
+        <li><b>Range:</b> you can only target within the weapon's range. A ranged weapon or spell cannot Attack a foe Engaged with you unless it has Touch range or is a Blast (Small) centered on you.</li>
+        <li><b>Stretching a shot:</b> remove a die from a ranged Attack before rolling to add 1 zone of base range (each die adds another). Long gains nothing.</li>
         </ul>
-        <div class="example"><b>Example.</b> A mace (d8), a shield (d4), and an ally with two daggers (d6 each) roll 7, 3, 1, 5. Highest is 7. The 5 is spent to Bolster: Damage 8. Target Armor 2 leaves <b>6 Damage</b>.</div>
-      </section>
-      <section class="panel" aria-label="Gambits and damage">
         <h3>Gambits</h3>
         <p>Discard any Attack dice showing <b>4 or higher</b>. Each die buys one effect. The foe must be a target of your Attack. Except Bolster and Move, the target gets a <b>Vigor Save</b> to ignore it.</p>
         <ul>
         <li><b>Bolster:</b> +1 total Damage.</li>
         <li><b>Move</b> after the Attack, even if you already moved.</li>
-        <li><b>Repel</b> a foe away from you.</li>
+        <li><b>Repel</b> a foe out of Engaged, a short distance. Into another zone only if it makes sense.</li>
         <li><b>Stop</b> a foe from moving next turn.</li>
         <li><b>Impair</b> a foe's weapon or spellcasting next turn.</li>
         <li><b>Trap</b> a shield, or <b>silence</b> a caster, until your next turn.</li>
@@ -134,7 +142,7 @@
         <li>Another effect of similar impact.</li>
         </ul>
         <h4>Strong Gambit</h4>
-        <p>If a die of <b>8 or higher</b> is used in <i>any</i> Attack (melee, ranged, or spell), choose one: <b>no Save</b> for the target, or a <b>greater effect</b> (disarm, break a wooden shield or weapon, remove a helm). A greater effect does not raise Bolster.</p>
+        <p>If a die of <b>8 or higher</b> is used in <i>any</i> Attack (melee, ranged, or spell), choose one: <b>no Save</b> for the target, or a <b>greater effect</b> (disarm, break a wooden shield or weapon, remove a helm, hurl a foe into an adjacent zone). A greater effect does not raise Bolster.</p>
         <h3>Damage</h3>
         <ol>
         <li>Damage comes off <b>Guard</b>. At least 1 Guard left: you <b>Evade</b>.</li>
@@ -181,7 +189,7 @@
         <li>You can hold <b>10 spells</b> in memory.</li>
         </ul>
         <h4>Ranges</h4>
-        <p><b>Self</b> · <b>Touch</b> (Engaged) · <b>Medium</b> (your zone) · <b>Long</b> (adjacent zones too) · <b>Extreme</b> (line of sight)</p>
+        <p><b>Self</b> · <b>Touch</b> (Engaged) · <b>Close</b> (your zone) · <b>Medium</b> (adjacent zones too) · <b>Long</b> (line of sight)</p>
         <h4>Spell Qualities</h4>
         <ul>
         <li><b>Attack:</b> uses the Attacking rules with the spell's dice.</li>

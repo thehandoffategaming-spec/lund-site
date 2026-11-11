@@ -299,12 +299,20 @@
         <p>A Move takes one of two forms. You can move to an <strong>adjacent zone</strong>, positioning yourself there, Engaged with whoever you choose or with no one. Or you can <strong>reposition within your current zone</strong>, engaging or disengaging from any creatures in it.</p>
         <p>Fatekin who are Engaged with an enemy cannot disengage or leave the zone unless they have Guard remaining, or an ally is Engaged with that enemy to assist with their retreat. Even with Guard, disengaging is not always possible: there may be nowhere to go, or the Fatekin may be overwhelmed and outnumbered. The GM decides. A Move Gambit always gets you out.</p>
         <p>A <strong>Short distance</strong> is a repositioning within a zone, such as being pushed or pulled into or out of Engaged.</p>
+        <h3 class="sub-head">Zone Features</h3>
+        <p>Most zones have a contextual feature chosen by the GM: a waist-high river, a long hallway full of traps, a large hill with snipers on it, a burning warehouse. A feature can add hazards, movement costs, obstacles, cover, or advantages. The GM describes a zone's features when the zone comes into play, and players are encouraged to ask.</p>
+        <ul>
+          <li><strong>Difficult terrain</strong> — a zone marked as difficult terrain costs <strong>2 Moves</strong> to leave. Those Moves can be spread over multiple turns: spend one Move now and one next turn, and you remain in the zone, with your progress kept, until the second is paid. A Move Gambit counts as one of the two. Being Repelled or pulled out of the zone costs nothing.</li>
+          <li><strong>Hazards</strong> — a zone can deal Damage or Virtue Loss, impose a Save, or apply a condition when a creature enters it, ends its turn in it, or leaves it.</li>
+          <li><strong>Obstacles and cover</strong> — a zone can block line of sight, grant cover, or require a Move or Action to cross, climb, or open.</li>
+          <li><strong>Ground and position</strong> — high ground, narrow ledges, and chokepoints change who can see, reach, or flank whom.</li>
+        </ul>
         <h3 class="sub-head">Ranges</h3>
         <ul>
-          <li><strong>Short-Range</strong> — a target Engaged with you</li>
-          <li><strong>Medium-Range</strong> — a target anywhere in your zone</li>
-          <li><strong>Long-Range</strong> — a target in your zone, or in an adjacent zone you can see</li>
-          <li><strong>Extreme-Range</strong> — a target anywhere you have line of sight</li>
+          <li><strong>Touch</strong> — a target Engaged with you</li>
+          <li><strong>Close-Range</strong> — a target anywhere in your zone</li>
+          <li><strong>Medium-Range</strong> — a target in your zone, or in an adjacent zone you can see</li>
+          <li><strong>Long-Range</strong> — a target anywhere you have line of sight</li>
         </ul>
         <p class="flavor">Travel outside of combat still uses real distances: a zone is only the scale of a single scene.</p>
         <p class="flavor">Actions aren't fully codified. Typical Actions are making an Attack or casting a Spell (Chapter III), but anything goes, and most other Actions are decided by context and the GM. There's no individual initiative roll — the party moves as one side, then the opposition responds as the other.</p>
@@ -333,8 +341,9 @@
           <li><strong>Blast (Small)</strong> — pick a target. The Blast hits that target and every creature Engaged with it.</li>
           <li><strong>Blast (Large)</strong> — the Blast hits every creature in a single zone.</li>
         </ul>
-        <p><strong>Bombs</strong> are thrown at Long-Range: at a target in your zone, or at one in an adjacent zone you can see. Unless a bomb says otherwise, it is Blast (Small), catching the target and every creature Engaged with it.</p>
-        <p><strong>Range</strong> — an Attack can only target creatures within its effective range (see Ranges, above). A ranged weapon or spell cannot make Attacks against an enemy Engaged with you, unless it has the Short-Range quality, is a Touch spell, or is a Blast (Small) centered on you. For a Blast, the target is the creature at its center.</p>
+        <p><strong>Bombs</strong> are thrown at Medium-Range: at a target in your zone, or at one in an adjacent zone you can see. Unless a bomb says otherwise, it is Blast (Small), catching the target and every creature Engaged with it.</p>
+        <p><strong>Range</strong> — an Attack can only target creatures within its effective range (see Ranges, above). A ranged weapon or spell cannot make Attacks against an enemy Engaged with you, unless it has the Touch range, or is a Blast (Small) centered on you. For a Blast, the target is the creature at its center.</p>
+        <p><strong>Stretching a shot</strong> — when attacking with a ranged weapon, you may remove one die from the Attack before rolling to increase the weapon's base range by 1 zone. Each additional die removed adds another zone. Touch then reaches anywhere in your zone, Close-Range reaches an adjacent zone you can see, and Medium-Range reaches a zone adjacent to an adjacent zone you can see. Long-Range already reaches anywhere in line of sight and gains nothing.</p>
         <p><strong>Enhanced</strong> attacks gain a bonus die. Whatever grants the Enhancement will typically specify which die — if it doesn't, the bonus die is a d8.</p>
       </section>
 
@@ -346,7 +355,7 @@
         <ul>
           <li>Bolster the Attack for +1 total Damage</li>
           <li>Move after the Attack, even if you already moved or are unable to move. This always frees you from Engaged foes</li>
-          <li>Repel a foe away from you, out of Engaged</li>
+          <li>Repel a foe away from you, breaking Engaged. They are pushed a short distance within the zone, and only into another zone if it makes sense (a ledge, a doorway, a great force)</li>
           <li>Stop a foe from moving next turn</li>
           <li>Impair a foe's weapon or spellcasting next turn</li>
           <li>Trap a shield or silence a spellcaster until your next turn</li>
@@ -444,11 +453,10 @@
         <p><strong>Range</strong> — spells typically use one of five ranges:</p>
         <ul>
           <li>Self</li>
-          <li>Touch (a target Engaged with you, touched)</li>
-          <li>Short-Range (a target Engaged with you, no contact needed)</li>
-          <li>Medium-Range (anywhere in your zone)</li>
-          <li>Long-Range (your zone, or an adjacent zone you can see)</li>
-		  <li>Extreme-Range (anywhere you have line of sight)</li>
+          <li>Touch (a target Engaged with you)</li>
+          <li>Close-Range (anywhere in your zone)</li>
+          <li>Medium-Range (your zone, or an adjacent zone you can see)</li>
+		  <li>Long-Range (anywhere you have line of sight)</li>
         </ul>
 
         <p><strong>Attack, Save, or Virtue Loss</strong> — spells that deal damage usually do so through an Attack, following the same rules as Attacking, but using the dice the spell provides.</p>
