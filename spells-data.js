@@ -115,8 +115,13 @@ const SPELLS_DATA = {
     { name: "Modify Memory", tags: ["Close-Range", "Curse"], cost: 4, effect: "Exert control over a target's mind. Rewrite up to 10 minutes of memory from their recent past." },
     { name: "Dream", tags: ["Special", "Curse"], cost: 4, effect: "Enter the dreamscape of a target you know to shape an illusory message or twist it into a terrifying nightmare." },
     { name: "Mass Suggestion", tags: ["Medium-Range", "Blast (Large)", "Curse"], cost: 4, effect: "Influence a crowd. Give a single reasonable command to up to 12 targets who follow it implicitly for a day. Targets make a SPIRIT Save to resist." },
+    { name: "Geyser", tags: ["Touch", "Attack", "Blast (Small)"], cost: 4, effect: "Make a 2d12 Attack with a touch, forcing blood out in a jet. If it causes a Mortal Wound, the target explodes in a Blast (Small) and you regain 5 VIGOR." },
+    { name: "Hemorrhagic Spike", tags: ["Touch", "Target", "Curse", "Virtue Loss"], cost: 4, effect: "A spike of pressure ruptures vessels in the target's brain, which begins bleeding. At the start of their turn they lose 1d6 in each Virtue." },
+    { name: "Blood Boil", tags: ["Touch", "Target", "Curse"], cost: 4, effect: "The target's blood scalds from within. Their attacks are Impaired, and attacks made against them are Enhanced (1d8)." },
+    { name: "Blood Puppet", tags: ["Touch", "Target", "Curse"], cost: 4, effect: "Use your turn to control the target's actions on their turn while the curse is active. The target makes a SPIRIT Save after every turn you take for them." },
     { name: "Mind Blank", tags: ["Touch"], cost: 8, effect: "Guard a mind against intrusion. For 24 hours, the target has complete immunity to psychic damage, mind-reading, scrying and mental curses." },
-    { name: "Power Word: Stun", tags: ["Close-Range", "Curse"], cost: 8, effect: "Speak a word of absolute authority. Target with 15 VIGOR or fewer is completely stunned and immobilized until the end of combat." }
+    { name: "Power Word: Stun", tags: ["Close-Range", "Curse"], cost: 8, effect: "Speak a word of absolute authority. Target with 15 VIGOR or fewer is completely stunned and immobilized until the end of combat." },
+    { name: "Rupturetide", tags: ["Close-Range", "Blast (Large)", "Curse", "Virtue Loss"], cost: 8, effect: "Targets in the Blast make a VIGOR Save or lose all VIGOR as they bleed from every orifice." }
   ],
   swords: [
     { name: "Restless Inquiry", tags: [], cost: 0, effect: "Ask one yes-or-no question of the nearest sentient mind within earshot. You hear their instinctual, truthful response telepathically." },
